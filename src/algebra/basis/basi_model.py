@@ -1,13 +1,15 @@
 from abc import ABC, abstractmethod
 from distances.base_distance import BaseDistance
 from neighboor_search.base_search import BaseSearch
+from neighboor_search.brute_force import BruteForceSearch
+from distances.euclidean_distance import EuclideanDistance
 import numpy as np
 
 class BaseModel(ABC):
     """
     Classe base abstrata para modelos de aprendizado de máquina que utilizam uma métrica de distância e um método de busca de vizinhos.
     """
-    def __init__(self, distance: BaseDistance, search: BaseSearch):
+    def __init__(self, distance: BaseDistance=EuclideanDistance(), search: BaseSearch = BruteForceSearch()):
         self.distance = distance
         self.search = search
 

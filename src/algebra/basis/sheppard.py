@@ -2,6 +2,8 @@ import numpy as np
 from .basi_model import BasisModel
 from distances.base_distance import BaseDistance
 from neighboor_search.base_search import BaseSearch
+from distances.euclidean_distance import EuclideanDistance
+from neighboor_search.brute_force import BruteForceSearch
 import math
 
 class SheppardBasis(BasisModel):
@@ -13,6 +15,11 @@ class SheppardBasis(BasisModel):
 
     Herda da classe BasisModel e fornece a implementação concreta da base de Sheppard.
     """
+    def __init__(self,
+                distance: BaseDistance=EuclideanDistance(),
+                search: BaseSearch =BruteForceSearch()):
+        super().__init__(distance, search)
+    
     def predict(self, X:np.array, k:int, z:int) -> np.array:
         """
         Faz previsões usando a base de Sheppard para os dados de entrada.
@@ -43,3 +50,5 @@ class SheppardBasis(BasisModel):
 
         if math.isnan(predicted):
             predicted = np.mean(self.y_train)
+        
+        return predicted
