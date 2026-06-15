@@ -1,49 +1,46 @@
 from abc import ABC, abstractmethod
 import numpy as np
-import algebra.neighboor_search.base_search as base_search
-import algebra.neighboor_search.brute_force as brute_force
-import algebra.basis.basis as basis
-import algebra.basis.shepard as shepard
-import algebra.distances.base_distance as base_distance
-import algebra.distances.euclidean_distance as euclidean_distance
+from algebra.basis.base_basis import BaseBasis
+
 
 class FEMaBaseModel(ABC):
-    def __init__(self,
-                 distance: base_distance.BaseDistance=euclidean_distance.EuclideanDistance(), search: base_search.BaseSearch=brute_force.BruteForce(),
-                 basis: basis.BaseModel = shepard.SheppardBasis()):
-        self.distance = distance
-        self.search = search
+    """
+    Classe base abstrata para os modelos FEMa.
+
+    O model é quem:
+        - Guarda X_train e y_train
+        - Manda o search indexar X no fit
+        - Orquestra search + basis no predict
+        - Faz o produto interno final
+    """
+
+    def __init__(self, basis: BaseBasis):
         self.basis = basis
+        self.X_train = None
+        self.y_train = None
 
     @abstractmethod
-    def fit(self, X : np.ndarray, y : np.ndarray) -> None: 
+    def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """
         Ajusta o modelo aos dados de treinamento.
 
         Args:
-            X: A matriz de características dos dados de treinamento.
-            y: O vetor de rótulos ou valores-alvo dos dados de treinamento.
-
-        Returns:
-            None
-
-        Notes:
-            Este método deve ser implementado por subclasses concretas, como classificadores ou regressões.
+            X: Features de treino (n_samples, n_features)
+            y: Targets de treino (n_samples,)
         """
         pass
 
     @abstractmethod
-    def predict(self, X:np.ndarray) -> np.ndarray:
+    def predict(self, X: np.ndarray, k: int, z: float) -> np.ndarray:
         """
-        Faz previsões usando o modelo treinado.
+        Faz previsões para o conjunto de teste.
 
         Args:
-            X: O conjunto de dados para o qual as previsões serão feitas (features).
+            X: Features de teste (n_samples, n_features)
+            k: Número de vizinhos (0 = todos)
+            z: Parâmetro da base de interpolação
 
         Returns:
-            As previsões do modelo para os dados de entrada.
-
-        Notes:
-            Este método deve ser implementado por subclasses concretas, como classificadores ou regressões.
+            Vetor de previsões (n_samples,)
         """
         pass

@@ -1,53 +1,80 @@
-from abc import ABC, abstractmethod
 from typing import Tuple
 import numpy as np
-import algebra.neighboor_search.base_search as base_search
-import algebra.neighboor_search.brute_force as brute_force
-from algebra.basis.basis import BaseModel
-from algebra.basis.shepard import SheppardBasis
-from algebra.distances.base_distance import BaseDistance
-from algebra.distances.euclidean_distance import EuclideanDistance
-from models.base_model import FEMaBaseModel 
-class FEMaClassifier(FEMaBaseModel):
-    def __init__(self,
-                distance: base_distance.BaseDistance= EuclideanDistance(),
-                search: base_search.BaseSearch=brute_force.BruteForceSearch(),
-                basis: basi_model.BaseModel = sheppard.SheppardBasis()):
-        super().__init__(distance, search, basis)
+from algebra.basis.base_basis import BaseBasis
+from models.base_model import FEMaBaseModel
 
-    def fit(self, X:np.ndarray, y:np.ndarray) -> None:
+
+class FEMaClassifier(FEMaBaseModel):
+    """
+    Classificador FEMa por interpolação de probabilidades por classe.
+
+    Para cada amostra de teste:
+        1. Search retorna índices e distâncias dos k vizinhos (uma vez)
+        2. Basis calcula os pesos a partir das distâncias
+        3. Model interpola a probabilidade de cada classe com os mesmos pesos
+
+    Uso:
+        model = FEMaClassifier(basis=Basis.get('shepard'))
+        model.fit(X_train, y_train)
+        labels, probs = model.predict(X_test, k=5, z=2)
+    """
+
+    def __init__(self, basis: BaseBasis):
+        super().__init__(basis)
+        self.num_classes = None
+        self.probability_classes = None  # (num_classes, n_train_samples)
+
+    def fit(self, X: np.ndarray, y: np.ndarray) -> None:
+        """
+        Indexa X no search e monta a matriz de probabilidades por classe.
+
+        Args:
+            X: Features de treino (n_samples, n_features)
+            y: Labels de treino (n_samples,)
+        """
         self.X_train = X
         self.y_train = y
-        self.basis.fit(X, y)
-        self.num_train_samples = len(y)
-        self.num_features = X.shape[1]
-        self.num_classes = len(np.unique(y[:, 0]))
-        self.probabilities_classes = np.zeros((self.num_train_samples, self.num_classes))
 
-        for i in range(self.num_classes):
-            self.probabilities_classes[i, :] = (self.y_train[:, 0] == i).astype(float)
-    
-    
-    def predict(self, test_x: np.array, *args) -> Tuple[np.array, np.array]:
+        # Search indexa X — constrói KDTree, BallTree, ou só guarda o array
+        self.basis.search.build(X)
+
+        self.num_classes = len(np.unique(y))
+
+        # Uma linha por classe: 1.0 onde y == c, 0.0 caso contrário
+        # shape: (num_classes, n_train_samples)
+        self.probability_classes = np.array(
+            [(y == c).astype(float) for c in range(self.num_classes)]
+        )
+
+    def predict(self, X: np.ndarray, k: int, z: float) -> Tuple[np.ndarray, np.ndarray]:
         """
-        Faz previsões usando o modelo treinado.
+        Para cada amostra: busca vizinhos uma vez, interpola para cada classe.
+
         Args:
-            test_x: O conjunto de dados para o qual as previsões serão feitas (features).
+            X: Features de teste (n_samples, n_features)
+            k: Número de vizinhos (0 = todos)
+            z: Parâmetro da base de interpolação
+
         Returns:
-            Uma tupla contendo:
-                - As previsões do modelo para os dados de entrada (rótulos previstos).
-                - As probabilidades associadas a cada classe para os dados de entrada.
+            labels: Classes preditas (n_samples,)
+            probs:  Probabilidades por classe (n_samples, num_classes)
         """
-        num_test_samples = test_x.shape[0]
-        labels = np.zeros(num_test_samples)
-        predicted_probabilities = np.zeros((num_test_samples, self.num_classes))
+        if self.probability_classes is None:
+            raise RuntimeError("Chame fit() antes de predict().")
+
+        num_test_samples = X.shape[0]
+        probs = np.zeros((num_test_samples, self.num_classes))
 
         for i in range(num_test_samples):
-            predicted_probabilities[i,:] = [self.basis.predict(train_x=self.train_x,
-                                                            train_y=self.probabilities_classes[c],
-                                                            test_one_sample=test_x[i], k=self.k, z=args[0]) 
-                                                            for c in range(self.num_classes)]
-            labels[i] = np.argmax(predicted_probabilities[i, :])
+            # Search calcula distâncias e retorna vizinhos — UMA vez por amostra
+            indices, dists = self.basis.search.query(X[i], k)
 
-        return labels, predicted_probabilities
+            # Basis calcula pesos a partir das distâncias
+            weights = self.basis.compute_weights(dists, z)
 
+            # Model interpola probabilidade de cada classe com os mesmos pesos
+            for c in range(self.num_classes):
+                probs[i, c] = np.dot(weights, self.probability_classes[c][indices])
+
+        labels = np.argmax(probs, axis=1)
+        return labels, probs

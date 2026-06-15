@@ -1,19 +1,40 @@
 from abc import ABC, abstractmethod
+from typing import Tuple
+import numpy as np
+
 
 class BaseSearch(ABC):
+    """
+    Classe base abstrata para métodos de busca de vizinhos.
+
+    Responsabilidades:
+        - Indexar X_train na estrutura adequada (build)
+        - Calcular distâncias e retornar índices + distâncias (query)
+
+    A métrica de distância é responsabilidade de cada implementação.
+    """
+
     @abstractmethod
-    def search(self, dists, k):
+    def build(self, X: np.ndarray) -> None:
         """
-        Realiza a busca de vizinhos mais próximos.
+        Indexa os dados de treino na estrutura espacial.
 
         Args:
-            dists: O vetor de distâncias do ponto de consulta aos vizinhos.
-            k: O número de vizinhos mais próximos a serem retornados.
+            X: Features de treino (n_samples, n_features)
+        """
+        pass
+
+    @abstractmethod
+    def query(self, sample: np.ndarray, k: int) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Retorna os k vizinhos mais próximos de sample.
+
+        Args:
+            sample: Amostra de teste (n_features,)
+            k:      Número de vizinhos (0 = todos)
 
         Returns:
-            Uma lista dos índices dos k vizinhos mais próximos ao ponto de consulta.
-
-        Notes:
-            Este método deve ser implementado por subclasses concretas, como brute force search, KD-tree, etc.
+            indices: Índices dos k vizinhos em X_train (k,)
+            dists:   Distâncias dos k vizinhos (k,)
         """
         pass

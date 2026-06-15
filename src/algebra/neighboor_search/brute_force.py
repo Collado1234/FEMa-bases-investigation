@@ -1,27 +1,52 @@
-from abc import ABC
+from typing import Tuple
 import numpy as np
-from .base_search import BaseSearch
+from algebra.neighboor_search.base_search import BaseSearch
+from algebra.distances.base_distance import BaseDistance
+from algebra.distances.euclidean_distance import EuclideanDistance
 
 class BruteForceSearch(BaseSearch):
-    def search(self, dists, k):
+    """
+    Busca de vizinhos por força bruta com distância euclidiana.
+
+    Calcula a distância de sample para todos os pontos de treino
+    e seleciona os k menores. Complexidade O(n) por query.
+
+    Para datasets grandes, prefira KDTreeSearch ou BallTreeSearch.
+    """
+
+    def __init__(self):
+        self.X_train = None
+
+    def build(self, X: np.ndarray) -> None:
         """
-        Realiza a busca de vizinhos mais próximos usando uma abordagem de força bruta.
+        Armazena X_train para uso nas queries.
 
         Args:
-            dists: O vetor de distâncias do ponto de consulta aos vizinhos.
-            k: O número de vizinhos mais próximos a serem retornados.
+            X: Features de treino (n_samples, n_features)
+        """
+        self.X_train = X
+
+    def query(self, sample: np.ndarray, k: int, distance: BaseDistance = EuclideanDistance()) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Calcula distância euclidiana para todos os pontos e retorna os k menores.
+
+        Args:
+            sample: Amostra de teste (n_features,)
+            k:      Número de vizinhos (0 = todos)
+            distance: Métrica de distância a ser utilizada
 
         Returns:
-            Uma lista dos índices dos k vizinhos mais próximos ao ponto de consulta.
-
-        Notes:
-            Esta implementação percorre todos os pontos do conjunto de dados para encontrar os vizinhos mais próximos,
-            o que pode ser ineficiente para grandes conjuntos de dados. É recomendado usar esta abordagem apenas para
-            conjuntos de dados pequenos ou para fins de teste.
+            indices: Índices dos k vizinhos (k,)
+            dists:   Distâncias euclidianas dos k vizinhos (k,)
         """
-        if k < 0:
-            raise ValueError("O número de vizinhos (k) deve ser um inteiro não negativo.")
-        elif k == 0:
-            return np.arange(len(dists))  # Retorna todos os índices se k for 0 / talvez bugue por não ser len(train_x) mas sim len(dists)
+        if self.X_train is None:
+            raise RuntimeError("Chame build() antes de query().")
+
+        dists = distance.compute(self.X_train, sample)
+
+        if k == 0:
+            indices = np.arange(len(self.X_train))
         else:
-            return np.argpartition(dists, k)[:k]  # Retorna os índices dos k menores valores de distância
+            indices = np.argpartition(dists, k)[:k]
+
+        return indices, dists[indices]
