@@ -1,5 +1,5 @@
 import numpy as np
-from basis.basi_model import BaseInterpolation
+from algebra.basis.basis import BaseInterpolation
 
 
 def is_interpolating(

@@ -5,13 +5,15 @@ from typing import Tuple
 # Adicione o caminho para o diretório src
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from fem_classifier import FEMaClassifier
+from models.fema_classifier import FEMaClassifier
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
-from fem_basis import Basis
+from algebra.basis.shepard import SheppardBasis
+from algebra.neighboor_search.brute_force import BruteForce
+from algebra.distances.euclidean_distance import EuclideanDistance
 
 df = pd.read_csv('data/classificationData.csv', sep=';')
 
@@ -28,7 +30,7 @@ train_x = scaler.fit_transform(train_x)
 test_x = scaler.transform(test_x)
 
 
-model = FEMaClassifier(k=2, basis=Basis.radialBasis)
+model = FEMaClassifier(distance=EuclideanDistance(), basis=SheppardBasis())
 model.fit(train_x,train_y)
 
 pred, confidence_level = model.predict(test_x,10)

@@ -2,7 +2,7 @@ from abc import ABC
 import numpy as np
 from .base_search import BaseSearch
 
-class BruteForceSearch(BaseSearch, ABC):
+class BruteForceSearch(BaseSearch):
     def search(self, dists, k):
         """
         Realiza a busca de vizinhos mais próximos usando uma abordagem de força bruta.

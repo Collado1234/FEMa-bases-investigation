@@ -2,15 +2,15 @@ from abc import ABC, abstractmethod
 import numpy as np
 import algebra.neighboor_search.base_search as base_search
 import algebra.neighboor_search.brute_force as brute_force
-import algebra.basis.basi_model as basi_model
-import algebra.basis.sheppard as sheppard
+import algebra.basis.basis as basis
+import algebra.basis.shepard as shepard
 import algebra.distances.base_distance as base_distance
 import algebra.distances.euclidean_distance as euclidean_distance
 
 class FEMaBaseModel(ABC):
     def __init__(self,
                  distance: base_distance.BaseDistance=euclidean_distance.EuclideanDistance(), search: base_search.BaseSearch=brute_force.BruteForce(),
-                 basis: basi_model.BaseModel = sheppard.SheppardBasis()):
+                 basis: basis.BaseModel = shepard.SheppardBasis()):
         self.distance = distance
         self.search = search
         self.basis = basis

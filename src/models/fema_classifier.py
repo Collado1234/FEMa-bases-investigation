@@ -3,15 +3,15 @@ from typing import Tuple
 import numpy as np
 import algebra.neighboor_search.base_search as base_search
 import algebra.neighboor_search.brute_force as brute_force
-import algebra.basis.basi_model as basi_model
-import algebra.basis.sheppard as sheppard
-import algebra.distances.base_distance as base_distance
-import algebra.distances.euclidean_distance as euclidean_distance
-from models.base_model import FEMaBaseModel
+from algebra.basis.basis import BaseModel
+from algebra.basis.shepard import SheppardBasis
+from algebra.distances.base_distance import BaseDistance
+from algebra.distances.euclidean_distance import EuclideanDistance
+from models.base_model import FEMaBaseModel 
 class FEMaClassifier(FEMaBaseModel):
     def __init__(self,
-                distance: base_distance.BaseDistance=base_distance.EuclideanDistance(),
-                search: base_search.BaseSearch=brute_force.BruteForce(),
+                distance: base_distance.BaseDistance= EuclideanDistance(),
+                search: base_search.BaseSearch=brute_force.BruteForceSearch(),
                 basis: basi_model.BaseModel = sheppard.SheppardBasis()):
         super().__init__(distance, search, basis)
 
@@ -25,7 +25,7 @@ class FEMaClassifier(FEMaBaseModel):
         self.probabilities_classes = np.zeros((self.num_train_samples, self.num_classes))
 
         for i in range(self.num_classes):
-            self.probability_classes[i, :] = (self.y_train[:, 0] == i).astype(float)
+            self.probabilities_classes[i, :] = (self.y_train[:, 0] == i).astype(float)
     
     
     def predict(self, test_x: np.array, *args) -> Tuple[np.array, np.array]:
@@ -44,7 +44,7 @@ class FEMaClassifier(FEMaBaseModel):
 
         for i in range(num_test_samples):
             predicted_probabilities[i,:] = [self.basis.predict(train_x=self.train_x,
-                                                            train_y=self.probability_classes[c],
+                                                            train_y=self.probabilities_classes[c],
                                                             test_one_sample=test_x[i], k=self.k, z=args[0]) 
                                                             for c in range(self.num_classes)]
             labels[i] = np.argmax(predicted_probabilities[i, :])
