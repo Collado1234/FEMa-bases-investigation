@@ -27,7 +27,7 @@ scaler = StandardScaler()
 train_x = scaler.fit_transform(train_x)
 test_x = scaler.transform(test_x)
 
-model = FEMaClassifier(k=2, z=10, basis=Basis.radialBasis)
+model = FEMaClassifier(k=2, z=10, basis=Basis.shepardBasis)
 model.fit(train_x, train_y)
 
 pred, confidence_level = model.predict(test_x)
