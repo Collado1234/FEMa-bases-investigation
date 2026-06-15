@@ -34,6 +34,6 @@ model = FEMaClassifier(basis=basis)
 
 model.fit(train_x, train_y)
 
-labels, probs = model.predict(test_x, k=10, z=2)
+labels, probs = model.predict(test_x, k=2, z=2)
 
 print(confusion_matrix(test_y, labels))
