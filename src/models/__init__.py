@@ -1,4 +1,4 @@
-from .fema_classifier import FEMaClassifier
-from .fema_regressor import FEMaRegressor
+from .CLASSIFIER import FEMaClassifier
+from .REGRESSOR import FEMaRegressor
 
 __all__ = ["FEMaClassifier", "FEMaRegressor"]
