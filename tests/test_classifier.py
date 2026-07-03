@@ -3,7 +3,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from models.fema_classifier import FEMaClassifier
+from models.CLASSIFIER import FEMaClassifier
 from algebra.basis.fem_basis import Basis
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
