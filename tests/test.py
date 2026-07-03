@@ -1,5 +1,5 @@
 import numpy as np
-from ..src import FEMaClassifier, EuclideanDistance, BruteForceSearch, SheppardBasis
+from ..core import FEMaClassifier, EuclideanDistance, BruteForceSearch, SheppardBasis
 
 # 1. Preparar os dados de exemplo
 X_train = np.array([[1, 2], [2, 3], [3, 4], [4, 5]])
