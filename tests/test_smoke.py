@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from experiments.config_schema import load_experiment_config
 from experiments.run_experiment import _override, _run
 from models.registry import list_models
-from datasets.registry import list_datasets
+from io.datasets import list_datasets
 
 
 def test_registries_populated():

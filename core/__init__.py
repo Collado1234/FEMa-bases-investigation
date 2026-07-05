@@ -1,5 +1,5 @@
 from .models import FEMaClassifier, FEMaRegressor
-from .algebra import (
+from .math import (
     EuclideanDistance, 
     ManhattanDistance, 
     BruteForceSearch, 

@@ -15,7 +15,7 @@ from typing import Callable, Dict
 
 import numpy as np
 
-from data_io.loaders.data_loader import DataSplit, load_dataset
+from ..loaders import DataSplit, load_dataset
 from preprocessing.splitter import train_test_split as _two_way_split
 
 # NOTA: preprocessing.splitter.train_val_test_split tem um bug pré-existente
