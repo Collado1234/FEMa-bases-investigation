@@ -42,7 +42,10 @@ class Basis:
             from .rbf_gaussian import RbfGaussianBasis
             return RbfGaussianBasis(search=search)
         elif name == "multiquadratic":
-            from .rbf_multiquadratic import MultiquadraticBasis
+            from .multiquadratic import MultiquadraticBasis
             return MultiquadraticBasis(search=search)
+        elif name == "inverse_multiquadratic":
+            from .inverse_multiquadratic import InverseMultiquadraticBasis
+            return InverseMultiquadraticBasis(search=search)
         
         
