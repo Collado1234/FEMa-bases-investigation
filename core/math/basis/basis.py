@@ -41,5 +41,8 @@ class Basis:
         elif name == 'rbf_gaussian':
             from .rbf_gaussian import RbfGaussianBasis
             return RbfGaussianBasis(search=search)
+        elif name == "multiquadratic":
+            from .rbf_multiquadratic import MultiquadraticBasis
+            return MultiquadraticBasis(search=search)
         
         
