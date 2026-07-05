@@ -58,7 +58,7 @@ por completo. Erro original: {exc_type}: {exc}
 
 def _import_fema_core():
     try:
-        from core.math.basis.sheppard import SheppardBasis
+        from core.math.basis.shepard import SheppardBasis
         from core.math.basis.radial import RadialBasis
         from core.math.neighboor_search.brute_force import BruteForceSearch
         from core.math.distances.euclidean_distance import EuclideanDistance

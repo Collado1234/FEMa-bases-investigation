@@ -8,10 +8,10 @@ class Basis:
         basis = Basis.get('shepard')
         basis = Basis.get('radial', search=KDTreeSearch())
 
-    Bases disponíveis: 'shepard', 'radial'
+    Bases disponíveis: 'shepard', 'radial', 'rbf_gaussian'
     """
 
-    AVAILABLE = ['shepard', 'radial']
+    AVAILABLE = ['shepard', 'radial', 'rbf_gaussian']
 
     @staticmethod
     def get(name: str, search: BaseSearch = None):
@@ -32,3 +32,14 @@ class Basis:
             basis = Basis.get('shepard')
             basis = Basis.get('radial', search=KDTreeSearch())
         """
+        if name == 'shepard':
+            from .shepard import ShepardBasis
+            return ShepardBasis(search=search)
+        elif name == 'radial':
+            from .radial import RadialBasis
+            return RadialBasis(search=search)
+        elif name == 'rbf_gaussian':
+            from .rbf_gaussian import RbfGaussianBasis
+            return RbfGaussianBasis(search=search)
+        
+        
