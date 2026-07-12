@@ -1,11 +1,7 @@
 from .models import FEMaClassifier, FEMaRegressor
-from .math import (
-    EuclideanDistance, 
-    ManhattanDistance, 
-    BruteForceSearch, 
-    SheppardBasis, 
-    RadialBasis
-)
+from .math.distances import EuclideanDistance, ManhattanDistance
+from .math.neighboor_search import BruteForceSearch
+from .math.basis import ShepardBasis, RadialBasis
 
 __all__ = [
     "FEMaClassifier",
@@ -13,6 +9,6 @@ __all__ = [
     "EuclideanDistance",
     "ManhattanDistance",
     "BruteForceSearch",
-    "SheppardBasis",
+    "ShepardBasis",
     "RadialBasis"
 ]

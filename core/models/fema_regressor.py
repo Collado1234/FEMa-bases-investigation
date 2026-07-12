@@ -1,7 +1,7 @@
 import numpy as np
 from .base_model import FEMaBaseModel
-from ..algebra.basis.base_basis import BaseBasis
-from ..algebra.neighboor_search.base_search import BaseSearch
+from ..math.basis.base_basis import BaseBasis
+from ..math.neighboor_search.base_search import BaseSearch
 
 class FEMaRegressor(FEMaBaseModel):
     """

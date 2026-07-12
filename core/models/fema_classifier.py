@@ -1,7 +1,7 @@
 from typing import Tuple
 import numpy as np
-from ..algebra.basis.base_basis import BaseBasis
-from ..algebra.neighboor_search.base_search import BaseSearch
+from ..math.basis.base_basis import BaseBasis
+from ..math.neighboor_search.base_search import BaseSearch
 from models.base_model import FEMaBaseModel
 
 class FEMaClassifier(FEMaBaseModel):

@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 import numpy as np
-from ..algebra.basis.base_basis import BaseBasis
-from ..algebra.neighboor_search import BaseSearch
-from ..algebra.neighboor_search.brute_force import BruteForceSearch
+from ..math.basis.base_basis import BaseBasis
+from ..math.neighboor_search import BaseSearch
+from ..math.neighboor_search.brute_force import BruteForceSearch
 
 class FEMaBaseModel(ABC):
     """
