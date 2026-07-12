@@ -1,12 +1,17 @@
-from .base_basis import BaseModel
+from .base_basis import BaseBasis
+from .factory_basis import Basis
 from .shepard import ShepardBasis
 from .radial import RadialBasis
 from .rbf_gaussian import RbfGaussianBasis
-from .rbf_multiquadratic import MultiquadraticBasis
+from .multiquadratic import MultiquadraticBasis
+from .inverse_multiquadratic import InverseMultiquadraticBasis
 
-__all__ = ["BaseModel",
-        "ShepardBasis",
-        "RadialBasis",
-        "RbfGaussianBasis",
-        "MultiquadraticBasis"]
-
+__all__ = [
+    "BaseBasis",
+    "Basis",
+    "ShepardBasis",
+    "RadialBasis",
+    "RbfGaussianBasis",
+    "MultiquadraticBasis",
+    "InverseMultiquadraticBasis",
+]

@@ -28,10 +28,6 @@ ABCs, plugin systems, um módulo por "fase" do pipeline) para 11 arquivos
 sem abstrações que não tinham uso real. Trocar de modelo/dataset/estratégia
 de tuning continua sendo só mudar um nome na config YAML.
 
-## Bugs corrigidos dentro de `core/` (autorizado explicitamente, sem redesenho)
-
-O pacote `core/` não conseguia nem ser importado antes destas correções:
-
 1. `core/models/base_model.py`, `fema_classifier.py`, `fema_regressor.py`:
    importavam `..algebra...` — a pasta correta é `core/math`.
 2. `fema_classifier.py`: `from models.base_model import FEMaBaseModel`

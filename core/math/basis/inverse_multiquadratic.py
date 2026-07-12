@@ -1,5 +1,5 @@
 import numpy as np
-from .base_basis import BaseBasis
+from .base_basis import DELTA, BaseBasis
 
 class InverseMultiquadraticBasis(BaseBasis):
     """
