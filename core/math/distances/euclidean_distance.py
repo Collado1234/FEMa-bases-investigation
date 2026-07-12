@@ -1,13 +1,24 @@
 import numpy as np
 from .base_distance import BaseDistance
 
+
 class EuclideanDistance(BaseDistance):
-    def compute(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
-        """
-        Calcula distância euclidiana.
-        Se x1 é (D,) e x2 é (N, D), retorna (N,).
-        """
-        # Garante que x1 tenha uma dimensão extra para broadcasting se necessário
-        if x1.ndim == 1 and x2.ndim == 2:
-            return np.linalg.norm(x1 - x2, axis=1)
-        return np.linalg.norm(x1 - x2)
+    """
+    Distância euclidiana.
+
+    Casos suportados:
+        - (D,) x (D,)       -> escalar
+        - (N, D) x (D,)     -> vetor (N,)
+        - (D,) x (N, D)     -> vetor (N,)
+    """
+
+    def compute(self, x1: np.ndarray, x2: np.ndarray):
+        diff = x1 - x2
+
+        # Se o resultado é uma matriz (N, D),
+        # calcula a norma de cada linha.
+        if diff.ndim == 2:
+            return np.linalg.norm(diff, axis=1)
+
+        # Caso contrário, calcula uma única distância.
+        return np.linalg.norm(diff)
