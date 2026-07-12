@@ -1,126 +1,201 @@
+"""
+validation.py
+
+Funções para validar propriedades matemáticas de bases de interpolação
+utilizadas pelo FEMa.
+
+Propriedades verificadas:
+
+- Partição da unidade
+- Não negatividade
+- Igualdade dos pesos para distâncias iguais
+- Monotonicidade
+- Interpolação exata (distância zero)
+
+
+No git bash: python -m tests.linear_algebra.math_validation
+"""
+
 import numpy as np
-from basis.basi_model import BaseInterpolation
+
+from core.math.basis import BaseBasis
 
 
-def is_interpolating(
-    basis: BaseInterpolation,
-    train_x: np.ndarray,
-    train_y: np.ndarray,
-    k: int,
-    z: float,
-    tol: float = 1e-6
-) -> bool:
-    """
-    Verifica se a base é interpoladora, ou seja, se reproduz exatamente
-    os valores nos pontos de treino.
-
-    Args:
-        basis: Instância de uma interpolação (Shepard, Radial, etc.)
-        train_x: Features do conjunto de treino (n_samples, n_features)
-        train_y: Valores alvo do conjunto de treino (n_samples,)
-        k: Número de vizinhos
-        z: Parâmetro da base
-        tol: Tolerância para comparação de floats
-
-    Returns:
-        True se for interpoladora, False caso contrário
-    """
-    for i in range(len(train_x)):
-        predicted = basis.predict(
-            train_x=train_x,
-            train_y=train_y,
-            sample=train_x[i],
-            k=k,
-            z=z
-        )
-        if not np.isclose(predicted, train_y[i], atol=tol):
-            return False
-    return True
+DEFAULT_TOL = 1e-6
 
 
 def check_partition_of_unity(
-    weights: np.ndarray,
-    tol: float = 1e-6
+    basis: BaseBasis,
+    dists: np.ndarray,
+    z: float,
+    tol: float = DEFAULT_TOL,
 ) -> bool:
     """
-    Verifica se um vetor de pesos é partição de unidade (soma = 1).
+    Verifica se os pesos formam uma partição da unidade.
 
-    Args:
-        weights: Vetor de pesos
-        tol: Tolerância para comparação de floats
-
-    Returns:
-        True se os pesos somam 1, False caso contrário
+    Σ wi = 1
     """
+    weights = basis.compute_weights(dists, z)
+
     return bool(np.isclose(np.sum(weights), 1.0, atol=tol))
 
 
-def check_non_negative_weights(weights: np.ndarray) -> bool:
+def check_non_negative_weights(
+    basis: BaseBasis,
+    dists: np.ndarray,
+    z: float,
+) -> bool:
     """
-    Verifica se todos os pesos são não-negativos.
-
-    Args:
-        weights: Vetor de pesos
-
-    Returns:
-        True se todos os pesos são >= 0, False caso contrário
+    Verifica se todos os pesos são não negativos.
     """
+    weights = basis.compute_weights(dists, z)
+
     return bool(np.all(weights >= 0))
 
 
-def validate_inputs(
-    train_x: np.ndarray,
-    train_y: np.ndarray,
-    sample: np.ndarray,
-    k: int
-) -> None:
+def check_equal_distances(
+    basis: BaseBasis,
+    n_points: int,
+    z: float,
+    tol: float = DEFAULT_TOL,
+) -> bool:
     """
-    Valida os inputs antes de rodar a interpolação.
-    Lança ValueError com mensagem clara se algo estiver errado.
-
-    Args:
-        train_x: Features do conjunto de treino (n_samples, n_features)
-        train_y: Valores alvo do conjunto de treino (n_samples,)
-        sample:  Amostra de teste (n_features,)
-        k:       Número de vizinhos
+    Se todas as distâncias forem iguais,
+    todos os pesos devem ser iguais.
     """
-    if train_x.ndim != 2:
-        raise ValueError(
-            f"train_x deve ser 2D (n_samples, n_features), "
-            f"mas tem shape {train_x.shape}"
-        )
+    dists = np.ones(n_points)
 
-    if train_y.ndim != 1:
-        raise ValueError(
-            f"train_y deve ser 1D (n_samples,), "
-            f"mas tem shape {train_y.shape}"
-        )
+    weights = basis.compute_weights(dists, z)
 
-    if len(train_x) != len(train_y):
-        raise ValueError(
-            f"train_x e train_y devem ter o mesmo número de amostras, "
-            f"mas têm {len(train_x)} e {len(train_y)}"
-        )
+    expected = np.full(n_points, 1.0 / n_points)
 
-    if sample.ndim != 1:
-        raise ValueError(
-            f"sample deve ser 1D (n_features,), "
-            f"mas tem shape {sample.shape}"
-        )
+    return bool(np.allclose(weights, expected, atol=tol))
 
-    if sample.shape[0] != train_x.shape[1]:
-        raise ValueError(
-            f"sample deve ter {train_x.shape[1]} features "
-            f"(igual a train_x), mas tem {sample.shape[0]}"
-        )
 
-    if k < 0:
-        raise ValueError(
-            f"k deve ser >= 0 (0 = usar todos os pontos), mas é {k}"
-        )
+def check_monotonicity(
+    basis: BaseBasis,
+    dists: np.ndarray,
+    z: float,
+) -> bool:
+    """
+    Verifica se pesos diminuem conforme a distância aumenta.
 
-    if k >= len(train_x):
-        raise ValueError(
-            f"k ({k}) deve ser menor que o número de amostras de treino "
-            f"({len(train_x)})"
-        )
+    Assume que dists está ordenado em ordem crescente.
+    """
+    weights = basis.compute_weights(dists, z)
+
+    return bool(np.all(np.diff(weights) <= 0))
+
+
+def check_exact_interpolation(
+    basis: BaseBasis,
+    z: float,
+    tol: float = DEFAULT_TOL,
+) -> bool:
+    """
+    Verifica a propriedade interpoladora.
+
+    Quando existe uma distância exatamente igual a zero,
+    o peso correspondente deve ser 1 e todos os demais 0.
+    """
+    dists = np.array([0.0, 1.0, 2.0, 3.0])
+
+    weights = basis.compute_weights(dists, z)
+
+    expected = np.array([1.0, 0.0, 0.0, 0.0])
+
+    return bool(np.allclose(weights, expected, atol=tol))
+
+
+def check_closest_point_has_highest_weight(
+    basis: BaseBasis,
+    dists: np.ndarray,
+    z: float,
+) -> bool:
+    """
+    O ponto mais próximo deve possuir o maior peso.
+    """
+    weights = basis.compute_weights(dists, z)
+
+    return bool(np.argmax(weights) == np.argmin(dists))
+
+
+def validate_basis(
+    basis: BaseBasis,
+    z: float = 2.0,
+    tol: float = DEFAULT_TOL,
+) -> dict:
+    """
+    Executa todas as validações matemáticas da base.
+
+    Returns
+    -------
+    dict
+        Dicionário contendo o resultado de cada teste.
+    """
+
+    dists = np.array([1.0, 2.0, 3.0, 4.0])
+
+    results = {
+        "partition_of_unity": check_partition_of_unity(
+            basis, dists, z, tol
+        ),
+        "non_negative_weights": check_non_negative_weights(
+            basis, dists, z
+        ),
+        "equal_distances": check_equal_distances(
+            basis, 4, z, tol
+        ),
+        "monotonicity": check_monotonicity(
+            basis, dists, z
+        ),
+        "exact_interpolation": check_exact_interpolation(
+            basis, z, tol
+        ),
+        "closest_point_highest_weight": check_closest_point_has_highest_weight(
+            basis, dists, z
+        ),
+    }
+
+    results["all"] = all(results.values())
+
+    return results
+
+
+if __name__ == "__main__":
+
+    from core.math.basis import Basis
+    from core.math.distances import EuclideanDistance
+    from core.math.neighboor_search import BruteForceSearch
+
+    search = BruteForceSearch(EuclideanDistance())
+
+    basis_names = [
+        "shepard",
+        "radial",
+        "rbf_gaussian",
+        "multiquadratic",
+        "inverse_multiquadratic",
+    ]
+
+    z = 2.0
+
+    print("=" * 70)
+    print("VALIDACAO DAS BASES DO FEMa")
+    print("=" * 70)
+
+    for name in basis_names:
+
+        print(f"\nBase: {name}")
+
+        basis = Basis.get(name, search)
+
+        results = validate_basis(basis, z)
+
+        for property_name, passed in results.items():
+
+            status = "[OK]" if passed else "[ERRO]"
+
+            print(f"  {property_name:<35} {status}")
+
+    print("\nFinalizado.")
