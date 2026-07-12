@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 from ..neighboor_search import BaseSearch
 
+DELTA = 1e-10
 class BaseBasis(ABC):
     """
     Classe base abstrata para bases de interpolação do FEMa.

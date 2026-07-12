@@ -19,7 +19,7 @@ class InverseMultiquadraticBasis(BaseBasis):
                         c:float = 1.0
                         ) -> np.ndarray:
         
-        weights = 1 / ( np.sqrt((dists)**2 + c**2) )
+        weights = 1 / ( np.sqrt((dists)**2 + c**2) + DELTA)
         weights /= np.sum(weights) # particao de unidade
 
         return weights
