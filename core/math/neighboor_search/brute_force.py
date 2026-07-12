@@ -36,10 +36,10 @@ class BruteForceSearch(BaseSearch):
         if k == 0 or k >= len(self.X_train): # todos os vizinhos se k=0 ou k >= n_samples
             indices = np.arange(len(self.X_train))
         else:
-            print("X_train.shape:", self.X_train.shape)
-            print("sample.shape:", sample.shape)
-            print("distances.shape:", distances.shape)
-            print("k:", k)
+            # print("X_train.shape:", self.X_train.shape)
+            # print("sample.shape:", sample.shape)
+            # print("distances.shape:", distances.shape)
+            # print("k:", k)
             indices = np.argpartition(distances, k)[:k] 
         
         return indices, distances[indices]
