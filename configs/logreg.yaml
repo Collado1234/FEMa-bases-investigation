@@ -1,0 +1,17 @@
+model: logreg
+dataset: fetal_health
+experiment_name: baseline
+
+metrics: [accuracy, f1, balanced_accuracy, mcc]
+ranking_metric: f1
+higher_is_better: true
+
+cv_strategy: repeated_stratified_kfold
+n_splits: 5
+n_repeats: 3
+
+tuning_strategy: random_search
+tuning_n_iter: 20
+seed: 42
+
+output_dir: results
