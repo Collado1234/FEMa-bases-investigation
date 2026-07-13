@@ -7,6 +7,10 @@ from .wendland_c2 import WendlandC2Basis
 from .cubic_spline import CubicSplineBasis
 from .quartic_spline import QuarticSplineBasis
 from .exp_gen import ExponentialGenBasis
+from .softmax_radial import SoftmaxRadialBasis
+from .attention_quadratica import AttentionQuadraticBasis
+from .logarithmic import LogarithimicBasis
+
 
 _CLASSES = {
     "shepard": ShepardBasis,
@@ -18,7 +22,9 @@ _CLASSES = {
     "cubic_spline": CubicSplineBasis,
     "quartic_spline": QuarticSplineBasis,
     "gen_exponential": ExponentialGenBasis,
-
+    "softmax_radial": SoftmaxRadialBasis,
+    "attention": AttentionQuadraticBasis,
+    "logarithmic": LogarithimicBasis,
 }
 
 class Basis:

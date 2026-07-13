@@ -7,7 +7,7 @@ class ExponentialGenBasis(BaseBasis):
         super().__init__(search)
     
 
-    def compute_weights(self, dists:np.ndarray, epsilon:float, p:float = 2.0):
+    def compute_weights(self, dists:np.ndarray, epsilon:float, p:float = 2.0) -> np.ndarray:
         dists = np.where(dists == 0, 1e-10, dists)
 
         weights = np.exp(-epsilon*(dists**p))

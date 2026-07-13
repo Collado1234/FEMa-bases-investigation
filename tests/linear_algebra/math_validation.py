@@ -177,6 +177,10 @@ if __name__ == "__main__":
         "multiquadratic",
         "inverse_multiquadratic",
         "wendland_c2",
+        "cubic_spline",
+        "quartic_spline",
+        "gen_exponential",
+        "softmax_radial",
     ]
 
     z = 2.0
