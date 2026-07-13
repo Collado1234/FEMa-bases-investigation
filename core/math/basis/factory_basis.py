@@ -10,6 +10,10 @@ from .exp_gen import ExponentialGenBasis
 from .softmax_radial import SoftmaxRadialBasis
 from .attention_quadratica import AttentionQuadraticBasis
 from .logarithmic import LogarithimicBasis
+from .harmonic import HarmonicBasis
+from .laplacian_kernel import LaplacianKernelBasis
+from .cauchy_kernel import CauchyKernelBasis
+from .student_t import StudentTBasis 
 
 
 _CLASSES = {
@@ -25,6 +29,10 @@ _CLASSES = {
     "softmax_radial": SoftmaxRadialBasis,
     "attention": AttentionQuadraticBasis,
     "logarithmic": LogarithimicBasis,
+    "harmonic": HarmonicBasis,
+    "laplacian": LaplacianKernelBasis,
+    "cauchy": CauchyKernelBasis,
+    "student_t": StudentTBasis,
 }
 
 class Basis:
