@@ -5,6 +5,7 @@ from .radial import RadialBasis
 from .rbf_gaussian import RbfGaussianBasis
 from .multiquadratic import MultiquadraticBasis
 from .inverse_multiquadratic import InverseMultiquadraticBasis
+from .wendland_c2 import WendlandC2Basis
 
 __all__ = [
     "BaseBasis",
@@ -14,4 +15,5 @@ __all__ = [
     "RbfGaussianBasis",
     "MultiquadraticBasis",
     "InverseMultiquadraticBasis",
+    "WendlandC2Basis",
 ]

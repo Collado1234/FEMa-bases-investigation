@@ -3,6 +3,7 @@ from .radial import RadialBasis
 from .rbf_gaussian import RbfGaussianBasis
 from .multiquadratic import MultiquadraticBasis
 from .inverse_multiquadratic import InverseMultiquadraticBasis
+from .wendland_c2 import WendlandC2Basis
 
 _CLASSES = {
     "shepard": ShepardBasis,
@@ -10,6 +11,7 @@ _CLASSES = {
     "rbf_gaussian": RbfGaussianBasis,
     "multiquadratic": MultiquadraticBasis,
     "inverse_multiquadratic": InverseMultiquadraticBasis,
+    "wendland_c2": WendlandC2Basis
 }
 
 class Basis:
