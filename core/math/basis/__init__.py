@@ -6,6 +6,8 @@ from .rbf_gaussian import RbfGaussianBasis
 from .multiquadratic import MultiquadraticBasis
 from .inverse_multiquadratic import InverseMultiquadraticBasis
 from .wendland_c2 import WendlandC2Basis
+from .quartic_spline import QuarticSplineBasis
+from .cubic_spline import CubicSplineBasis
 
 __all__ = [
     "BaseBasis",
@@ -16,4 +18,7 @@ __all__ = [
     "MultiquadraticBasis",
     "InverseMultiquadraticBasis",
     "WendlandC2Basis",
+    "QuarticSplineBasis",
+    "CubicSplineBasis",
+    
 ]

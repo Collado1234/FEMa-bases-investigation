@@ -176,6 +176,7 @@ if __name__ == "__main__":
         "rbf_gaussian",
         "multiquadratic",
         "inverse_multiquadratic",
+        "wendland_c2",
     ]
 
     z = 2.0

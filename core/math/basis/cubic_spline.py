@@ -1,30 +1,22 @@
 import numpy as np
 from core.math.basis._compactSupport import CompactSupportBasis
 
+class CubicSplineBasis(CompactSupportBasis):
 
-class WendlandC2Basis(CompactSupportBasis):
-    """
-    Funcao de base:
-        w_i[r] = (1-r)^4(4r+1)
-
-        onde r = d/h sendo d, distancia e h raio de suporte.
-
-        Verificar se é isso mesmo
-    """
     def __init__(self, search):
         super().__init__(search)
+    
 
-    def compute_weights(
-        self,
-        dists: np.ndarray,
-        h: float | None = None
-    ) -> np.ndarray:
+    def compute_weights(self, dists:np.ndarray,
+                        h:float | None
+                        )-> np.ndarray:
+        
 
         r = self._normalized_distance(dists, h)
 
         weights = np.where(
             r <= 1,
-            (1 - r) ** 4 * (4 * r + 1),
+            (1-r)**4,
             0.0
         )
 
@@ -35,4 +27,3 @@ class WendlandC2Basis(CompactSupportBasis):
 
         return weights
 
-        
