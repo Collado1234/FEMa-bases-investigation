@@ -8,6 +8,7 @@ from .inverse_multiquadratic import InverseMultiquadraticBasis
 from .wendland_c2 import WendlandC2Basis
 from .quartic_spline import QuarticSplineBasis
 from .cubic_spline import CubicSplineBasis
+from .exp_gen import ExponentialGenBasis
 
 __all__ = [
     "BaseBasis",
@@ -20,5 +21,6 @@ __all__ = [
     "WendlandC2Basis",
     "QuarticSplineBasis",
     "CubicSplineBasis",
-    
+    "ExponentialGenBasis",
+
 ]
