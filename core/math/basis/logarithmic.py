@@ -7,7 +7,7 @@ class LogarithimicBasis(BaseBasis):
     
     def compute_weights(self, dists:np.ndarray, c:float) -> np.ndarray:
 
-        weights = 1/(1 + dists**2)
-        weights /= weights.sum() 
-
+        weights = 1 / ( np.log(1 + dists + c) )
+        weights /= np.sum(weights)
+        
         return weights

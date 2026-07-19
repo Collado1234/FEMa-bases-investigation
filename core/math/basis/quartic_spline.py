@@ -1,5 +1,5 @@
 import numpy as np
-from ._compactSupport import CompactSupportBasis
+from core.math.basis._compactSupport import CompactSupportBasis
 
 class QuarticSplineBasis(CompactSupportBasis):
 

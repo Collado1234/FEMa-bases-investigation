@@ -87,7 +87,7 @@ def check_monotonicity(
     return bool(np.all(np.diff(weights) <= 0))
 
 
-def check_exact_interpolation(
+def check_exact_interpolation(  # Ajustar para avaliar percentual de erro
     basis: BaseBasis,
     z: float,
     tol: float = DEFAULT_TOL,
