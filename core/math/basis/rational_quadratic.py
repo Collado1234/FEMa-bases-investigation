@@ -1,7 +1,7 @@
 import numpy as np
 from core.math.basis import BaseBasis
 
-class RationalQuadraticTBasis(BaseBasis):
+class RationalQuadraticBasis(BaseBasis):
 
     def __init__(self, search):
         super().__init__(search)
