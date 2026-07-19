@@ -1,7 +1,7 @@
 import numpy as np
 from core.math.basis import _compactSupport
 
-class CosineBasis(Co):
+class CosineBasis(_compactSupport):
 
     def __init__(self, search):
         super().__init__(search)
