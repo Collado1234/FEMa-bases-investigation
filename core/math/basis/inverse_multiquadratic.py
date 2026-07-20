@@ -1,25 +1,26 @@
 import numpy as np
-from .base_basis import DELTA, BaseBasis
+from .base_basis import BaseBasis, DELTA
+from .parameters import BasisParameters
 
 class InverseMultiquadraticBasis(BaseBasis):
     """
-    Inverse Multiquadric radial basis.
-
-    w_i = 1 / sqrt(d_i² + c²)
-
-    Após o cálculo, os pesos são normalizados para formar
-    uma partição da unidade.
+    Inverse Multiquadric radial basis: w_i = 1 / sqrt(d_i^2 + c^2), normalizada.
     """
+    PARAMS = ("c",)
+
     def __init__(self, search):
         super().__init__(search)
     
 
     def compute_weights(self,
                         dists:np.ndarray,
-                        c:float = 1.0
+                        params: BasisParameters
                         ) -> np.ndarray:
         
+        c = self._require(params)["c"]
+
         weights = 1 / ( np.sqrt((dists)**2 + c**2) + DELTA)
+        
         weights /= np.sum(weights) # particao de unidade
 
         return weights

@@ -52,3 +52,16 @@ class Basis:
             return _CLASSES[name](search=search)
         except KeyError:
             raise ValueError(f"Base '{name}' não reconhecida.")
+    
+
+    @staticmethod
+    def available() -> list:
+        """
+        Retorna os nomes de todas as bases registradas na fábrica.
+
+        Usado, entre outras coisas, pelo harness de validação matemática
+        (tests/linear_algebra/math_validation.py) para descobrir
+        automaticamente quais bases testar, sem precisar manter uma
+        lista duplicada e sujeita a ficar desatualizada.
+        """
+        return sorted(_CLASSES.keys())

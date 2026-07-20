@@ -1,38 +1,29 @@
 import numpy as np
-from core.math.basis._compactSupport import CompactSupportBasis
-
+from ._compactSupport import CompactSupportBasis
+from .parameters import BasisParameters
 
 class WendlandC2Basis(CompactSupportBasis):
     """
-    Funcao de base:
-        w_i[r] = (1-r)^4(4r+1)
+    Wendland C2 (Wendland, 1995), suporte compacto, classe C^2:
+        w[r] = (1-r)^4 (4r+1),  r = d/h,  0 caso r > 1
 
-        onde r = d/h sendo d, distancia e h raio de suporte.
-
-        Verificar se é isso mesmo
+    h é opcional: se None, usa max(dists) como raio de suporte (ver
+    CompactSupportBasis._normalized_distance). Por isso h NÃO passa por
+    self._require — None é um valor válido ("modo automático"), não
+    "parâmetro faltando".
     """
+    PARAMS = ()
+
     def __init__(self, search):
         super().__init__(search)
 
-    def compute_weights(
-        self,
-        dists: np.ndarray,
-        h: float | None = None
-    ) -> np.ndarray:
+    def compute_weights(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+        r = self._normalized_distance(dists, params.h)
 
-        r = self._normalized_distance(dists, h)
-
-        weights = np.where(
-            r <= 1,
-            (1 - r) ** 4 * (4 * r + 1),
-            0.0
-        )
+        weights = np.where(r <= 1, (1 - r) ** 4 * (4 * r + 1), 0.0)
 
         total = weights.sum()
-
         if total > 0:
             weights /= total
 
         return weights
-
-        
