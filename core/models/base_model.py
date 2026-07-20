@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 import numpy as np
-from ..algebra.basis.base_basis import BaseBasis
-from ..algebra.neighboor_search import BaseSearch
-from ..algebra.neighboor_search.brute_force import BruteForceSearch
+from ..math.basis.base_basis import BaseBasis
+from ..math.basis.parameters import BasisParameters
+from ..math.neighboor_search import BaseSearch
+from ..math.neighboor_search.brute_force import BruteForceSearch
 
 class FEMaBaseModel(ABC):
     """
@@ -17,7 +18,7 @@ class FEMaBaseModel(ABC):
     Uso:
         model = FEMaClassifier(basis=Basis.get('shepard'))
         model.fit(X_train, y_train)
-        result = model.predict(X_test, k=5, z=2)
+        result = model.predict(X_test, k=5, params=BasisParameters(z=2.0))
     """
     def __init__(self, basis: BaseBasis, search: BaseSearch = BruteForceSearch):
         self.basis = basis
@@ -37,14 +38,16 @@ class FEMaBaseModel(ABC):
         pass
 
     @abstractmethod
-    def predict(self, X: np.ndarray, k: int, z: float) -> np.ndarray:
+    def predict(self, X: np.ndarray, k: int, params: BasisParameters) -> np.ndarray:
         """
         Faz previsões para o conjunto de teste.
 
         Args:
-            X: Features de teste (n_samples, n_features)
-            k: Número de vizinhos (0 = todos)
-            z: Parâmetro da base de interpolação
+            X:      Features de teste (n_samples, n_features)
+            k:      Número de vizinhos (0 = todos)
+            params: Hiperparâmetros da base de interpolação (ver
+                    BasisParameters) — cada base lê apenas os campos
+                    que sua fórmula usa (basis.PARAMS).
 
         Returns:
             Vetor de previsões (n_samples,)

@@ -1,8 +1,9 @@
 from typing import Tuple
 import numpy as np
-from ..algebra.basis.base_basis import BaseBasis
-from ..algebra.neighboor_search.base_search import BaseSearch
-from models.base_model import FEMaBaseModel
+from ..math.basis.base_basis import BaseBasis
+from ..math.basis.parameters import BasisParameters
+from ..math.neighboor_search.base_search import BaseSearch
+from .base_model import FEMaBaseModel
 
 class FEMaClassifier(FEMaBaseModel):
     """
@@ -16,13 +17,13 @@ class FEMaClassifier(FEMaBaseModel):
     Uso:
         model = FEMaClassifier(basis=Basis.get('shepard'))
         model.fit(X_train, y_train)
-        labels, probs = model.predict(X_test, k=5, z=2)
+        labels, probs = model.predict(X_test, k=5, params=BasisParameters(z=2.0))
     """
 
-    def __init__(self, basis:BaseBasis, search: BaseSearch):
+    def __init__(self, basis: BaseBasis, search: BaseSearch):
         super().__init__(basis, search)
         self.num_classes = None
-        self.probability_classes = None #shape (num_classes, n_train_samples)
+        self.probability_classes = None  # shape (num_classes, n_train_samples)
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """
@@ -32,27 +33,24 @@ class FEMaClassifier(FEMaBaseModel):
             X: Features de treino (n_samples, n_features)
             y: Labels de treino (n_samples,)
         """
-
-        # Search indexa X -> Constrói estrutura de dados espacial
-        # self.basis.search.build(X)
         self.search.build(X)
 
         self.num_classes = len(np.unique(y))
 
-        #uma linha por classe: 1.0 quando y == c, 0.0 caso contrário
-        #shape: (num_classes, n_train_samples)
+        # uma linha por classe: 1.0 quando y == c, 0.0 caso contrário
+        # shape: (num_classes, n_train_samples)
         self.probability_classes = np.array(
             [(y == c).astype(float) for c in range(self.num_classes)]
         )
 
-    def predict(self, X: np.ndarray, k: int, z: float) -> Tuple[np.ndarray, np.ndarray]:
+    def predict(self, X: np.ndarray, k: int, params: BasisParameters) -> Tuple[np.ndarray, np.ndarray]:
         """
         Para cada amostra: busca vizinhos uma vez, interpola para cada classe.
 
         Args:
-            X: Features de teste (n_samples, n_features)
-            k: Número de vizinhos (0 = todos)
-            z: Parâmetro da base de interpolação
+            X:      Features de teste (n_samples, n_features)
+            k:      Número de vizinhos (0 = todos)
+            params: Hiperparâmetros da base de interpolação (BasisParameters)
 
         Returns:
             labels: Classes preditas (n_samples,)
@@ -60,20 +58,19 @@ class FEMaClassifier(FEMaBaseModel):
         """
         if self.probability_classes is None:
             raise RuntimeError("Chame fit() antes de predict()")
-        
+
         num_test_samples = X.shape[0]
         probs = np.zeros((num_test_samples, self.num_classes))
 
         for i in range(num_test_samples):
             indices, dists = self.search.query(X[i], k)
 
-            weights = self.basis.compute_weights(dists,z)
+            weights = self.basis.compute_weights(dists, params)
 
-            #interpola a probabilidade de cada classe com os mesmos pesos
+            # interpola a probabilidade de cada classe com os mesmos pesos
             for c in range(self.num_classes):
                 probs[i, c] = np.dot(weights, self.probability_classes[c][indices])
 
-        labels = np.argmax(probs, axis=1)   
+        labels = np.argmax(probs, axis=1)
 
-        return labels, probs 
-        
+        return labels, probs
