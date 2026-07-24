@@ -94,7 +94,7 @@ INTERPOLATION_NEAR_TOL = 0.05     # leakage até aqui: considerada "quase interp
 # só o subconjunto declarado em basis.PARAMS; os demais são ignorados.
 # Se um campo novo for adicionado a BasisParameters, basta uma linha aqui.
 TEST_PARAMS = BasisParameters(
-    z=1.0,
+    z=2.0,
     epsilon=1.0,
     c=1.0,
     alpha=1.0,
@@ -170,11 +170,43 @@ def check_closest_point_has_highest_weight(dists: np.ndarray, weights: np.ndarra
     return bool(np.argmax(weights) == np.argmin(dists))
 
 
+def check_leakage_matches_worst_case_prediction(basis: BaseBasis, params: BasisParameters, dists: np.ndarray = TEST_DISTS, tol: float = DEFAULT_TOL):
+    """
+    Verificação empírica (não só algébrica) de que leakage é de fato o
+    erro de `weights @ y` no pior caso: monta y_j=0 no vizinho de
+    distância zero e y_i=1 em todos os outros (máxima diferença possível
+    dentro de [0, 1]), calcula `weights @ y` DE VERDADE, e confere que
+    o erro resultante bate com `leakage` calculado pela fórmula fechada.
+
+    Existe para não depender só da dedução algébrica (predição - y_j =
+    Σ wi(yi - y_j)) sem nunca ter sido conferida contra o cálculo direto.
+
+    Returns
+    -------
+    bool, ou None se compute_weights falhou estruturalmente.
+    """
+    weights, error = _safe_compute(basis, dists, params)
+    if error:
+        return None
+
+    zero_idx = np.argmin(dists)
+    y = np.ones_like(dists)
+    y[zero_idx] = 0.0
+
+    prediction_error = abs(float(weights @ y))  # weights @ y, de fato, no pior caso
+    leak, _ = compute_interpolation_leakage(basis, params, dists=dists)
+
+    return bool(np.isclose(prediction_error, leak["leakage"], atol=tol))
+
+
 def compute_interpolation_leakage(basis: BaseBasis, params: BasisParameters, dists: np.ndarray = TEST_DISTS):
     """
     Mede o leakage = 1 - peso no vizinho de distância zero, que é o
     limite exato (superior E atingível) do erro de interpolação
     |weights @ y - y_j| para qualquer y — ver docstring do módulo.
+
+    Essa equivalência é conferida empiricamente por
+    check_leakage_matches_worst_case_prediction, não é só assumida.
 
     Returns
     -------
@@ -254,6 +286,7 @@ def validate_basis(
             classify_interpolation(leak["leakage"], interpolation_strict_tol, interpolation_near_tol)
             if leak else None
         ),
+        "leakage_matches_prediction": check_leakage_matches_worst_case_prediction(basis, params),
         "interpolation_error_detail": leak_error,
     }
 
@@ -272,6 +305,66 @@ def validate_basis(
     results["all"] = all(v for v in core_checks if v is not None) and interpolation_ok
 
     return results
+
+
+# Para cada base, qual campo de BasisParameters é o "parâmetro de escala"
+# (o que controla o quão concentrada/peaked a função fica perto de d=0) e
+# em que faixa varrê-lo. Direção do efeito varia por base (às vezes
+# aumentar concentra, às vezes diminuir concentra) — por isso a varredura
+# testa uma faixa ampla em vez de assumir a direção.
+#
+# None como parâmetro de escala significa "esta base não tem, hoje, um
+# parâmetro que controle a concentração perto de d=0" — não é omissão,
+# é uma limitação real da fórmula atual (ver notas em lorentzian_basis.py
+# e attention_quadratica.py: ambas fixas, sem parâmetro de escala).
+SWEEP_CONFIG = {
+    "shepard": ("z", np.geomspace(0.5, 8.0, 25)),
+    "radial": ("z", np.geomspace(0.01, 5.0, 25)),
+    "rbf_gaussian": ("epsilon", np.geomspace(0.1, 50.0, 25)),
+    "multiquadratic": ("c", np.geomspace(1e-3, 5.0, 25)),  # esperado: continua nao_interpoladora p/ qualquer c (cresce com d por construcao)
+    "inverse_multiquadratic": ("c", np.geomspace(1e-3, 5.0, 25)),
+    "wendland_c2": ("h", np.geomspace(0.1, 5.0, 25)),
+    "cubic_spline": ("h", np.geomspace(0.1, 5.0, 25)),
+    "quartic_spline": ("h", np.geomspace(0.1, 5.0, 25)),
+    "cosine": ("h", np.geomspace(0.1, 5.0, 25)),
+    "gen_exponential": ("epsilon", np.geomspace(0.1, 50.0, 25)),
+    "softmax_radial": ("beta", np.geomspace(0.1, 50.0, 25)),
+    "attention": (None, None),  # sem parametro de escala hoje
+    "logarithmic": ("c", np.geomspace(1e-3, 5.0, 25)),
+    "harmonic": ("nu", np.geomspace(1e-6, 50.0, 33)),
+    "laplacian": ("epsilon", np.geomspace(0.1, 50.0, 25)),
+    "cauchy": ("epsilon", np.geomspace(0.1, 50.0, 25)),
+    "student_t": ("nu", np.geomspace(1e-6, 50.0, 33)),
+    "sigmoidal": ("alpha", np.geomspace(0.1, 50.0, 25)),
+    "lorentzian": (None, None),  # sem parametro de escala hoje
+    "entropic": ("beta", np.geomspace(0.1, 50.0, 25)),
+    "rational_quadratic": ("l", np.geomspace(1e-3, 5.0, 25)),
+}
+
+
+def sweep_leakage(basis: BaseBasis, base_params: BasisParameters, param_name: str, values: np.ndarray, dists: np.ndarray = TEST_DISTS):
+    """
+    Varre um único campo de BasisParameters (mantendo os demais fixos em
+    base_params) e mede o leakage para cada valor.
+
+    Returns
+    -------
+    list[(valor, leakage_ou_None)] — leakage None quando compute_weights
+    falhou estruturalmente para aquele valor específico (ex.: parâmetro
+    fora de domínio válido).
+    """
+    results = []
+    for value in values:
+        params = replace_field(base_params, param_name, float(value))
+        leak, error = compute_interpolation_leakage(basis, params, dists=dists)
+        results.append((float(value), leak["leakage"] if leak else None))
+    return results
+
+
+def replace_field(params: BasisParameters, field: str, value: float) -> BasisParameters:
+    """Copia BasisParameters trocando um único campo (dataclasses.replace)."""
+    from dataclasses import replace
+    return replace(params, **{field: value})
 
 
 if __name__ == "__main__":
@@ -321,7 +414,9 @@ if __name__ == "__main__":
             print(f"  {'interpolacao_exata':<35} [N/A] ({results['interpolation_error_detail']})")
         else:
             classe = results["interpolation_class"]
-            print(f"  {'interpolacao_exata':<35} [{classe}]  leakage={leakage:.4g}")
+            confirmado = results["leakage_matches_prediction"]
+            check = "confirmado por weights@y" if confirmado else "[AVISO] weights@y NAO bateu com a formula!"
+            print(f"  {'interpolacao_exata':<35} [{classe}]  leakage={leakage:.4g}  ({check})")
             ranking.append((name, leakage))
 
         overall = "[OK]" if results["all"] else "[NEM TODAS PASSARAM]"
@@ -333,5 +428,34 @@ if __name__ == "__main__":
     for name, leakage in sorted(ranking, key=lambda item: item[1]):
         classe = classify_interpolation(leakage)
         print(f"  {name:<25} leakage={leakage:.6g}   [{classe}]")
+
+    print("\n" + "=" * 70)
+    print("VARREDURA DE PARAMETRO: melhor leakage possivel por base")
+    print("(TEST_PARAMS fixo é só UM ponto do espaço de parâmetros — aqui")
+    print(" variamos o parâmetro de escala de cada base para achar o quão")
+    print(" perto de interpoladora ela CONSEGUE ficar, e com qual valor)")
+    print("=" * 70)
+
+    sweep_results = []  # (nome, melhor_leakage, melhor_valor, param_name)
+
+    for name in basis_names:
+        param_name, values = SWEEP_CONFIG.get(name, (None, None))
+        basis = Basis.get(name, search)
+
+        if param_name is None:
+            print(f"  {name:<25} sem parâmetro de escala disponível hoje")
+            continue
+
+        sweep = sweep_leakage(basis, TEST_PARAMS, param_name, values)
+        valid = [(v, l) for v, l in sweep if l is not None]
+
+        if not valid:
+            print(f"  {name:<25} varredura falhou estruturalmente para todos os valores testados")
+            continue
+
+        best_value, best_leakage = min(valid, key=lambda item: item[1])
+        classe = classify_interpolation(best_leakage)
+        print(f"  {name:<25} melhor leakage={best_leakage:.4g}  em {param_name}={best_value:.4g}   [{classe}]")
+        sweep_results.append((name, best_leakage, best_value, param_name))
 
     print("\nFinalizado.")

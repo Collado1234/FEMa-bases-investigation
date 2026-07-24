@@ -11,7 +11,7 @@ class CauchyKernelBasis(BaseBasis):
         super().__init__(search)
 
     def compute_weights(self, dists:np.ndarray, params: BasisParameters) -> np.ndarray:
-        epsilon = self._require(params)[["epsilon"]]
+        epsilon = self._require(params)["epsilon"]
         weights = 1.0 / (1.0 + (epsilon * dists)**2)
         weights /= weights.sum()
 

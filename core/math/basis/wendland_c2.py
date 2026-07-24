@@ -20,7 +20,11 @@ class WendlandC2Basis(CompactSupportBasis):
     def compute_weights(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         r = self._normalized_distance(dists, params.h)
 
-        weights = np.where(r <= 1, (1 - r) ** 4 * (4 * r + 1), 0.0)
+        weights = np.where(
+            r <= 1,
+            (1 - r) ** 4 * (4 * r + 1),
+            0.0
+            )
 
         total = weights.sum()
         if total > 0:
