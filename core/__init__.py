@@ -1,12 +1,11 @@
-from .models import __all__ as models_all
-from .math.distances import __all__ as distances_all
-from .math.neighboor_search import __all__ as neighboor_search_all
-from .math.basis import __all__ as basis_all
+from .models import FEMaClassifier, FEMaRegressor
+from .math.basis import Basis, BaseBasis, BasisParameters
+from .math.distances import EuclideanDistance, ManhattanDistance, BaseDistance
+from .math.neighboor_search import BruteForceSearch, BaseSearch
 
 __all__ = [
-    *models_all,
-    *distances_all,
-    *neighboor_search_all,
-    *basis_all,
+    "FEMaClassifier", "FEMaRegressor",
+    "Basis", "BaseBasis", "BasisParameters",
+    "EuclideanDistance", "ManhattanDistance", "BaseDistance",
+    "BruteForceSearch", "BaseSearch",
 ]
-
