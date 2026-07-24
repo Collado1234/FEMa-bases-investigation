@@ -64,14 +64,14 @@ from tuning.param_space import generate_combinations
 from utils.logging_config import get_logger
 from utils.seeding import derive_seed, set_global_seed
 from utils.timing import timer
+from metrics.registry import metrics_for_context
 
 logger = get_logger("pipeline.run_model")
 
 BASE_CONFIG_PATH = Path(__file__).resolve().parent.parent / "configs" / "base.yaml"
 
-DEFAULT_CLASSIFICATION_METRICS = ["accuracy", "f1", "balanced_accuracy", "mcc"]
-DEFAULT_REGRESSION_METRICS = ["mae", "rmse", "r2"]
-
+DEFAULT_CLASSIFICATION_METRICS = metrics_for_context("classifier")  # todas as 7 registradas
+DEFAULT_REGRESSION_METRICS = metrics_for_context("regressor")  # todas as 5 registradas
 
 def _load_yaml(path) -> dict:
     with open(path, "r", encoding="utf-8") as f:

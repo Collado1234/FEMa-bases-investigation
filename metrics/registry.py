@@ -43,6 +43,24 @@ HIGHER_IS_BETTER = {
 }
 
 
+# Subconjuntos de _METRICS por tipo de tarefa - fonte unica de verdade
+# para "todas as metricas registradas" de classificacao/regressao. Usado
+# por pipeline/run_model.py (defaults de metric_names por contexto) e por
+# reporting/compare_bases.py + tests/ (para garantir que a comparacao e os
+# testes cobrem TODAS as metricas relevantes, nao um subconjunto arbitrario
+# escolhido a mao em cada lugar que precisa da lista).
+CLASSIFICATION_METRICS = ["accuracy", "balanced_accuracy", "precision", "recall", "f1", "roc_auc", "mcc"]
+REGRESSION_METRICS = ["mae", "mse", "rmse", "r2", "mape"]
+
+
+def metrics_for_context(context: str) -> list:
+    if context == "classifier":
+        return list(CLASSIFICATION_METRICS)
+    if context == "regressor":
+        return list(REGRESSION_METRICS)
+    raise ValueError(f"Contexto '{context}' desconhecido. Use 'classifier' ou 'regressor'.")
+
+
 def get_metric_fn(metric_name: str):
     if metric_name not in _METRICS:
         raise ValueError(f"Metrica '{metric_name}' desconhecida. Disponiveis: {list(_METRICS.keys())}")

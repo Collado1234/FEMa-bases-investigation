@@ -1,0 +1,957 @@
+{
+  "context": "classifier",
+  "dataset": "fetal_health",
+  "experiment": "baseline",
+  "generated_at": "2026-07-24T21:47:16.436964+00:00",
+  "metrics_compared": [
+    "accuracy",
+    "balanced_accuracy",
+    "precision",
+    "recall",
+    "f1",
+    "roc_auc",
+    "mcc"
+  ],
+  "bases": [
+    {
+      "context": "classifier",
+      "basis": "attention",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 30
+      },
+      "n_combinations_evaluated": 13,
+      "test_metrics": {
+        "accuracy": 0.8307210031347962,
+        "balanced_accuracy": 0.48704789833822093,
+        "precision": 0.36369047619047623,
+        "recall": 0.3652859237536657,
+        "f1": 0.36231060606060606,
+        "roc_auc": null,
+        "mcc": 0.46921987710291513
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cauchy",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "epsilon": 5.068077717443547
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8401253918495298,
+        "balanced_accuracy": 0.5035434995112414,
+        "precision": 0.37493945558461683,
+        "recall": 0.3776576246334311,
+        "f1": 0.37442312647878745,
+        "roc_auc": null,
+        "mcc": 0.504017225812164
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cosine",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8338557993730408,
+        "balanced_accuracy": 0.5195503421309873,
+        "precision": 0.388421642837118,
+        "recall": 0.38966275659824046,
+        "f1": 0.38869756153935053,
+        "roc_auc": null,
+        "mcc": 0.5310080819652342
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cubic_spline",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8369905956112853,
+        "balanced_accuracy": 0.533357771260997,
+        "precision": 0.3906800563777308,
+        "recall": 0.4000183284457478,
+        "f1": 0.3952569169960474,
+        "roc_auc": null,
+        "mcc": 0.5468623812738642
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "entropic",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 26,
+        "beta": 1.0017808951943048
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8401253918495298,
+        "balanced_accuracy": 0.5347018572825024,
+        "precision": 0.3719844973503124,
+        "recall": 0.4010263929618768,
+        "f1": 0.385954471060854,
+        "roc_auc": null,
+        "mcc": 0.5228053304016084
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "gen_exponential",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 30,
+        "epsilon": 0.2217046753718674,
+        "p": 1.9007718757911343
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8369905956112853,
+        "balanced_accuracy": 0.5084310850439883,
+        "precision": 0.3701086956521739,
+        "recall": 0.3813233137829912,
+        "f1": 0.37472737186477645,
+        "roc_auc": null,
+        "mcc": 0.49847185298093627
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "harmonic",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "nu": 0.0336246363764408
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8338557993730408,
+        "balanced_accuracy": 0.48839198435972636,
+        "precision": 0.36797153024911033,
+        "recall": 0.36629398826979476,
+        "f1": 0.3644803905147041,
+        "roc_auc": null,
+        "mcc": 0.4785594187039431
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "inverse_multiquadratic",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "c": 0.284104903560722
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8307210031347962,
+        "balanced_accuracy": 0.48704789833822093,
+        "precision": 0.36369047619047623,
+        "recall": 0.3652859237536657,
+        "f1": 0.36231060606060606,
+        "roc_auc": null,
+        "mcc": 0.46921987710291513
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "laplacian",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "epsilon": 5.068077717443547
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8338557993730408,
+        "balanced_accuracy": 0.5320136852394918,
+        "precision": 0.3657035848047084,
+        "recall": 0.3990102639296188,
+        "f1": 0.3816055955736507,
+        "roc_auc": null,
+        "mcc": 0.5074612485365817
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "logarithmic",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "c": 0.18337021671045928
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8307210031347962,
+        "balanced_accuracy": 0.48704789833822093,
+        "precision": 0.36369047619047623,
+        "recall": 0.3652859237536657,
+        "f1": 0.36231060606060606,
+        "roc_auc": null,
+        "mcc": 0.46921987710291513
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "lorentzian",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 30
+      },
+      "n_combinations_evaluated": 13,
+      "test_metrics": {
+        "accuracy": 0.8463949843260188,
+        "balanced_accuracy": 0.5249266862170088,
+        "precision": 0.3803547671840355,
+        "recall": 0.3936950146627566,
+        "f1": 0.3862107749409516,
+        "roc_auc": null,
+        "mcc": 0.531955172017961
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "multiquadratic",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "c": 3.195155555698118
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8213166144200627,
+        "balanced_accuracy": 0.4767839687194526,
+        "precision": 0.35198101327133585,
+        "recall": 0.35758797653958946,
+        "f1": 0.35305830815002226,
+        "roc_auc": null,
+        "mcc": 0.43826688705776906
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "quartic_spline",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8369905956112853,
+        "balanced_accuracy": 0.533357771260997,
+        "precision": 0.3906800563777308,
+        "recall": 0.4000183284457478,
+        "f1": 0.3952569169960474,
+        "roc_auc": null,
+        "mcc": 0.5468623812738642
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "radial",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "z": 0.5068077717443549
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8338557993730408,
+        "balanced_accuracy": 0.5320136852394918,
+        "precision": 0.3657035848047084,
+        "recall": 0.3990102639296188,
+        "f1": 0.3816055955736507,
+        "roc_auc": null,
+        "mcc": 0.5074612485365817
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rational_quadratic",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 30,
+        "alpha": 0.6921704490133188,
+        "l": 0.1087305419535857
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8369905956112853,
+        "balanced_accuracy": 0.4897360703812317,
+        "precision": 0.3724968710888611,
+        "recall": 0.36730205278592376,
+        "f1": 0.36669085631349785,
+        "roc_auc": null,
+        "mcc": 0.4882224489149442
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rbf_gaussian",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 26,
+        "epsilon": 1.0017808951943048
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8401253918495298,
+        "balanced_accuracy": 0.5347018572825024,
+        "precision": 0.3719844973503124,
+        "recall": 0.4010263929618768,
+        "f1": 0.385954471060854,
+        "roc_auc": null,
+        "mcc": 0.5228053304016084
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "shepard",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "z": 3.342489796049292
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8432601880877743,
+        "balanced_accuracy": 0.5235826001955034,
+        "precision": 0.376477233229058,
+        "recall": 0.3926869501466276,
+        "f1": 0.3839214113873296,
+        "roc_auc": null,
+        "mcc": 0.523198444221588
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "sigmoidal",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 30,
+        "alpha": 0.802076384452658,
+        "c": 1.1755789068433506
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8307210031347962,
+        "balanced_accuracy": 0.4932795698924732,
+        "precision": 0.36326202196137825,
+        "recall": 0.36995967741935487,
+        "f1": 0.3651349346193082,
+        "roc_auc": null,
+        "mcc": 0.4731185002831674
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "softmax_radial",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "beta": 5.068077717443547
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8338557993730408,
+        "balanced_accuracy": 0.5320136852394918,
+        "precision": 0.3657035848047084,
+        "recall": 0.3990102639296188,
+        "f1": 0.3816055955736507,
+        "roc_auc": null,
+        "mcc": 0.5074612485365817
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "student_t",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 27,
+        "nu": 0.0336246363764408
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8338557993730408,
+        "balanced_accuracy": 0.48839198435972636,
+        "precision": 0.36797153024911033,
+        "recall": 0.36629398826979476,
+        "f1": 0.3644803905147041,
+        "roc_auc": null,
+        "mcc": 0.4785594187039431
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "wendland_c2",
+      "dataset": "fetal_health",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8369905956112853,
+        "balanced_accuracy": 0.527126099706745,
+        "precision": 0.39148351648351654,
+        "recall": 0.3953445747800587,
+        "f1": 0.39319721662699136,
+        "roc_auc": null,
+        "mcc": 0.5424276240723791
+      }
+    }
+  ],
+  "ranking_per_metric": {
+    "accuracy": [
+      {
+        "basis": "lorentzian",
+        "value": 0.8463949843260188
+      },
+      {
+        "basis": "shepard",
+        "value": 0.8432601880877743
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.8401253918495298
+      },
+      {
+        "basis": "entropic",
+        "value": 0.8401253918495298
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.8401253918495298
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.8369905956112853
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.8369905956112853
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.8369905956112853
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.8369905956112853
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.8369905956112853
+      },
+      {
+        "basis": "cosine",
+        "value": 0.8338557993730408
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.8338557993730408
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.8338557993730408
+      },
+      {
+        "basis": "radial",
+        "value": 0.8338557993730408
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.8338557993730408
+      },
+      {
+        "basis": "student_t",
+        "value": 0.8338557993730408
+      },
+      {
+        "basis": "attention",
+        "value": 0.8307210031347962
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.8307210031347962
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.8307210031347962
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.8307210031347962
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.8213166144200627
+      }
+    ],
+    "balanced_accuracy": [
+      {
+        "basis": "entropic",
+        "value": 0.5347018572825024
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.5347018572825024
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.533357771260997
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.533357771260997
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.5320136852394918
+      },
+      {
+        "basis": "radial",
+        "value": 0.5320136852394918
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.5320136852394918
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.527126099706745
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.5249266862170088
+      },
+      {
+        "basis": "shepard",
+        "value": 0.5235826001955034
+      },
+      {
+        "basis": "cosine",
+        "value": 0.5195503421309873
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.5084310850439883
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.5035434995112414
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.4932795698924732
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.4897360703812317
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.48839198435972636
+      },
+      {
+        "basis": "student_t",
+        "value": 0.48839198435972636
+      },
+      {
+        "basis": "attention",
+        "value": 0.48704789833822093
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.48704789833822093
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.48704789833822093
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.4767839687194526
+      }
+    ],
+    "precision": [
+      {
+        "basis": "wendland_c2",
+        "value": 0.39148351648351654
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.3906800563777308
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.3906800563777308
+      },
+      {
+        "basis": "cosine",
+        "value": 0.388421642837118
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.3803547671840355
+      },
+      {
+        "basis": "shepard",
+        "value": 0.376477233229058
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.37493945558461683
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.3724968710888611
+      },
+      {
+        "basis": "entropic",
+        "value": 0.3719844973503124
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.3719844973503124
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.3701086956521739
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.36797153024911033
+      },
+      {
+        "basis": "student_t",
+        "value": 0.36797153024911033
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.3657035848047084
+      },
+      {
+        "basis": "radial",
+        "value": 0.3657035848047084
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.3657035848047084
+      },
+      {
+        "basis": "attention",
+        "value": 0.36369047619047623
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.36369047619047623
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.36369047619047623
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.36326202196137825
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.35198101327133585
+      }
+    ],
+    "recall": [
+      {
+        "basis": "entropic",
+        "value": 0.4010263929618768
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.4010263929618768
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.4000183284457478
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.4000183284457478
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.3990102639296188
+      },
+      {
+        "basis": "radial",
+        "value": 0.3990102639296188
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.3990102639296188
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.3953445747800587
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.3936950146627566
+      },
+      {
+        "basis": "shepard",
+        "value": 0.3926869501466276
+      },
+      {
+        "basis": "cosine",
+        "value": 0.38966275659824046
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.3813233137829912
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.3776576246334311
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.36995967741935487
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.36730205278592376
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.36629398826979476
+      },
+      {
+        "basis": "student_t",
+        "value": 0.36629398826979476
+      },
+      {
+        "basis": "attention",
+        "value": 0.3652859237536657
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.3652859237536657
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.3652859237536657
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.35758797653958946
+      }
+    ],
+    "f1": [
+      {
+        "basis": "cubic_spline",
+        "value": 0.3952569169960474
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.3952569169960474
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.39319721662699136
+      },
+      {
+        "basis": "cosine",
+        "value": 0.38869756153935053
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.3862107749409516
+      },
+      {
+        "basis": "entropic",
+        "value": 0.385954471060854
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.385954471060854
+      },
+      {
+        "basis": "shepard",
+        "value": 0.3839214113873296
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.3816055955736507
+      },
+      {
+        "basis": "radial",
+        "value": 0.3816055955736507
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.3816055955736507
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.37472737186477645
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.37442312647878745
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.36669085631349785
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.3651349346193082
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.3644803905147041
+      },
+      {
+        "basis": "student_t",
+        "value": 0.3644803905147041
+      },
+      {
+        "basis": "attention",
+        "value": 0.36231060606060606
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.36231060606060606
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.36231060606060606
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.35305830815002226
+      }
+    ],
+    "roc_auc": [],
+    "mcc": [
+      {
+        "basis": "cubic_spline",
+        "value": 0.5468623812738642
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.5468623812738642
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.5424276240723791
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.531955172017961
+      },
+      {
+        "basis": "cosine",
+        "value": 0.5310080819652342
+      },
+      {
+        "basis": "shepard",
+        "value": 0.523198444221588
+      },
+      {
+        "basis": "entropic",
+        "value": 0.5228053304016084
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.5228053304016084
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.5074612485365817
+      },
+      {
+        "basis": "radial",
+        "value": 0.5074612485365817
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.5074612485365817
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.504017225812164
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.49847185298093627
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.4882224489149442
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.4785594187039431
+      },
+      {
+        "basis": "student_t",
+        "value": 0.4785594187039431
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.4731185002831674
+      },
+      {
+        "basis": "attention",
+        "value": 0.46921987710291513
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.46921987710291513
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.46921987710291513
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.43826688705776906
+      }
+    ]
+  }
+}
