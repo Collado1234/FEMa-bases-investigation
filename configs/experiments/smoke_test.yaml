@@ -1,0 +1,13 @@
+model: logreg
+dataset: synthetic_demo
+experiment_name: smoke_test
+
+cv_strategy: stratified_kfold
+n_splits: 3
+n_repeats: 1
+
+tuning_strategy: random_search
+tuning_n_iter: 3
+
+metrics: [accuracy, f1]
+ranking_metric: f1

@@ -1,0 +1,9 @@
+# Baseline externo - NAO faz parte da comparacao de bases, serve so' de
+# referencia metodologica. Resultados isolados em
+# results/external_baselines/knn/fetal_health/baseline/.
+model: knn
+dataset: fetal_health
+experiment_name: baseline
+
+tuning_strategy: random_search
+tuning_n_iter: 20

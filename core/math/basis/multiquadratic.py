@@ -4,21 +4,15 @@ from .parameters import BasisParameters
 
 class MultiquadraticBasis(BaseBasis):
     """
-    Multiquadric radial basis: w_i = sqrt(d_i^2 + c^2), normalizada.
-
-    NOTA (propositalmente preservada): esta forma é monotonicamente
-    CRESCENTE em d, então, usada diretamente como peso normalizado
-    (e não resolvendo o sistema linear A*lambda=y da interpolação
-    multiquadric clássica de Hardy 1971), ela favorece vizinhos mais
-    distantes. Isso é um objeto de estudo do projeto, não um bug.
+    phi(d) = sqrt(d^2 + c^2). Monotonicamente CRESCENTE em d por
+    construção (Hardy, 1971) — favorece vizinhos distantes quando usada
+    como peso normalizado; é objeto de estudo do projeto, não um bug.
     """
     PARAMS = ("c",)
 
     def __init__(self, search):
         super().__init__(search)
 
-    def compute_weights(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+    def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         c = self._require(params)["c"]
-        weights = np.sqrt(dists ** 2 + c ** 2)
-        weights /= np.sum(weights)  # particao de unidade
-        return weights
+        return np.sqrt(dists ** 2 + c ** 2)

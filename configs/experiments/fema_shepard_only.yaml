@@ -1,0 +1,9 @@
+# Exemplo de experimento escopado a UMA UNICA base (util para depurar ou
+# re-rodar so' uma base especifica sem tocar nas demais).
+context: classifier
+basis: shepard
+dataset: fetal_health
+experiment_name: baseline
+
+tuning_strategy: random_search
+tuning_n_iter: 20
