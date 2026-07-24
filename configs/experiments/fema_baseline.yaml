@@ -1,8 +1,12 @@
-model: fema
+# Roda TODAS as bases registradas (core.Basis.available()) para o
+# contexto "classifier", no dataset fetal_health. Cada base gera seus
+# proprios resultados em results/classifier/<basis>/fetal_health/baseline/.
+context: classifier
+all_bases: true
 dataset: fetal_health
 experiment_name: baseline
 
-# FEMa nao tem hiperparametros discretos naturais (k, z, basis_function sao
+# FEMa nao tem hiperparametros discretos naturais (k, z, epsilon, ... sao
 # continuos/categoricos) - random_search e a estrategia recomendada aqui.
 tuning_strategy: random_search
 tuning_n_iter: 20

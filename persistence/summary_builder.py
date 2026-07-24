@@ -1,11 +1,27 @@
 """
 Construcao do resumo final (summary.json).
 
-Le todos os run_*.json de um experimento, agrupa por combinacao de
+Le todos os run_*.json de results/<scope...>/, agrupa por combinacao de
 hiperparametros (combo_id), calcula media e desvio padrao de cada metrica
 entre folds/repeticoes, rankeia as combinacoes pela metrica "primaria"
 definida na config (respeitando se maior ou menor e melhor - ver
 metrics/registry.py::HIGHER_IS_BETTER) e grava summary.json.
+
+MUDANCA ARQUITETURAL: como `*scope` agora e' generico (persistence/
+run_writer.py) e cada diretorio de resultados passou a corresponder a UMA
+UNICA base do FEMa (ou a UM UNICO baseline externo), o ranking aqui dentro
+e' sempre homogeneo - so' varia k e os parametros PROPRIOS daquela base.
+Isso e' a correcao do problema original: antes, o ranking podia misturar
+combinacoes de bases DIFERENTES (ex: shepard e radial) na mesma lista, e
+o "best_configuration" global nao respondia a pergunta de pesquisa do
+projeto ("qual e' o melhor desempenho DE CADA base", nao "qual e' a melhor
+combinacao entre todas misturadas"). Ver reporting/compare_bases.py para
+a comparacao ENTRE bases, que le' um summary.json por base.
+
+`extra_fields` e' injetado no summary tal como veio de quem chamou (ex:
+{"context": "classifier", "basis": "shepard", "experiment": "baseline"}
+ou {"model": "logreg", "experiment": "baseline"}) - summary_builder nao
+precisa saber o que esses campos significam.
 """
 
 import statistics
@@ -17,15 +33,15 @@ from persistence.run_writer import load_all_runs, write_summary
 
 
 def build_summary(
-    model_name: str,
-    experiment_name: str,
+    *scope: str,
     primary_metric: str,
     higher_is_better: Optional[bool] = None,
+    extra_fields: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    runs = load_all_runs(model_name, experiment_name)
+    runs = load_all_runs(*scope)
     if not runs:
         raise RuntimeError(
-            f"Nenhum run encontrado para {model_name}/{experiment_name}. "
+            f"Nenhum run encontrado para results/{'/'.join(scope)}. "
             "Rode o grid/random search antes de gerar o summary."
         )
 
@@ -72,8 +88,7 @@ def build_summary(
     ranking.sort(key=sort_key)
 
     summary = {
-        "model": model_name,
-        "experiment": experiment_name,
+        **(extra_fields or {}),
         "primary_metric": primary_metric,
         "higher_is_better": higher_is_better,
         "n_combinations_evaluated": len(ranking),
@@ -82,5 +97,5 @@ def build_summary(
         "ranking": ranking,
     }
 
-    write_summary(model_name, experiment_name, summary)
+    write_summary(*scope, summary=summary)
     return summary

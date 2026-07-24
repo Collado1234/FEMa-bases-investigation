@@ -2,26 +2,31 @@
 Ponto de entrada da linha de comando para o pipeline de treino, tuning e avaliação.
 
 Uso:
+    # Comparação de bases do FEMa (objeto de estudo do projeto)
     python main.py --experiment configs/experiments/fema_baseline.yaml
-    python main.py --experiment configs/experiments/*.yaml   # roda vários arquivos (glob expandido pelo shell)
-    python main.py --model fema --dataset fetal_health --experiment-name baseline
+    python main.py --context classifier --all-bases --dataset fetal_health
+    python main.py --context classifier --basis shepard --dataset fetal_health
+
+    # Baseline externo (referência metodológica, fora da comparação de bases)
+    python main.py --baseline-model knn --dataset fetal_health
+    python main.py --experiment configs/experiments/logreg_baseline.yaml
 
 Este módulo lê as configurações base em `configs/base.yaml` e, em seguida,
-aplica as definições do arquivo YAML de experimento para executar o pipeline.
-Também suporta uma forma mais direta de execução, fornecendo `--model` e
-`--dataset` para rodar um experimento com o nome informado.
+aplica as definições do arquivo YAML de experimento para executar o
+pipeline. Também suporta uma forma mais direta de execução via flags de
+linha de comando, sem precisar de um arquivo YAML.
 """
 
 import argparse
 from pathlib import Path
 
-from pipeline.run_model import run_from_experiment_file, run_model
+from pipeline.run_model import run_all_bases, run_baseline_experiment, run_basis_experiment, run_from_experiment_file
 
 
 def main():
     """Parseia os argumentos da linha de comando e dispara a execução do pipeline."""
     parser = argparse.ArgumentParser(
-        description="Pipeline de treino/tuning/avaliação do FEMa e baselines."
+        description="Pipeline de comparação de bases do FEMa e baselines externos (logreg, knn)."
     )
 
     parser.add_argument(
@@ -30,11 +35,28 @@ def main():
         nargs="+",
         help="Caminho(s) para arquivo(s) YAML de experimento.",
     )
+
     parser.add_argument(
-        "--model",
+        "--context",
         type=str,
-        choices=["fema", "logreg", "mlp"],
-        help="Nome do modelo (alternativa a --experiment).",
+        choices=["classifier", "regressor"],
+        help="Contexto de execução do FEMa (usar com --basis ou --all-bases).",
+    )
+    parser.add_argument(
+        "--basis",
+        type=str,
+        help="Nome da base de interpolação do FEMa a rodar (usar com --context e --dataset).",
+    )
+    parser.add_argument(
+        "--all-bases",
+        action="store_true",
+        help="Roda TODAS as bases registradas em core.Basis.available() (usar com --context e --dataset).",
+    )
+    parser.add_argument(
+        "--baseline-model",
+        type=str,
+        choices=["logreg", "knn"],
+        help="Nome do baseline externo a rodar (alternativa a --context/--basis).",
     )
     parser.add_argument(
         "--dataset",
@@ -45,24 +67,29 @@ def main():
         "--experiment-name",
         type=str,
         default="baseline",
-        help="Nome do experimento usado quando --model e --dataset são fornecidos.",
+        help="Nome do experimento (usado quando --context/--basis ou --baseline-model são fornecidos).",
     )
 
     args = parser.parse_args()
 
     if args.experiment:
-        # Executa um ou mais experimentos a partir de arquivos YAML.
         for exp_path in args.experiment:
             run_from_experiment_file(Path(exp_path))
-    elif args.model and args.dataset:
-        # Executa um experimento rápido usando modelo + dataset.
-        run_model(
-            model_name=args.model,
-            dataset=args.dataset,
-            experiment_name=args.experiment_name,
+    elif args.context and args.all_bases and args.dataset:
+        run_all_bases(context=args.context, dataset=args.dataset, experiment_name=args.experiment_name)
+    elif args.context and args.basis and args.dataset:
+        run_basis_experiment(
+            context=args.context, basis=args.basis, dataset=args.dataset, experiment_name=args.experiment_name
+        )
+    elif args.baseline_model and args.dataset:
+        run_baseline_experiment(
+            model_name=args.baseline_model, dataset=args.dataset, experiment_name=args.experiment_name
         )
     else:
-        parser.error("Forneca --experiment <arquivo.yaml> ou --model + --dataset.")
+        parser.error(
+            "Forneca --experiment <arquivo.yaml>, ou --context + (--basis|--all-bases) + --dataset, "
+            "ou --baseline-model + --dataset."
+        )
 
 
 if __name__ == "__main__":

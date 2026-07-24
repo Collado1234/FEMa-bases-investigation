@@ -1,36 +1,47 @@
-"""Plugin do FEMa (Finite Element Machine) - modelo principal do projeto.
+"""Plugin do FEMa (Finite Element Machine).
 
-Wrapper fino sobre core.FEMaClassifier / core.Basis. Nenhum codigo dentro
-de core/ e alterado aqui - este plugin so orquestra o que ja existe la
-(search + basis + classifier) atras do contrato ModelPlugin.
+MUDANCA ARQUITETURAL: cada instancia de FEMaPlugin agora representa o FEMa
+rodando com UM contexto (classifier|regressor) e UMA base de interpolacao
+FIXOS - ex.: FEMaPlugin(context="classifier", basis="shepard"). Antes,
+existia um unico FEMaPlugin "generico" e a base era só mais um valor
+dentro do espaco de hiperparametros buscado (basis_function), misturada
+com k, z, epsilon etc. Isso fazia com que o ranking final do summary
+misturasse combinacoes de bases DIFERENTES (ver
+persistence/summary_builder.py) - o que é conceitualmente errado para um
+projeto cujo objeto de estudo e' comparar bases entre si, não encontrar a
+"melhor combinação global" entre todas.
 
-basis_function/k/<parametros da base> sao hiperparametros de INFERENCIA do
-FEMa (nao existe "treino" no sentido classico: fit() so indexa X_train).
-Aqui eles viram hiperparametros normais do modelo, para poderem ser
-tunados como qualquer outro (grid_search ou random_search).
+Com a base fixada na instancia:
+  - cada execucao do pipeline (pipeline/run_model.py::run_basis_experiment)
+    já e' inerentemente escopada a uma unica base;
+  - parameter_grid()/random_search_space() voltam a ser um unico
+    Dict[str, list] "achatado" (k + os parametros PROPRIOS daquela base),
+    sem precisar da ramificacao condicional List[Dict[str, list]] que
+    existia so' para evitar produto cartesiano entre bases dentro de um
+    unico plugin "fema" (tuning/grid_search.py e tuning/random_search.py
+    continuam suportando o formato de lista por compatibilidade com
+    outros plugins que um dia possam precisar, mas o FEMa não usa mais).
 
-ESPAÇO DE BUSCA CONDICIONAL: cada base usa um subconjunto diferente de
-campos de BasisParameters (basis.PARAMS/OPTIONAL_PARAMS — ver
-core/math/basis/base_basis.py), então parameter_grid()/random_search_space()
-não retornam um único Dict[str, list] "achatado" (isso faria produto
-cartesiano de TODOS os campos de TODAS as bases, gerando combinações
-inválidas/redundantes — ex.: 'epsilon' combinado com basis_function=
-'shepard', que nunca usa epsilon). Em vez disso retornam List[Dict[str,
-list]], uma ramificação por base — suportado por tuning/grid_search.py e
-tuning/random_search.py (expandem/amostram cada ramificação separadamente,
-sem produto cruzado entre elas).
-
-PARAM_GRIDS/RANDOM_SEARCH_SPACES são validados contra basis.PARAMS |
-basis.OPTIONAL_PARAMS no import deste módulo (_validate_param_grids): se
-uma base nova for registrada em core/math/basis/factory_basis.py e
-esquecerem de cadastrar a faixa de busca aqui, o erro aparece na hora de
-importar o plugin, não no meio de um tuning de horas.
+PARAM_GRIDS/RANDOM_SEARCH_SPACES continuam centralizados aqui (nao dentro
+de core/math/basis/) por decisao deliberada: são faixas de busca de
+EXPERIMENTO (decisão de quem desenha o experimento), não uma propriedade
+matemática da base (que pertence a core/). A validação cruzada com
+basis.PARAMS/OPTIONAL_PARAMS agora acontece na CONSTRUÇÃO de cada
+FEMaPlugin (_validate_basis_entry), não mais de uma vez para todas as
+bases no import do modulo.
 """
 from typing import Any, Dict, List
 
 import numpy as np
 
-from core import Basis, BasisParameters, EuclideanDistance, BruteForceSearch, FEMaClassifier
+from core import (
+    Basis,
+    BasisParameters,
+    EuclideanDistance,
+    BruteForceSearch,
+    FEMaClassifier,
+    FEMaRegressor,
+)
 from models.base import ModelPlugin
 
 # Grade para grid_search: basis_name -> {campo: [valores]}. Faixas
@@ -90,47 +101,43 @@ RANDOM_SEARCH_SPACES: Dict[str, Dict[str, Any]] = {
 _K_GRID = [5, 10, 15, 20]
 _K_SPACE = ("randint", 3, 30)
 
+_CONTEXT_CLASSES = {
+    "classifier": FEMaClassifier,
+    "regressor": FEMaRegressor,
+}
 
-def _validate_param_grids() -> None:
-    """Confere, para toda base registrada em core (Basis.available()),
-    que PARAM_GRIDS e RANDOM_SEARCH_SPACES cobrem exatamente os campos
-    que ela declara (basis.PARAMS | basis.OPTIONAL_PARAMS)."""
+
+def _validate_basis_entry(basis_name: str) -> None:
+    """Confere que PARAM_GRIDS/RANDOM_SEARCH_SPACES tem uma entrada para
+    `basis_name` cobrindo exatamente os campos que ela declara
+    (basis.PARAMS | basis.OPTIONAL_PARAMS)."""
     search = BruteForceSearch(metric=EuclideanDistance())
+    basis = Basis.get(basis_name, search=search)
+    required = set(basis.PARAMS) | set(basis.OPTIONAL_PARAMS)
 
-    for name in Basis.available():
-        basis = Basis.get(name, search=search)
-        required = set(basis.PARAMS) | set(basis.OPTIONAL_PARAMS)
-
-        for grid_name, grids in (("PARAM_GRIDS", PARAM_GRIDS), ("RANDOM_SEARCH_SPACES", RANDOM_SEARCH_SPACES)):
-            if name not in grids:
-                raise ValueError(
-                    f"Base '{name}' está registrada em core mas não tem entrada em "
-                    f"{grid_name} (models/fema.py). Adicione uma entrada, mesmo que "
-                    f"vazia ({{}}) para bases sem parâmetro de escala."
-                )
-            provided = set(grids[name].keys())
-            if provided != required:
-                raise ValueError(
-                    f"{grid_name}['{name}'] declara os campos {sorted(provided)}, mas "
-                    f"{type(basis).__name__}.PARAMS|OPTIONAL_PARAMS = {sorted(required)} — "
-                    f"eles precisam bater exatamente. Confira core/math/basis/{name}.py "
-                    f"e models/fema.py."
-                )
-
-
-_validate_param_grids()
+    for grid_name, grids in (("PARAM_GRIDS", PARAM_GRIDS), ("RANDOM_SEARCH_SPACES", RANDOM_SEARCH_SPACES)):
+        if basis_name not in grids:
+            raise ValueError(
+                f"Base '{basis_name}' esta registrada em core mas nao tem entrada em "
+                f"{grid_name} (models/fema.py). Adicione uma entrada, mesmo que "
+                f"vazia ({{}}) para bases sem parametro de escala."
+            )
+        provided = set(grids[basis_name].keys())
+        if provided != required:
+            raise ValueError(
+                f"{grid_name}['{basis_name}'] declara os campos {sorted(provided)}, mas "
+                f"{type(basis).__name__}.PARAMS|OPTIONAL_PARAMS = {sorted(required)} — "
+                f"eles precisam bater exatamente. Confira core/math/basis/{basis_name}.py "
+                f"e models/fema.py."
+            )
 
 
 class _FEMaEstimator:
     """Estimator "sklearn-like" que encapsula o ciclo fit/predict do FEMa,
-    para caber no contrato genérico ModelPlugin.create_model/fit/predict."""
+    para caber no contrato generico ModelPlugin.create_model/fit/predict."""
 
-    def __init__(self, basis_function: str, k: int, random_state: int = 42, **basis_kwargs: float):
-        """basis_kwargs: hiperparâmetros da base escolhida (mesmos nomes
-        de campo de BasisParameters: z, epsilon, c, alpha, l, h, nu,
-        beta, p). O que não for passado fica None; se a base precisar de
-        um campo ausente, BaseBasis._require levanta erro claro no
-        predict (ver core/math/basis/base_basis.py)."""
+    def __init__(self, context: str, basis_function: str, k: int, random_state: int = 42, **basis_kwargs: float):
+        self.context = context
         self.basis_function = basis_function
         self.k = k
         self.random_state = random_state
@@ -140,7 +147,8 @@ class _FEMaEstimator:
     def fit(self, X: np.ndarray, y: np.ndarray):
         search = BruteForceSearch(metric=EuclideanDistance())
         basis = Basis.get(self.basis_function, search=search)
-        self._model = FEMaClassifier(basis=basis, search=search)
+        model_cls = _CONTEXT_CLASSES[self.context]
+        self._model = model_cls(basis=basis, search=search)
         self._model.fit(X, y)
         return self
 
@@ -148,36 +156,60 @@ class _FEMaEstimator:
         return BasisParameters(**self.basis_kwargs)
 
     def predict(self, X: np.ndarray) -> np.ndarray:
-        labels, _ = self._model.predict(X, k=self.k, params=self._params())
-        return labels
+        result = self._model.predict(X, k=self.k, params=self._params())
+        if self.context == "classifier":
+            labels, _ = result
+            return labels
+        return result  # FEMaRegressor.predict ja' retorna so' o vetor de previsoes
 
-    def predict_proba(self, X: np.ndarray) -> np.ndarray:
+    def predict_proba(self, X: np.ndarray):
+        if self.context != "classifier":
+            return None
         _, probs = self._model.predict(X, k=self.k, params=self._params())
         return probs
 
 
 class FEMaPlugin(ModelPlugin):
-    name = "fema"
-    supports_proba = True
+    """Uma instancia = um (context, basis) fixo.
+
+    Uso:
+        plugin = FEMaPlugin(context="classifier", basis="shepard")
+
+    k e os parametros proprios da base (z, epsilon, c, h, nu, beta, ...)
+    continuam sendo hiperparametros tunados normalmente via
+    parameter_grid()/random_search_space() - a unica mudanca e' que agora
+    esses metodos devolvem um Dict[str, list] simples (so' desta base),
+    nao mais uma lista de ramificacoes cobrindo todas as bases.
+    """
+
+    def __init__(self, context: str, basis: str):
+        if context not in _CONTEXT_CLASSES:
+            raise ValueError(f"context invalido: '{context}'. Use 'classifier' ou 'regressor'.")
+        if basis not in Basis.available():
+            raise ValueError(f"Base '{basis}' nao registrada. Disponiveis: {Basis.available()}")
+        _validate_basis_entry(basis)
+
+        self.context = context
+        self.basis = basis
+        self.name = f"fema:{context}:{basis}"
+        self.supports_proba = context == "classifier"
 
     def create_model(self, params: Dict[str, Any], random_state: int):
-        basis_function = params.get("basis_function", "shepard")
         k = params.get("k", 5)
-        basis_kwargs = {key: value for key, value in params.items() if key not in ("basis_function", "k")}
+        basis_kwargs = {key: value for key, value in params.items() if key != "k"}
+        return _FEMaEstimator(
+            context=self.context, basis_function=self.basis, k=k, random_state=random_state, **basis_kwargs
+        )
 
-        return _FEMaEstimator(basis_function=basis_function, k=k, random_state=random_state, **basis_kwargs)
+    def parameter_grid(self) -> Dict[str, list]:
+        return {"k": _K_GRID, **PARAM_GRIDS[self.basis]}
 
-    def parameter_grid(self) -> List[Dict[str, list]]:
-        """Uma ramificação por base — ver docstring do módulo sobre por
-        que isso não é um único Dict[str, list] achatado."""
-        return [
-            {"basis_function": [name], "k": _K_GRID, **PARAM_GRIDS[name]}
-            for name in Basis.available()
-        ]
+    def random_search_space(self) -> Dict[str, Any]:
+        return {"k": _K_SPACE, **RANDOM_SEARCH_SPACES[self.basis]}
 
-    def random_search_space(self) -> List[Dict[str, Any]]:
-        """Mesma ideia do parameter_grid, para random_search."""
-        return [
-            {"basis_function": [name], "k": _K_SPACE, **RANDOM_SEARCH_SPACES[name]}
-            for name in Basis.available()
-        ]
+
+def available_bases() -> List[str]:
+    """Lista as bases registradas em core (core.Basis.available()) - usado
+    por pipeline.run_model.run_all_bases e por reporting/compare_bases.py
+    para nao duplicar essa lista em outro lugar do projeto."""
+    return Basis.available()
