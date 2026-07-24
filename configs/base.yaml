@@ -1,0 +1,24 @@
+# Defaults globais do projeto. Configs de experimento (configs/experiments/*.yaml)
+# podem sobrescrever qualquer um desses campos.
+
+master_seed: 42
+
+cross_validation:
+  strategy: repeated_stratified_kfold   # ou stratified_kfold
+  n_splits: 5
+  n_repeats: 3
+
+tuning:
+  strategy: random_search   # ou grid_search
+  n_iter: 20
+
+metrics:
+  - accuracy
+  - f1
+  - balanced_accuracy
+  - mcc
+
+ranking_metric: f1        # metrica usada para rankear e escolher a melhor combinacao
+higher_is_better: true    # ver metrics/registry.py::HIGHER_IS_BETTER para o default por metrica
+
+run_final_test: true

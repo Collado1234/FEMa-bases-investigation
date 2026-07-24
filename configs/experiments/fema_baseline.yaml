@@ -1,0 +1,8 @@
+model: fema
+dataset: fetal_health
+experiment_name: baseline
+
+# FEMa nao tem hiperparametros discretos naturais (k, z, basis_function sao
+# continuos/categoricos) - random_search e a estrategia recomendada aqui.
+tuning_strategy: random_search
+tuning_n_iter: 20
