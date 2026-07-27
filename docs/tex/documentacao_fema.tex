@@ -1,0 +1,1320 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{titlesec}
+
+\geometry{margin=2.7cm}
+
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{codegray}{RGB}{110,110,110}
+\definecolor{codeblue}{RGB}{30,80,160}
+\definecolor{codegreen}{RGB}{30,120,60}
+
+\lstdefinestyle{py}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{codeblue}\bfseries,
+  commentstyle=\color{codegray}\itshape,
+  stringstyle=\color{codegreen},
+  numbers=none,
+  breaklines=true,
+  showstringspaces=false,
+  frame=single,
+  framerule=0.3pt,
+  rulecolor=\color{codegray},
+  xleftmargin=1em,
+  xrightmargin=1em,
+  aboveskip=8pt,
+  belowskip=8pt,
+  language=Python,
+}
+\lstset{style=py}
+
+\lstdefinestyle{yaml}{
+  style=py,
+  language=,
+  keywordstyle=\color{codeblue}\bfseries,
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=codeblue,
+  urlcolor=codeblue,
+  citecolor=codeblue,
+  bookmarksopen=true,
+}
+
+\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter.}{20pt}{\huge}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\newcommand{\arq}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{\Huge Documentação Técnica do Projeto FEMa\\[6pt]
+\Large Comparação de Bases de Interpolação para o Finite Element Machine}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Introdução}
+
+\section{Objetivo científico do projeto}
+
+Este projeto implementa e avalia o \textbf{FEMa} (\emph{Finite Element Machine}), um método de
+classificação/regressão baseado em interpolação por vizinhos próximos: para prever o rótulo (ou
+valor) de uma amostra nova, o FEMa busca os $k$ vizinhos mais próximos no conjunto de treino e
+combina os valores desses vizinhos usando pesos derivados de uma \textbf{função de base}
+$\varphi(d)$, onde $d$ é a distância até cada vizinho.
+
+O objeto de estudo central do projeto \textbf{não é o FEMa em si}, mas sim
+\textbf{a comparação entre as diferentes funções de base} que podem ser usadas dentro dele —
+Shepard, RBF Gaussiana, Multiquadrática, Wendland C2, splines, kernels de Cauchy, Student-t,
+Racional Quadrático, entre outras (21 ao todo, listadas na Seção~\ref{sec:factory-basis}). A
+pergunta de pesquisa é, essencialmente: \emph{dado um dataset e uma tarefa (classificação ou
+regressão), qual função de base produz o melhor desempenho preditivo, e por quê?}
+
+Essa é a razão pela qual, como será detalhado ao longo deste documento, toda a arquitetura do
+código — do desenho dos \emph{plugins} de modelo à organização dos resultados em disco — foi
+construída para que a \textbf{base de interpolação seja o eixo estrutural de comparação}, e não
+apenas mais um hiperparâmetro entre outros. Baselines externos (regressão logística, k-NN) existem
+apenas como \emph{referência metodológica} — para responder ``o FEMa com a melhor base é
+competitivo com um classificador simples?'' — e ficam deliberadamente isolados do restante da
+comparação.
+
+\section{Visão geral da arquitetura}
+
+O projeto segue uma arquitetura em camadas, na qual cada diretório do repositório tem uma
+responsabilidade única e bem delimitada. A regra geral é: \textbf{uma camada só conhece a camada
+imediatamente abaixo dela}. Isso significa, por exemplo, que a camada de persistência
+(\arq{persistence/}) não sabe o que é uma ``base'' ou um ``dataset'' — ela só grava e lê JSON em
+caminhos genéricos; quem decide o \emph{significado} de cada segmento do caminho é a camada de
+orquestração (\arq{pipeline/}).
+
+O fluxo de dependências entre camadas, da base para o topo, resumido a seguir:
+
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{\arq{core/}} — o núcleo matemático do FEMa (bases, distâncias, busca de vizinhos,
+        os modelos \code{FEMaClassifier}/\code{FEMaRegressor}). É tratado como uma
+        \emph{biblioteca fechada}: nenhuma decisão de experimento deveria exigir alterá-lo.
+  \item \textbf{\arq{datasets/}} — carregamento e split de dados, desacoplado de qualquer modelo.
+  \item \textbf{\arq{models/}} — a camada de \emph{plugins}: adapta o FEMa (\arq{core/}) e os
+        baselines externos (scikit-learn) a um contrato único (\code{ModelPlugin}).
+  \item \textbf{\arq{metrics/}}, \textbf{\arq{tuning/}}, \textbf{\arq{training/}},
+        \textbf{\arq{evaluation/}} — blocos de construção independentes usados pelo orquestrador:
+        cálculo de métricas, geração de combinações de hiperparâmetros, treino e avaliação.
+  \item \textbf{\arq{persistence/}} — escrita atômica dos resultados em JSON e sistema de
+        checkpoint (retomada de execuções interrompidas).
+  \item \textbf{\arq{pipeline/run\_model.py}} — o orquestrador único que liga todas as camadas
+        acima em um fluxo completo: carregar dados $\to$ checkpoint $\to$ busca de
+        hiperparâmetros $\to$ validação cruzada $\to$ resumo $\to$ retreino final $\to$ avaliação
+        no teste.
+  \item \textbf{\arq{reporting/}} — lê os resultados já persistidos e produz tabelas, JSON
+        consolidado e gráficos comparando as bases entre si.
+  \item \textbf{\arq{utils/}} — utilitários transversais (log, seed, tempo, hash).
+  \item \textbf{\arq{configs/}} — arquivos YAML declarativos que parametrizam experimentos, sem
+        exigir alteração de código.
+  \item \textbf{\arq{main.py}} — ponto de entrada de linha de comando.
+\end{enumerate}
+
+Os capítulos a seguir documentam cada camada nessa mesma ordem — da matemática para a
+orquestração —, e o Capítulo~\ref{ch:expansao} explica concretamente como estender o projeto em
+cada uma das direções mais prováveis: novos datasets, novas bases, análise de regressão e
+comparação com outros modelos.
+
+\chapter{O núcleo matemático: \arq{core/}}
+\label{ch:core}
+
+\arq{core/} contém tudo o que é \textbf{matemática do FEMa em si} — as funções de base, as
+métricas de distância, a estrutura de busca de vizinhos e os dois modelos
+(\code{FEMaClassifier}, \code{FEMaRegressor}). Por convenção do projeto, esta pasta é tratada como
+uma biblioteca estável: decisões de \emph{experimento} (que faixa de hiperparâmetros testar, quais
+métricas calcular, como organizar os resultados) vivem fora dela, nas camadas superiores.
+
+\section{\arq{core/math/distances/} — métricas de distância}
+
+Três arquivos pequenos definem o contrato de distância:
+
+\begin{itemize}
+  \item \arq{base\_distance.py}: classe abstrata \code{BaseDistance} com um único método,
+        \code{compute(x1, x2)}, vetorizado (aceita tanto um par de vetores quanto um vetor contra
+        uma matriz de N vetores).
+  \item \arq{euclidean\_distance.py}: \code{EuclideanDistance}, a métrica usada em praticamente
+        todo o projeto — norma $L_2$ da diferença, com \code{np.linalg.norm}.
+  \item \arq{manhattan\_distance.py}: \code{ManhattanDistance}, norma $L_1$, disponível mas não
+        usada em nenhum experimento atual (ver Seção~\ref{sec:expansao-modelos} sobre como
+        conectá-la).
+\end{itemize}
+
+\section{\arq{core/math/neighboor\_search/} — busca de vizinhos}
+
+\code{BaseSearch} define o contrato: \code{build(X)} indexa o conjunto de treino, e
+\code{query(sample, k)} retorna os índices e distâncias dos $k$ vizinhos mais próximos de uma
+amostra (ou de todos, se $k=0$).
+
+A única implementação existente, \code{BruteForceSearch} (\arq{brute\_force.py}), calcula a
+distância de \code{sample} contra \textbf{todos} os pontos de treino e usa
+\code{np.argpartition} para selecionar os $k$ menores em tempo $O(n)$ (sem ordenar o vetor
+inteiro). É deliberadamente simples: para os tamanhos de dataset usados no projeto, uma estrutura
+de indexação espacial (KD-tree, ball-tree) traria complexidade adicional sem necessidade prática.
+Trocar a estratégia de busca por uma mais eficiente é uma extensão natural e isolada (basta
+implementar \code{BaseSearch} — ver Seção~\ref{sec:expansao-modelos}).
+
+\section{\arq{core/math/basis/} — as funções de base}
+\label{sec:factory-basis}
+
+Esta é a parte mais extensa e mais importante de \arq{core/}, pois \textbf{as funções de base são
+o objeto de estudo do projeto}.
+
+\subsection{\arq{parameters.py} — o contêiner único de hiperparâmetros}
+
+Antes de qualquer base específica, vale entender \code{BasisParameters}
+(\arq{parameters.py}): um \emph{dataclass} único com nove campos opcionais
+(\code{z, epsilon, c, alpha, beta, nu, h, l, p}), todos com valor-padrão \code{None}. Essa é uma
+decisão de design central: em vez de cada base ter sua própria assinatura de função (o que
+obrigaria quem chama a base — o classificador, o harness de validação, a camada de tuning — a
+conhecer a fórmula de cada uma para montar os argumentos certos), \textbf{toda base recebe a mesma
+assinatura} \code{compute\_weights(dists, params)}, e cada implementação lê, de \code{params},
+apenas os campos que sua fórmula usa. Um campo faz o papel de vários símbolos matemáticos
+diferentes dependendo da base (por exemplo, \code{c} é usado por Multiquadrática, Inversa
+Multiquadrática, Logarítmica e Sigmoidal, cada uma com um papel distinto na fórmula) — isso é
+intencional: o nome é só o ``slot'' de configuração, não implica semântica compartilhada.
+
+\subsection{\arq{base\_basis.py} — a classe abstrata \code{BaseBasis}}
+
+\code{BaseBasis} separa duas camadas deliberadamente:
+
+\begin{itemize}
+  \item \code{evaluate(dists, params)}: o valor \textbf{cru} (não normalizado) de $\varphi(d)$.
+        Cada subclasse concreta implementa apenas isto — a fórmula da base em si.
+  \item \code{compute\_weights(dists, params)}: o peso \textbf{normalizado} (partição da
+        unidade), $w = \varphi(d) / \sum \varphi(d)$. Implementado uma única vez, na classe base,
+        em cima de \code{evaluate()}. Nenhuma subclasse deveria reimplementar isso.
+\end{itemize}
+
+Essa separação corrige, por construção, uma classe inteira de bug que existia em versões
+anteriores do código: a normalização feita incorretamente dentro de cada base individualmente
+(nos comentários do projeto, ``\code{weights /= weights}'' em vez de
+``\code{weights /= weights.sum()}''). Centralizar a normalização em \code{BaseBasis} elimina essa
+possibilidade de erro para qualquer base nova.
+
+Além disso, se $\sum \varphi(d) = 0$ (uma base de suporte compacto em que nenhum vizinho cai
+dentro do raio, por exemplo), \code{compute\_weights} recorre a pesos uniformes em vez de propagar
+um \code{NaN} silenciosamente.
+
+Cada subclasse declara dois atributos de classe:
+
+\begin{itemize}
+  \item \code{PARAMS}: os nomes dos campos de \code{BasisParameters} que a fórmula
+        \textbf{exige}. O método \code{\_require(params)} extrai esses campos e levanta um
+        \code{ValueError} claro se algum estiver \code{None}, em vez de deixar o erro estourar
+        mais adiante como uma exceção aritmética difícil de rastrear.
+  \item \code{OPTIONAL\_PARAMS}: campos que a base usa, mas que são opcionais (o caso mais comum
+        é \code{h} nas bases de suporte compacto, onde \code{None} significa ``raio automático,
+        igual à maior distância observada'').
+\end{itemize}
+
+\subsection{\arq{\_compactSupport.py} — bases de suporte compacto}
+
+\code{CompactSupportBasis} é uma classe intermediária, herdada por Wendland C2, Cubic Spline,
+Quartic Spline e Cosine. Fornece \code{\_normalized\_distance(dists, h)}, que calcula
+$r = d/h$ — usando $h = \max(d)$ automaticamente quando \code{h} não é informado. Fora do
+intervalo $r \le 1$, a base vale zero: são funções de \textbf{suporte compacto}, que ignoram
+vizinhos além de um certo raio.
+
+\subsection{As 21 bases registradas}
+
+A Tabela~\ref{tab:bases} resume as 21 funções de base atualmente implementadas, todas em
+\arq{core/math/basis/}, registradas na fábrica \code{Basis} (\arq{factory\_basis.py},
+Seção~\ref{sec:factory}). Note que várias bases têm notas de equivalência matemática
+documentadas no próprio código-fonte (docstrings marcadas ``NOTA''): decisões de nomenclatura e
+de fórmula ainda pendentes de confirmação com o orientador, deixadas explícitas em vez de
+escondidas.
+
+\begingroup
+\small
+\begin{longtable}{@{}p{2.6cm}p{6.2cm}p{4.6cm}@{}}
+\caption{As 21 funções de base registradas em \code{Basis} (\arq{factory\_basis.py}).}
+\label{tab:bases} \\
+\toprule
+\textbf{Nome (registry)} & \textbf{Fórmula} $\varphi(d)$ & \textbf{Parâmetros} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Nome (registry)} & \textbf{Fórmula} $\varphi(d)$ & \textbf{Parâmetros} \\
+\midrule
+\endhead
+\code{shepard} & $1/d^z$ & \code{z} \\
+\code{radial} & $\exp(-0.5\,(d/r_0)^2)$, $r_0=z$ & \code{z} \\
+\code{rbf\_gaussian} & $\exp(-(\epsilon d)^2)$ & \code{epsilon} \\
+\code{multiquadratic} & $\sqrt{d^2+c^2}$ (crescente em $d$) & \code{c} \\
+\code{inverse\_multiquadratic} & $1/\sqrt{d^2+c^2}$ & \code{c} \\
+\code{wendland\_c2} & $(1-r)^4(4r+1)$, $r=d/h$, $0$ se $r>1$ & \code{h} (opc.) \\
+\code{cubic\_spline} & $(1-r)^4$, $r=d/h$, $0$ se $r>1$ & \code{h} (opc.) \\
+\code{quartic\_spline} & $(1-r)^4$, $r=d/h$, $0$ se $r>1$ (idêntica a \code{cubic\_spline} — nota de decisão pendente) & \code{h} (opc.) \\
+\code{gen\_exponential} & $\exp(-\epsilon\,d^p)$ & \code{epsilon}, \code{p} \\
+\code{softmax\_radial} & $\exp(-\beta d)$ (nota: equivalente a \code{laplacian} após normalização) & \code{beta} \\
+\code{attention} & $1/(1+d^2)$ (nota: equivalente a \code{cauchy} com $\epsilon=1$) & --- \\
+\code{logarithmic} & $1/\log(1+d+c)$ & \code{c} \\
+\code{harmonic} & $(1+d^2/\nu)^{-(\nu+1)/2}$ (nota: formalmente idêntica a \code{student\_t}) & \code{nu} \\
+\code{laplacian} & $\exp(-\epsilon d)$ & \code{epsilon} \\
+\code{cauchy} & $1/(1+(\epsilon d)^2)$ & \code{epsilon} \\
+\code{student\_t} & $(1+d^2/\nu)^{-(\nu+1)/2}$ (kernel-t, van der Maaten \& Hinton, 2008) & \code{nu} \\
+\code{cosine} & $\cos^2(\pi r/2)$, $r=d/h$, $0$ se $r>1$ & \code{h} (opc.) \\
+\code{sigmoidal} & $1/(1+\exp(\alpha(d-c)))$ & \code{alpha}, \code{c} \\
+\code{lorentzian} & $1/(1+d^4)$ (nota: na literatura ``Lorentzian'' costuma ser sinônimo de Cauchy) & --- \\
+\code{entropic} & $\exp(-\beta d^2)$ & \code{beta} \\
+\code{rational\_quadratic} & $(1+d^2/(2\alpha l^2))^{-\alpha}$ (Rasmussen \& Williams, 2006) & \code{alpha}, \code{l} \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+Todas seguem o mesmo padrão de arquivo — pequeno, uma classe, um método \code{evaluate}:
+
+\begin{lstlisting}
+class ShepardBasis(BaseBasis):
+    PARAMS = ("z",)
+
+    def evaluate(self, dists, params):
+        z = self._require(params)["z"]
+        dists = np.where(dists == 0, DELTA, dists)  # evita divisao por zero
+        return 1.0 / (dists ** z)
+\end{lstlisting}
+
+\subsection{\arq{factory\_basis.py} — a fábrica \code{Basis}}
+\label{sec:factory}
+
+\code{Basis} é o ponto único de acesso às implementações: \code{Basis.get(nome, search)}
+instancia a base pelo nome (string), e \code{Basis.available()} retorna a lista ordenada de todos
+os nomes registrados no dicionário interno \code{\_CLASSES}. Essa função é usada extensivamente
+por outras camadas (o harness de validação matemática, os \emph{plugins} de modelo, o módulo de
+comparação de bases) para \textbf{descobrir automaticamente} quais bases existem, sem duplicar
+essa lista em vários lugares do projeto — uma base nova só precisa de uma entrada em
+\code{\_CLASSES} para se tornar visível a todo o resto do sistema (ver
+Seção~\ref{sec:expansao-base}).
+
+\section{\arq{core/models/} — os modelos FEMa}
+
+\subsection{\arq{base\_model.py} — \code{FEMaBaseModel}}
+
+Classe abstrata que define o contrato comum: o modelo guarda \code{X\_train}/\code{y\_train},
+delega a indexação ao \code{search} injetado no construtor, e implementa \code{fit}/\code{predict}
+como métodos abstratos. A ideia de responsabilidade é: \emph{o modelo orquestra search + basis e
+faz o produto interno final; a busca de vizinhos e o cálculo de pesos são delegados}.
+
+\subsection{\arq{fema\_classifier.py} — \code{FEMaClassifier}}
+
+Para classificação, o \code{fit} constrói uma matriz de probabilidades por classe: uma linha por
+classe, com $1.0$ nas posições de treino cuja classe é aquela e $0.0$ nas demais (codificação
+one-hot transposta). O \code{predict}, para cada amostra de teste, busca os $k$ vizinhos uma
+única vez, calcula os pesos com a base escolhida, e então interpola a probabilidade de
+\textbf{cada} classe usando os \textbf{mesmos} pesos (produto interno entre o vetor de pesos e a
+linha da classe). O rótulo previsto é o \code{argmax} das probabilidades interpoladas.
+
+\subsection{\arq{fema\_regressor.py} — \code{FEMaRegressor}}
+
+Para regressão, o processo é mais direto: o \code{fit} apenas guarda \code{X\_train}/\code{y\_train}
+e indexa \code{X\_train} no \code{search}; o \code{predict} interpola diretamente o valor-alvo
+(produto interno entre pesos e \code{y\_train[indices]}), com uma salvaguarda para o caso raro em
+que a predição resulte em \code{NaN} (cai para a média de \code{y\_train}).
+
+Este componente já existe e está pronto para uso — ver Seção~\ref{sec:expansao-regressao} sobre
+como habilitar experimentos de regressão de ponta a ponta.
+
+\chapter{Camada de dados: \arq{datasets/}}
+
+\section{\arq{registry.py} — o que existe e onde}
+
+Define \code{DatasetSpec}, um \emph{dataclass} imutável com o caminho do CSV, a coluna-alvo, as
+colunas a descartar e o delimitador. O dicionário \code{\_REGISTRY} mapeia um nome lógico de
+dataset para essa especificação. Quatro datasets estão registrados hoje:
+
+\begin{itemize}
+  \item \code{fetal\_health} — CSV real, alvo \code{fetal\_health} (3 classes).
+  \item \code{iris} — CSV real, alvo \code{Species}, descarta a coluna \code{Id}.
+  \item \code{classification\_data} — CSV real com delimitador \code{;}, alvo \code{class}.
+  \item \code{synthetic\_demo} — não tem arquivo; é gerado em tempo de execução (ver
+        \arq{loader.py}) — usado nos testes automatizados, por ser rápido e não depender de
+        arquivos externos.
+\end{itemize}
+
+Este módulo \textbf{nunca lê nem transforma dados} — apenas descreve onde/como encontrá-los. A
+função \code{get\_dataset\_spec(name)} valida que o arquivo existe no disco antes de devolver a
+especificação (levanta \code{FileNotFoundError} cedo, com mensagem clara, em vez de falhar mais
+adiante dentro do \emph{pandas}).
+
+\section{\arq{loader.py} — leitura, split e padronização}
+
+\code{load\_dataset(dataset\_name, seed, val\_ratio, test\_ratio, scale)} é a única função pública
+relevante. Faz, nesta ordem:
+
+\begin{enumerate}
+  \item Lê o CSV (via \code{pandas.read\_csv}, normalizando nomes de coluna e removendo o BOM
+        \code{\textbackslash ufeff} que alguns arquivos trazem) ou gera o dataset sintético
+        (\code{sklearn.datasets.make\_classification}).
+  \item Separa \code{X} (todas as colunas menos o alvo, convertidas para \code{float64}) de
+        \code{y} (convertido para inteiro diretamente se já for numérico, ou por
+        \code{codes} de categoria caso contrário).
+  \item Faz o split treino/validação/teste em duas chamadas encadeadas de
+        \code{train\_test\_split} (ambas \code{stratify}), de forma \textbf{determinística}
+        (mesma \code{seed} sempre produz o mesmo split).
+  \item Se \code{scale=True} (padrão), padroniza todas as partições
+        ($x' = (x-\mu)/\sigma$) usando \textbf{apenas} estatísticas do conjunto de treino — esta
+        padronização é essencial para o FEMa, que é um método baseado em distância: sem ela,
+        variáveis em escalas diferentes dominariam artificialmente o cálculo de distância.
+\end{enumerate}
+
+O retorno é um \code{LoadedData} (\emph{dataclass} imutável) com
+\code{X\_train/y\_train/X\_val/y\_val/X\_test/y\_test} e o nome do dataset. Esta camada não conhece
+nenhum modelo nem faz parte do pipeline de tuning/avaliação — é puramente sobre dados.
+
+\chapter{Camada de modelos: \arq{models/}}
+\label{ch:models}
+
+\section{\arq{base.py} — o contrato \code{ModelPlugin}}
+
+Esta é a peça de desenho mais importante do projeto depois de \arq{core/}: \textbf{nenhuma outra
+camada importa um algoritmo diretamente}. Tudo — treino, avaliação, tuning, persistência — fala
+apenas com a interface abstrata \code{ModelPlugin}. Isso é o que permite trocar de modelo (ou
+adicionar um novo) sem tocar em \arq{pipeline/}, \arq{evaluation/}, \arq{training/} ou
+\arq{tuning/}.
+
+Os métodos do contrato:
+
+\begin{itemize}
+  \item \code{create\_model(params, random\_state)} \emph{(abstrato)}: instancia (sem treinar) um
+        estimador com os hiperparâmetros dados.
+  \item \code{parameter\_grid()} \emph{(abstrato)}: espaço de busca \textbf{discreto}, para
+        \code{grid\_search} — formato \code{\{nome: [valores]\}}.
+  \item \code{random\_search\_space()} \emph{(opcional, com \code{default} = reaproveitar
+        \code{parameter\_grid()})}: espaço de busca \textbf{contínuo}, para \code{random\_search}
+        — aceita também tuplas \code{("uniform", low, high)}, \code{("loguniform", low, high)} e
+        \code{("randint", low, high)}. Esta é uma extensão em relação ao projeto de referência que
+        inspirou esta arquitetura (que só tinha grades discretas): necessária porque o FEMa e os
+        baselines aqui têm hiperparâmetros contínuos (\code{z}, \code{epsilon}, \code{C}, \ldots)
+        mal representados por uma grade fixa.
+  \item \code{fit(estimator, X, y, X\_val, y\_val)}: por padrão, chama \code{estimator.fit(X, y)};
+        plugins podem sobrescrever se precisarem de \code{X\_val}/\code{y\_val} (ex.: \emph{early
+        stopping}).
+  \item \code{predict}/\code{predict\_proba}: delegam ao estimador; \code{predict\_proba} retorna
+        \code{None} graciosamente se o modelo não suportar (o cálculo de métricas trata isso sem
+        quebrar, pulando métricas que dependem de probabilidade, como \code{roc\_auc}).
+  \item \code{save}/\code{load}: serialização via \code{joblib}.
+\end{itemize}
+
+\section{\arq{fema.py} — o FEMa como (contexto, base)}
+\label{sec:models-fema}
+
+Este é o arquivo que mais evoluiu ao longo do desenvolvimento do projeto, e a evolução em si é
+instrutiva. Numa versão anterior, existia um único \code{FEMaPlugin} ``genérico'', e a base de
+interpolação era apenas mais um valor dentro do espaço de hiperparâmetros buscado
+(\code{basis\_function}), junto com \code{k}, \code{z}, \code{epsilon} etc. Isso tinha um problema
+conceitual sério: o \emph{ranking} final do resumo (\arq{persistence/summary\_builder.py}) acabava
+misturando combinações de bases \textbf{diferentes} na mesma lista, de modo que a ``melhor
+combinação'' encontrada respondia à pergunta errada (``qual é a melhor combinação global entre
+todas as bases misturadas'', em vez de ``qual é o melhor desempenho \emph{de cada} base'').
+
+A arquitetura atual resolve isso fixando o \textbf{contexto} (\code{"classifier"} ou
+\code{"regressor"}) e a \textbf{base} na própria instância do plugin:
+
+\begin{lstlisting}
+class FEMaPlugin(ModelPlugin):
+    def __init__(self, context: str, basis: str):
+        ...
+        self.context = context
+        self.basis = basis
+        self.name = f"fema:{context}:{basis}"
+        self.supports_proba = context == "classifier"
+
+    def parameter_grid(self) -> Dict[str, list]:
+        return {"k": _K_GRID, **PARAM_GRIDS[self.basis]}
+\end{lstlisting}
+
+Consequências desse desenho:
+
+\begin{itemize}
+  \item Cada execução do pipeline já é, por construção, escopada a uma única base — não existe
+        mais a possibilidade de misturar bases no mesmo resumo.
+  \item \code{parameter\_grid()}/\code{random\_search\_space()} voltam a ser um único
+        \code{Dict[str, list]} simples (\code{k} + os parâmetros \textbf{próprios} daquela base),
+        sem precisar de um espaço de busca condicional/ramificado.
+  \item \code{PARAM\_GRIDS}/\code{RANDOM\_SEARCH\_SPACES} — os dicionários que mapeiam nome de
+        base para a faixa de busca de cada parâmetro — continuam centralizados aqui, e não dentro
+        de \arq{core/math/basis/}, por decisão deliberada: são faixas de busca de
+        \textbf{experimento} (decisão de quem desenha o experimento), não uma propriedade
+        matemática da base (que pertence a \arq{core/}).
+  \item \code{\_validate\_basis\_entry(basis\_name)} confere, na \textbf{construção} de cada
+        \code{FEMaPlugin}, que \code{PARAM\_GRIDS}/\code{RANDOM\_SEARCH\_SPACES} cobrem
+        \textbf{exatamente} os campos que \code{basis.PARAMS | basis.OPTIONAL\_PARAMS} declara —
+        nem a mais, nem a menos. Isso significa que registrar uma base nova em \arq{core/} sem
+        adicionar a entrada correspondente aqui produz um erro imediato e claro, no momento de
+        instanciar o plugin, em vez de uma falha silenciosa ou um espaço de busca incompleto no
+        meio de um tuning de horas.
+\end{itemize}
+
+O adaptador \code{\_FEMaEstimator} é o que dá ao FEMa uma interface ``\emph{sklearn-like}''
+(\code{fit}/\code{predict}/\code{predict\_proba}) para caber no contrato \code{ModelPlugin}: ele
+escolhe \code{FEMaClassifier} ou \code{FEMaRegressor} conforme o \code{context}, instancia a base
+via \code{Basis.get}, e traduz \code{predict} de acordo (um classificador retorna
+\code{(labels, probs)}; um regressor retorna só o vetor de previsões).
+
+A função \code{available\_bases()} apenas repassa \code{Basis.available()} — usada por
+\code{pipeline.run\_model.run\_all\_bases} e por \code{reporting/compare\_bases.py} para nunca
+duplicar essa lista em outro lugar do projeto.
+
+\section{\arq{logreg.py}, \arq{knn.py}, \arq{mlp.py} — baselines externos}
+
+\code{models/registry.py} deixa claro, na própria docstring, que \textbf{o FEMa não está neste
+registro}: ele não é identificado por um único nome, mas por um par \code{(context, basis)} (ver
+\code{FEMaPlugin} acima), então não cabe no formato ``nome $\to$ instância fixa'' usado para
+baselines. Este registro existe apenas para os baselines \textbf{externos}, que servem de
+referência metodológica e não fazem parte da comparação de bases:
+
+\begin{itemize}
+  \item \code{LogRegPlugin} (\arq{logreg.py}) — regressão logística do scikit-learn, com cuidado
+        explícito de só passar \code{penalty}/\code{solver} quando diferentes do padrão (evita um
+        \code{FutureWarning} de depreciação em versões recentes do scikit-learn).
+  \item \code{KNNPlugin} (\arq{knn.py}) — k-Vizinhos Mais Próximos
+        (\code{KNeighborsClassifier}). É o baseline mais metodologicamente próximo do FEMa (também
+        baseado em vizinhança), o que o torna uma referência particularmente informativa: mostra
+        o quanto a \emph{escolha da base de interpolação} agrega sobre uma vizinhança
+        ``crua''.
+  \item \code{MLPPlugin} (\arq{mlp.py}) — uma rede neural simples
+        (\code{MLPClassifier}) \textbf{existe como arquivo}, mas \textbf{não está registrada} em
+        \code{models/registry.py::\_PLUGINS} na versão atual do código. Ou seja, o arquivo está
+        pronto e funcional, mas inacessível via \code{model\_name="mlp"} até que alguém a adicione
+        de volta ao dicionário \code{\_PLUGINS} — um único ponto de re-habilitação (ver
+        Seção~\ref{sec:expansao-modelos}).
+\end{itemize}
+
+Ambos os baselines registrados (\code{logreg}, \code{knn}) seguem exatamente o mesmo padrão:
+\code{parameter\_grid()} para grade discreta, \code{random\_search\_space()} para distribuições
+contínuas, sem nenhuma lógica além da tradução direta para os construtores do scikit-learn.
+
+
+\chapter{Métricas: \arq{metrics/}}
+
+\section{\arq{contracts.py} — o contrato de métrica}
+
+Toda métrica é uma função com a assinatura
+\code{metric(y\_true, y\_pred, y\_score, n\_classes) -> Optional[float]}. \code{y\_score} é a
+matriz de probabilidades (ou \code{None}, se indisponível); \code{n\_classes} é usado por métricas
+que se comportam diferente em binário vs.\ multiclasse. Retornar \code{None} (em vez de levantar
+exceção) é o sinal esperado para ``não calculável nesta situação'' — por exemplo, \code{roc\_auc}
+sem \code{y\_score}, ou quando um fold contém uma única classe.
+
+\section{\arq{classification.py} e \arq{regression.py} — implementações}
+
+Sete métricas de classificação (via \code{sklearn.metrics}): \code{accuracy},
+\code{balanced\_accuracy}, \code{precision}, \code{recall}, \code{f1}, \code{roc\_auc},
+\code{mcc}. Todas são ``\emph{multiclass-aware}'': quando há mais de duas classes, usam
+\code{average='macro'} (não ponderado por suporte, para não mascarar desempenho ruim em classes
+minoritárias) e, no caso de \code{roc\_auc}, \code{multi\_class='ovr'}.
+
+Cinco métricas de regressão: \code{mae}, \code{mse}, \code{rmse}, \code{r2}, \code{mape}. Seguem o
+\textbf{mesmo contrato} (recebem \code{y\_score}/\code{n\_classes}, mas os ignoram) — isso é o que
+permite que o mesmo motor de avaliação (\code{compute\_all}) sirva tanto para classificação quanto
+para regressão sem nenhuma ramificação de código.
+
+\section{\arq{registry.py} — registro central e direção de otimização}
+
+\code{\_METRICS} mapeia nome $\to$ função; \code{HIGHER\_IS\_BETTER} mapeia nome $\to$ booleano
+(usado por \code{persistence/summary\_builder.py} para saber se, ao rankear pela métrica
+primária, um valor maior é melhor — caso de \code{f1} — ou pior — caso de \code{mae}). Duas listas
+adicionais, \code{CLASSIFICATION\_METRICS} e \code{REGRESSION\_METRICS}, são a fonte única de
+verdade para ``todas as métricas registradas'' de cada tipo de tarefa, acessadas através de
+\code{metrics\_for\_context(context)}. Isso é usado por \code{pipeline/run\_model.py} para decidir
+os \emph{defaults} de \code{metric\_names} conforme o contexto (classificador $\to$ 7 métricas;
+regressor $\to$ 5 métricas), e por \code{reporting/compare\_bases.py} e pelos testes para garantir
+que a comparação cobre \textbf{todas} as métricas relevantes, e não um subconjunto escolhido à mão
+em cada lugar que precisa dessa lista.
+
+\code{compute\_all(metric\_names, y\_true, y\_pred, y\_score, n\_classes)} calcula todas as
+métricas pedidas de uma vez, capturando qualquer exceção individual e gravando \code{None} sem
+interromper as demais.
+
+\chapter{Busca de hiperparâmetros: \arq{tuning/}}
+
+\section{\arq{grid\_search.py} — Grid Search}
+
+\code{expand\_param\_grid(param\_grid)} expande um dicionário \code{\{chave: [valores]\}} no
+produto cartesiano de todas as combinações. Também suporta, por compatibilidade histórica,
+\code{List[Dict[str, list]]} — uma ``ramificação'' por dicionário, útil quando um hiperparâmetro só
+faz sentido para certos valores de outro (o caso que motivou originalmente esse formato foi o
+antigo \code{FEMaPlugin} genérico, descrito na Seção~\ref{sec:models-fema}; hoje nenhum plugin do
+projeto usa mais esse formato condicional, mas o suporte permanece disponível para um plugin
+futuro que precise dele). \code{combo\_id(params)} gera um identificador estável e legível (string
+ordenada por chave), usado como chave de checkpoint e no ranking do resumo.
+
+\section{\arq{random\_search.py} — Random Search}
+
+\code{sample\_param\_space(search\_space, n\_iter, seed)} amostra \code{n\_iter} combinações de um
+espaço de busca contínuo, de forma determinística dada a \code{seed}. Suporta os três tipos de
+distribuição descritos na Seção~\ref{ch:models} (\code{uniform}, \code{loguniform},
+\code{randint}) e também listas de escolha discreta. Assim como \code{grid\_search.py}, aceita o
+formato condicional \code{List[Dict]} por compatibilidade — no caso condicional, cada amostra
+sorteia primeiro \textbf{qual} ramificação usar (peso igual entre elas) e só então amostra os
+campos daquela ramificação, nunca misturando campos de ramificações diferentes numa mesma amostra.
+
+\section{\arq{param\_space.py} — o ponto único de entrada}
+
+\code{generate\_combinations(plugin, strategy, seed, n\_iter, fixed\_hyperparameters)} é a única
+função que \arq{pipeline/run\_model.py} chama: decide, com base em \code{strategy}
+(\code{"grid\_search"} ou \code{"random\_search"}), qual dos dois motores usar. Se
+\code{fixed\_hyperparameters} for informado, ignora completamente a estratégia de tuning e usa
+exatamente aquela combinação — útil para reproduzir um resultado específico ou rodar sem busca de
+hiperparâmetros (por exemplo, ao gerar uma curva de sensibilidade a um único parâmetro mantendo os
+demais fixos).
+
+\section{\arq{cv\_strategy.py} — geração de splits de validação cruzada}
+
+\code{build\_cv\_splits(X, y, strategy, n\_splits, n\_repeats, master\_seed)} é um gerador que
+produz tuplas \code{(repeat\_idx, fold\_idx, train\_idx, val\_idx)}. Duas estratégias:
+\code{stratified\_kfold} (uma única passada) e \code{repeated\_stratified\_kfold} (repete com
+seeds diferentes, reduzindo a variância da estimativa — útil com datasets pequenos ou
+desbalanceados). \emph{Nested} CV não é oferecido de propósito: a separação treino/validação
+(usada aqui para o tuning) e o \emph{holdout} de teste (Capítulo~\ref{ch:evaluation}) já cumprem o
+mesmo papel metodológico sem o custo computacional multiplicado de uma validação cruzada
+aninhada. A seed do particionador é sempre \textbf{derivada} da seed mestre
+(\code{utils.seeding.derive\_seed}), garantindo que o mesmo conjunto de splits seja gerado sempre
+que o pipeline for reexecutado com a mesma configuração — condição necessária para o checkpoint
+funcionar corretamente (Capítulo~\ref{ch:persistence}).
+
+\chapter{Treino: \arq{training/}}
+
+Dois arquivos pequenos e sem lógica de negócio própria — só orquestram chamadas ao
+\code{ModelPlugin}:
+
+\begin{itemize}
+  \item \code{trainer.py::train\_estimator(plugin, params, X\_train, y\_train, random\_state,
+        X\_val, y\_val)} — instancia (\code{plugin.create\_model}) e treina
+        (\code{plugin.fit}) um estimador. Não sabe nada sobre validação cruzada, busca de
+        hiperparâmetros, métricas ou persistência.
+  \item \code{final\_fit.py::fit\_final\_model(plugin, best\_params, X\_train, y\_train,
+        master\_seed, X\_val, y\_val)} — chamado \textbf{depois} que o tuning + CV determina os
+        melhores hiperparâmetros (Capítulo~\ref{ch:persistence}), treina um modelo
+        \textbf{novo do zero} (não reaproveita nenhum modelo de fold), usando uma seed derivada
+        especificamente para o retreino final (\code{derive\_seed(master\_seed, "final\_fit",
+        plugin.name)}). Este é o único modelo que será avaliado no conjunto de teste.
+\end{itemize}
+
+\chapter{Avaliação: \arq{evaluation/}}
+\label{ch:evaluation}
+
+\begin{itemize}
+  \item \code{cv\_evaluator.py::evaluate\_fold(plugin, params, X\_train\_fold, y\_train\_fold,
+        X\_val\_fold, y\_val\_fold, metric\_names, random\_state)} — treina no split de treino do
+        fold, avalia no split de validação, retorna as métricas calculadas. Não sabe nada sobre
+        persistência.
+  \item \code{test\_evaluator.py::evaluate\_on\_test(plugin, estimator, X\_test, y\_test,
+        y\_train\_reference, metric\_names)} — chamado \textbf{uma única vez}, depois do
+        retreino final. O conjunto de teste nunca é usado antes deste ponto — nem no
+        grid/random search, nem na validação cruzada, nem em nenhuma decisão de tuning. Isso é o
+        que garante que a métrica de teste reportada é uma estimativa honesta de generalização, e
+        não um número inflado por vazamento de informação do teste para o tuning.
+\end{itemize}
+
+Ambos delegam o cálculo efetivo das métricas a \code{metrics.registry.compute\_all}
+(Capítulo anterior) — a única diferença entre eles é \emph{quando} e \emph{sobre qual partição de
+dados} são chamados.
+
+\chapter{Persistência: \arq{persistence/}}
+\label{ch:persistence}
+
+Esta camada sofreu uma mudança arquitetural deliberada e importante: \textbf{deixou de saber o que
+é ``modelo'' ou ``experimento''}. As três funções centrais de \arq{run\_writer.py}
+(\code{next\_run\_path}, \code{load\_all\_runs}, \code{write\_summary}, \code{write\_test\_results})
+recebem um número arbitrário de segmentos de caminho, \code{*scope}, e simplesmente os concatenam
+sob \code{results/}:
+
+\begin{lstlisting}
+def _run_dir(*scope: str) -> Path:
+    d = RESULTS_DIR.joinpath(*scope)
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+\end{lstlisting}
+
+O \textbf{significado} de cada segmento — se é um contexto, uma base, um dataset, um nome de
+experimento, ou o nome de um baseline — é responsabilidade exclusiva de quem monta o caminho
+(\arq{pipeline/run\_model.py}, Capítulo~\ref{ch:pipeline}), nunca da camada de persistência. Essa
+inversão de dependência é o que permite que \code{results/} seja organizado por
+\textbf{base} (o eixo científico do projeto) sem que \arq{persistence/} precise ter qualquer
+conhecimento sobre o que é uma ``base''.
+
+\section{Escrita atômica}
+
+\code{write\_run\_atomic(path, payload)} grava em um arquivo temporário no \textbf{mesmo}
+diretório de destino e só então faz \code{os.replace} (rename atômico ao nível do sistema
+operacional). Isso garante que nunca existirá, em disco, um JSON parcialmente escrito — mesmo que
+o processo seja interrompido (\texttt{Ctrl+C}, queda de energia, \emph{out-of-memory}) no meio da
+escrita.
+
+\section{Checkpoint: retomada de execuções interrompidas}
+
+\code{checkpoint.py::get\_completed\_keys(*scope)} varre todos os \code{run\_*.json} já existentes
+em um diretório de escopo e reconstrói o conjunto de chaves \code{(combo\_id, repeat\_idx,
+fold\_idx)} já executadas. \code{is\_done(completed\_keys, combo\_id, repeat\_idx, fold\_idx)} é a
+checagem usada, fold a fold, dentro do laço principal do pipeline (Capítulo~\ref{ch:pipeline}),
+para pular o que já foi feito. Isso é o que torna o pipeline \textbf{idempotente}: chamá-lo duas
+vezes com os mesmos argumentos não duplica trabalho nem resultados — a segunda chamada
+simplesmente constata que tudo já está pronto e vai direto para o resumo.
+
+\section{Resumo: \arq{summary\_builder.py}}
+
+\code{build\_summary(*scope, primary\_metric, higher\_is\_better, extra\_fields)} lê todos os
+\code{run\_*.json} de um escopo, agrupa por \code{combo\_id}, calcula média e desvio-padrão de
+cada métrica entre folds/repetições, e ordena as combinações pela métrica primária (respeitando a
+direção de otimização — Capítulo anterior). O resultado (\code{summary.json}) inclui
+\code{best\_configuration} (a melhor combinação encontrada) e o \code{ranking} completo.
+
+Como consequência direta da mudança para \code{FEMaPlugin(context, basis)} fixo
+(Seção~\ref{sec:models-fema}), \textbf{cada diretório de resultados corresponde hoje a uma única
+base do FEMa} (ou a um único baseline externo) — logo, o ranking dentro de um \code{summary.json}
+é sempre \textbf{homogêneo}: só varia \code{k} e os parâmetros próprios daquela base. A comparação
+\emph{entre} bases diferentes é responsabilidade de \arq{reporting/} (Capítulo~\ref{ch:reporting}),
+que lê um \code{summary.json} por base.
+
+\code{extra\_fields} é injetado no resumo exatamente como veio de quem chamou (por exemplo,
+\code{\{"context": "classifier", "basis": "shepard", "experiment": "baseline"\}}) —
+\code{summary\_builder.py} não precisa interpretar o que esses campos significam, apenas
+propagá-los para o JSON final.
+
+\chapter{Orquestração: \arq{pipeline/run\_model.py}}
+\label{ch:pipeline}
+
+Este é o módulo que \textbf{liga todas as camadas anteriores}. Reflete, na própria API pública, a
+divisão conceitual do projeto entre dois tipos de experimento com objetivos completamente
+diferentes:
+
+\begin{itemize}
+  \item \textbf{\code{run\_basis\_experiment(context, basis, dataset, \ldots)}} — roda o FEMa com
+        o contexto e a base fixos. É o pipeline \textbf{central} da pesquisa: cada chamada
+        corresponde a uma célula da matriz (contexto $\times$ base) sendo avaliada. Persiste em
+        \code{results/<context>/<basis>/<dataset>/<experiment\_name>/}.
+  \item \textbf{\code{run\_all\_bases(context, dataset, bases=None, \ldots)}} — chama
+        \code{run\_basis\_experiment} para \textbf{todas} as bases registradas em
+        \code{core.Basis.available()} (ou para um subconjunto, se \code{bases} for informado). É o
+        modo de uso mais comum do projeto: comparar todas as bases de uma vez, para um mesmo
+        contexto/dataset.
+  \item \textbf{\code{run\_baseline\_experiment(model\_name, dataset, \ldots)}} — roda um baseline
+        externo (\code{logreg}, \code{knn}). \textbf{Não} faz parte da comparação de bases; serve
+        apenas de referência metodológica (``o FEMa com a melhor base é competitivo com um
+        classificador simples?''). Persiste, isolado, em
+        \code{results/external\_baselines/<model\_name>/<dataset>/<experiment\_name>/}.
+\end{itemize}
+
+Os três compartilham o mesmo motor interno, \code{\_execute(scope, plugin, dataset, \ldots)}, que
+implementa o fluxo completo:
+
+\begin{enumerate}
+  \item Fixa a seed global (\code{utils.seeding.set\_global\_seed}).
+  \item Carrega o dataset (\code{datasets.loader.load\_dataset}).
+  \item Gera as combinações de hiperparâmetros a avaliar (\code{tuning.param\_space.generate\_combinations}).
+  \item Consulta o checkpoint (\code{persistence.checkpoint.get\_completed\_keys}) para saber o que
+        já foi feito.
+  \item Para cada combinação $\times$ cada fold de validação cruzada ainda não executado: treina e
+        avalia (\code{evaluation.cv\_evaluator.evaluate\_fold}), mede o tempo de execução
+        (\code{utils.timing.timer}), e grava o resultado imediatamente
+        (\code{persistence.run\_writer.write\_run\_atomic}) — nunca espera o fim de tudo para
+        persistir nada.
+  \item Constrói o resumo (\code{persistence.summary\_builder.build\_summary}), que identifica a
+        melhor combinação de hiperparâmetros.
+  \item Retreina um modelo final com essa combinação, no conjunto de treino completo
+        (\code{training.final\_fit.fit\_final\_model}).
+  \item Avalia esse modelo final, uma única vez, no conjunto de teste
+        (\code{evaluation.test\_evaluator.evaluate\_on\_test}), e grava o resultado
+        (\code{persistence.run\_writer.write\_test\_results}).
+\end{enumerate}
+
+O motor \textbf{não sabe} se \code{plugin} é o FEMa ou um baseline externo — fala apenas com o
+contrato \code{ModelPlugin} (Capítulo~\ref{ch:models}). A diferença entre
+\code{run\_basis\_experiment} e \code{run\_baseline\_experiment} está inteiramente em \emph{como
+cada uma monta o \code{scope} (caminho de resultados) e os \code{metric\_names}/\code{ranking\_metric}
+padrão} antes de chamar \code{\_execute}.
+
+Note, em particular, que \code{run\_basis\_experiment} escolhe as métricas e a métrica de
+\emph{ranking} \textbf{padrão} de acordo com o contexto:
+
+\begin{lstlisting}
+is_classifier = context == "classifier"
+default_metrics = DEFAULT_CLASSIFICATION_METRICS if is_classifier else DEFAULT_REGRESSION_METRICS
+default_ranking = "f1" if is_classifier else "rmse"
+\end{lstlisting}
+
+Isso é o que torna a análise de regressão (Seção~\ref{sec:expansao-regressao}) uma questão de
+\emph{configuração}, e não de código novo: bastam um dataset com alvo contínuo e
+\code{context="regressor"}.
+
+\section{\arq{run\_from\_experiment\_file} — roteamento de configuração}
+
+L� \code{configs/base.yaml} (defaults globais) e o YAML do experimento (Capítulo~\ref{ch:configs}),
+combina os dois, e decide qual das três funções acima chamar, com base no \emph{schema} do YAML:
+
+\begin{itemize}
+  \item Se o YAML contém a chave \code{basis} (uma base) ou \code{all\_bases: true} $\to$
+        experimento do FEMa (\code{run\_basis\_experiment} ou \code{run\_all\_bases}). A chave
+        \code{context} é opcional, com \emph{default} \code{"classifier"}.
+  \item Se contém a chave \code{model} $\to$ baseline externo
+        (\code{run\_baseline\_experiment}).
+\end{itemize}
+
+Isso significa que, na prática, o usuário quase nunca chama \code{run\_basis\_experiment} ou
+\code{run\_baseline\_experiment} diretamente — escreve um arquivo YAML pequeno
+(Capítulo~\ref{ch:configs}) e roda via \arq{main.py} (Capítulo~\ref{ch:main}).
+
+\chapter{Relatórios e comparação de bases: \arq{reporting/}}
+\label{ch:reporting}
+
+\section{\arq{compare\_bases.py} — o módulo ativo}
+
+Este é o módulo que materializa a pergunta de pesquisa do projeto: lê os \code{summary.json} e
+\code{test\_results.json} de cada base já rodada (via
+\code{pipeline.run\_model.run\_basis\_experiment}/\code{run\_all\_bases}) e produz, num único
+ponto de entrada:
+
+\begin{lstlisting}
+from reporting.compare_bases import run_full_comparison
+
+run_full_comparison(
+    context="classifier", dataset="fetal_health", experiment_name="baseline",
+    output_dir="reports/basis_comparison/classifier/fetal_health",
+)
+\end{lstlisting}
+
+\begin{itemize}
+  \item \code{comparison\_table.csv} — uma linha por base, uma coluna por métrica de teste
+        (na ordem canônica de \code{metrics.registry.metrics\_for\_context}), mais a melhor
+        combinação de hiperparâmetros de cada base.
+  \item \code{comparison.json} — o mesmo conteúdo, em JSON, mais um \code{ranking\_per\_metric}:
+        para cada métrica, as bases ordenadas da melhor para a pior (respeitando
+        \code{HIGHER\_IS\_BETTER}).
+  \item \code{plots/bar\_<metrica>.png} — um gráfico de barras por métrica, todas as bases lado a
+        lado, gerado para \textbf{toda} métrica registrada para o contexto que tenha ao menos um
+        valor disponível.
+  \item \code{plots/curve\_<metrica>\_vs\_k.png} — uma curva de sensibilidade a $k$ por base
+        (uma linha por base), construída a partir do \code{ranking} de validação cruzada de cada
+        \code{summary.json} — \textbf{não} do teste, já que o teste só produz um único ponto por
+        base, insuficiente para uma curva. A própria docstring da função documenta uma
+        limitação conhecida: como o \emph{random search} varia o parâmetro próprio de cada base
+        (\code{z}, \code{epsilon}, \ldots) simultaneamente a \code{k}, os pontos de uma mesma
+        base podem não formar uma curva estritamente monotônica em \code{k} — o valor no eixo
+        $Y$ para um dado \code{k} é de \textbf{uma} combinação específica sorteada com aquele
+        \code{k}, não uma média marginal sobre o parâmetro próprio da base. Para uma curva
+        estritamente marginal em \code{k}, é preciso rodar um experimento com
+        \code{fixed\_hyperparameters} variando apenas \code{k}.
+\end{itemize}
+
+Os resultados de exemplo já presentes no repositório
+(\arq{reports/basis\_comparison/classifier/fetal\_health/}) foram gerados exatamente por esse
+fluxo, sobre o dataset \code{fetal\_health}.
+
+\section{\arq{compare\_models.py} — arquivo legado, não utilizado}
+
+Este arquivo é uma versão \textbf{anterior} de \code{compare\_bases.py} — de fato, sua própria
+docstring já afirma ``\emph{esta é a substituição de reporting/compare\_models.py (removido)}'',
+mas o arquivo antigo, na prática, não foi removido do repositório, apenas duplicado com o novo
+nome. \code{reporting/\_\_init\_\_.py} importa exclusivamente de \code{compare\_bases}, então
+\code{compare\_models.py} \textbf{não é executado por nenhum caminho de código ativo do
+projeto} atualmente. Recomenda-se removê-lo numa próxima limpeza, para não confundir alguém que o
+encontre e não perceba que está obsoleto (ver Capítulo~\ref{ch:legado}).
+
+\section{\arq{plots.py} e \arq{curves.py} — utilitários de visualização gerais}
+
+Dois módulos independentes de \code{compare\_bases.py}, com funções de plotagem mais genéricas
+(matriz de confusão, curva ROC/PR a partir de \code{y\_score}, gráfico de valor previsto vs.\ real
+para regressão) e o cálculo manual (sem dependência além de \emph{numpy}) de curvas ROC e
+precision-recall em \code{curves.py}. Não são chamados automaticamente por nenhum pipeline —
+existem como ferramentas prontas para uso pontual/exploratório (por exemplo, dentro de um notebook
+de análise).
+
+\chapter{Utilitários: \arq{utils/}}
+
+\begin{itemize}
+  \item \code{logging\_config.py::get\_logger(name)} — logger único por módulo, formato
+        padronizado, grava simultaneamente em \emph{stdout} e em \code{logs/pipeline.log}. Evita
+        handlers duplicados em reimportações.
+  \item \code{seeding.py} — \code{set\_global\_seed(seed)} fixa as sementes de \code{random} e
+        \emph{numpy}; \code{derive\_seed(master\_seed, *parts)} deriva, via \emph{hash} SHA-256
+        estável, uma seed determinística a partir de identificadores arbitrários (nome do plugin,
+        \code{combo\_id}, índice de fold, índice de repetição, \ldots). Isso garante que o
+        \textbf{mesmo} fold/repetição sempre receba a \textbf{mesma} seed entre execuções
+        diferentes — condição necessária tanto para reprodutibilidade quanto para o checkpoint.
+  \item \code{timing.py::timer()} — \emph{context manager} simples para medir tempo decorrido
+        (usado para registrar \code{execution\_time\_seconds} em cada \code{run\_*.json}).
+  \item \code{hashing.py::stable\_hash} / \code{run\_identity} — geração de hashes SHA-256
+        determinísticos a partir de dicionários (canonicalizando chaves ordenadas e arredondando
+        \emph{floats} para evitar que \code{0.1} vs.\ \code{0.100000000000001} gerem hashes
+        diferentes). \textbf{Não é mais usado} pelo sistema de checkpoint atual (que usa
+        \code{combo\_id} + índices de fold/repetição diretamente, ver
+        Capítulo~\ref{ch:persistence}) — é um remanescente de uma versão anterior do checkpoint,
+        que identificava cada execução por um hash único. Mantido no repositório por ser
+        potencialmente reaproveitável, mas hoje um código morto do ponto de vista do pipeline
+        principal.
+  \item \code{hardware\_info.py::get\_hardware\_info} / \code{get\_code\_version} — coleta
+        informação de plataforma, contagem de CPUs, disponibilidade de GPU/\emph{CUDA} (via
+        \emph{torch}, se instalado) e o \emph{commit} \emph{git} atual. Também \textbf{não é
+        chamado} por nenhum ponto do pipeline atual — outro remanescente disponível para uso
+        futuro (por exemplo, anexar essas informações a cada \code{run\_*.json}, para auditar em
+        que máquina/versão do código cada resultado foi gerado).
+\end{itemize}
+
+\chapter{Configuração declarativa: \arq{configs/}}
+\label{ch:configs}
+
+\section{\arq{base.yaml} — defaults globais}
+
+\begin{lstlisting}[style=yaml]
+master_seed: 42
+cross_validation:
+  strategy: repeated_stratified_kfold
+  n_splits: 5
+  n_repeats: 3
+tuning:
+  strategy: random_search
+  n_iter: 20
+metrics: [accuracy, f1, balanced_accuracy, mcc]
+ranking_metric: f1
+higher_is_better: true
+run_final_test: true
+\end{lstlisting}
+
+Todo campo aqui pode ser sobrescrito por um YAML de experimento individual.
+
+\section{\arq{experiments/*.yaml} — um arquivo por experimento}
+
+Quatro exemplos já presentes ilustram os dois \emph{schemas} de experimento reconhecidos por
+\code{run\_from\_experiment\_file} (Capítulo~\ref{ch:pipeline}):
+
+\begin{lstlisting}[style=yaml]
+# fema_baseline.yaml — roda TODAS as bases para um contexto/dataset
+context: classifier
+all_bases: true
+dataset: fetal_health
+experiment_name: baseline
+tuning_strategy: random_search
+tuning_n_iter: 20
+\end{lstlisting}
+
+\begin{lstlisting}[style=yaml]
+# fema_shepard_only.yaml — escopado a UMA UNICA base
+context: classifier
+basis: shepard
+dataset: fetal_health
+experiment_name: baseline
+\end{lstlisting}
+
+\begin{lstlisting}[style=yaml]
+# knn.yaml — baseline externo, fora da comparacao de bases
+model: knn
+dataset: fetal_health
+experiment_name: baseline
+\end{lstlisting}
+
+\code{smoke\_test.yaml} roda o baseline \code{logreg} sobre o dataset sintético, com validação
+cruzada reduzida (3 \emph{folds}, 1 repetição) e apenas 3 iterações de \emph{random search} —
+existe para validar rapidamente que o pipeline inteiro (do carregamento de dados à avaliação no
+teste) funciona de ponta a ponta, sem esperar o tempo de um experimento real.
+
+\chapter{Ponto de entrada: \arq{main.py}}
+\label{ch:main}
+
+A interface de linha de comando cobre quatro modos de uso, que podem ser combinados:
+
+\begin{lstlisting}[style=yaml]
+# Roda um ou mais experimentos a partir de arquivo(s) YAML
+python main.py --experiment configs/experiments/fema_baseline.yaml
+
+# Roda todas as bases diretamente por flags (sem YAML)
+python main.py --context classifier --all-bases --dataset fetal_health
+
+# Roda uma unica base
+python main.py --context classifier --basis shepard --dataset fetal_health
+
+# Aciona a comparacao entre bases ja rodadas (nao roda experimentos)
+python main.py --compare --context classifier --dataset fetal_health
+
+# Roda todas as bases E compara em seguida, num unico comando
+python main.py --context classifier --all-bases --dataset fetal_health --compare
+
+# Baseline externo
+python main.py --baseline-model knn --dataset fetal_health
+\end{lstlisting}
+
+A flag \code{--compare} não roda nenhum experimento por si só — ela lê os resultados já
+persistidos em \code{results/<context>/<basis>/<dataset>/<experiment\_name>/} e gera a tabela, o
+JSON consolidado e os gráficos via \code{reporting.compare\_bases.run\_full\_comparison}
+(Capítulo~\ref{ch:reporting}). Pode ser combinada com \code{--all-bases} para, num único comando,
+rodar todas as bases e já produzir a comparação em seguida.
+
+\chapter{Testes: \arq{tests/}}
+
+\section{\arq{test\_pipeline.py} — testes de fumaça do pipeline}
+
+Usa o dataset sintético (rápido, sem depender de arquivos externos) para validar, de ponta a
+ponta: que o FEMa treina e prediz corretamente (\code{test\_fema\_classifier\_end\_to\_end}, com
+um exemplo geometricamente óbvio — dois agrupamentos bem separados); que
+\code{run\_basis\_experiment} persiste no caminho correto,
+\code{results/<context>/<basis>/<dataset>/<experiment\_name>/}; que
+\code{run\_baseline\_experiment} persiste isolado em
+\code{results/external\_baselines/\ldots}; e que o checkpoint efetivamente evita duplicar
+execuções (roda o mesmo experimento duas vezes e confere que o número de arquivos
+\code{run\_*.json} não muda na segunda vez).
+
+\section{\arq{test\_reporting.py} — testes do módulo de comparação}
+
+Roda \code{run\_all\_bases} sobre um pequeno subconjunto de bases (\code{shepard}, \code{radial},
+\code{rbf\_gaussian}) no dataset sintético, usando \textbf{todas} as métricas registradas para o
+contexto (não um subconjunto reduzido), e confere que: cada linha da comparação traz todas as
+métricas esperadas; o JSON consolidado e o CSV contêm exatamente essas métricas; e
+\code{run\_full\_comparison} gera um gráfico de barras \textbf{e} uma curva de $k$ para
+\textbf{cada} métrica registrada — nenhuma a mais, nenhuma a menos.
+
+\section{\arq{tests/linear\_algebra/} — validação matemática das bases}
+
+Dois arquivos com sobreposição significativa de conteúdo: \code{math\_validation.py} (mais antigo)
+e \code{validation.py} (mais recente e mais completo — ver Capítulo~\ref{ch:legado}). Ambos
+implementam um \emph{harness} que verifica propriedades matemáticas de cada base registrada em
+\code{Basis.available()}, automaticamente (sem precisar listar as bases manualmente): sanidade
+estrutural (não levantar exceção nem retornar \code{NaN}), partição da unidade
+($\sum w_i = 1$), não-negatividade, igualdade de pesos para distâncias iguais, monotonicidade, e
+uma métrica específica do domínio chamada \textbf{\emph{leakage}} (vazamento de interpolação).
+
+A ideia de \emph{leakage} merece destaque por ser conceitualmente central à validação: o que
+importa para a qualidade da interpolação não é o vetor de pesos em si comparado a um ``vetor
+ideal'' $[1, 0, 0, \ldots]$, mas sim o quanto a predição final \textbf{pode} se afastar do valor
+verdadeiro no pior caso. Com partição da unidade e o vizinho de distância zero no índice $j$:
+$$\text{predição} - y_j = \sum_i w_i (y_i - y_j) \quad\Rightarrow\quad
+|\text{predição} - y_j| \le (1 - w_j)\max_i|y_i - y_j|.$$
+O termo $(1-w_j)$ — a soma dos pesos em todos os vizinhos \textbf{exceto} o de distância zero — é
+o \emph{leakage}: simultaneamente o limite superior do erro de interpolação e um valor atingível.
+A versão mais recente (\code{validation.py}) vai além da dedução algébrica e verifica isso
+\textbf{empiricamente} (\code{check\_leakage\_matches\_worst\_case\_prediction}): monta um caso
+sintético de pior caso ($y_j=0$, $y_i=1$ nos demais) e confere que a predição real bate com a
+fórmula fechada do \emph{leakage}.
+
+\code{validation.py} também inclui \code{SWEEP\_CONFIG}: para cada base, qual campo de
+\code{BasisParameters} é o ``parâmetro de escala'' (o que controla a concentração da função perto
+de $d=0$) e em que faixa varrê-lo, permitindo auditar como o \emph{leakage} muda conforme esse
+parâmetro varia — inclusive documentando, na própria configuração, os casos em que uma base
+\textbf{não tem} hoje um parâmetro de escala (\code{lorentzian}, \code{attention}), o que é
+descrito como uma limitação real da fórmula atual, não uma omissão do harness.
+
+\chapter{Código legado e pendências}
+\label{ch:legado}
+
+Para que este documento seja útil como mapa fiel do repositório (e não apenas da arquitetura
+``ideal''), vale registrar explicitamente o que existe no código hoje mas não faz parte do
+caminho ativo:
+
+\begin{itemize}
+  \item \textbf{\arq{src/}} — a árvore de módulos anterior à arquitetura atual
+        (\code{config.py}, \code{cross\_validation.py}, \code{curves.py}, \code{datasets.py},
+        \code{metrics.py}, \code{models.py}, \code{persistence.py}, \code{pipeline.py},
+        \code{plots.py}, \code{tuning.py}, \code{utils.py}). Nenhum módulo fora de \arq{src/}
+        importa nada dela. É segura para remoção; foi mantida até aqui apenas como referência
+        histórica de como o projeto era organizado antes da divisão em camadas descrita neste
+        documento.
+  \item \textbf{\arq{reporting/compare\_models.py}} — versão anterior de
+        \code{compare\_bases.py} (Seção~\ref{ch:reporting}), não referenciada por
+        \code{reporting/\_\_init\_\_.py} nem por nenhum outro módulo. Candidato a remoção.
+  \item \textbf{\arq{models/mlp.py}} — implementado, mas não registrado em
+        \code{models/registry.py::\_PLUGINS}. Re-habilitá-lo é uma mudança de uma linha (ver
+        Seção~\ref{sec:expansao-modelos}).
+  \item \textbf{\arq{utils/hashing.py}} e \textbf{\arq{utils/hardware\_info.py}} — utilitários
+        funcionais, mas não chamados por nenhum ponto do pipeline atual (o checkpoint usa
+        \code{combo\_id} + índices de fold/repetição, não hashes; nenhum \code{run\_*.json} grava
+        informação de hardware hoje). Ficam disponíveis para uso futuro.
+  \item \textbf{\arq{tests/linear\_algebra/math\_validation.py}} — sobreposto por
+        \code{validation.py} (mais completo, com verificação empírica de \emph{leakage} e
+        \code{SWEEP\_CONFIG}). Mantido, mas duplica boa parte do conteúdo do arquivo mais novo.
+  \item \textbf{\arq{teste.ipynb}} — notebook de uso exploratório, fora do escopo desta
+        documentação (não faz parte do pipeline reprodutível).
+\end{itemize}
+
+Nenhum destes pontos é urgente — o pipeline funciona corretamente com eles presentes —, mas vale
+uma limpeza numa próxima iteração, para reduzir a chance de alguém editar por engano um arquivo
+que não é mais executado.
+
+\chapter{Como expandir o projeto}
+\label{ch:expansao}
+
+Este capítulo é o mais orientado à ação: cobre, com passos concretos, as quatro direções de
+expansão mais prováveis para este projeto. Em todos os casos, a resposta curta é a mesma —
+\textbf{a arquitetura em camadas foi desenhada exatamente para que essas expansões não exijam
+tocar em \arq{core/}, \arq{pipeline/}, \arq{persistence/}, \arq{training/} ou
+\arq{evaluation/}}. Cada extensão se resume a adicionar um arquivo pequeno (ou uma entrada em um
+dicionário) na camada correspondente.
+
+\section{Adicionando um novo dataset}
+\label{sec:expansao-dataset}
+
+Passos:
+
+\begin{enumerate}
+  \item Coloque o CSV em \arq{data/raw/}.
+  \item Adicione uma entrada em \code{datasets/registry.py::\_REGISTRY}:
+\begin{lstlisting}
+"meu_dataset": DatasetSpec(
+    name="meu_dataset",
+    csv_path=DATA_RAW / "meu_arquivo.csv",
+    target_column="minha_coluna_alvo",
+    drop_columns=("id",),        # opcional
+    delimiter=",",                 # opcional, default ja e' ","
+),
+\end{lstlisting}
+  \item Pronto — \code{datasets.loader.load\_dataset("meu\_dataset")} já funciona, com split
+        treino/validação/teste determinístico e padronização automática. Nenhum outro arquivo
+        precisa ser tocado: qualquer experimento (FEMa ou baseline) passa a poder usar
+        \code{dataset: meu\_dataset} no YAML (Capítulo~\ref{ch:configs}).
+\end{enumerate}
+
+Se o alvo for \textbf{contínuo} (dataset de regressão), não é preciso nenhum passo adicional
+aqui — \code{loader.py} já detecta automaticamente se a coluna-alvo é numérica ou categórica.
+A diferenciação entre classificação e regressão acontece na escolha do \code{context} ao rodar o
+experimento (próxima seção), não no cadastro do dataset.
+
+\section{Adicionando uma nova base de interpolação ao FEMa}
+\label{sec:expansao-base}
+
+Este é o fluxo de expansão mais frequente do projeto, e o mais bem pavimentado — a própria
+existência de \code{Basis.available()} como fonte única de verdade (Seção~\ref{sec:factory}) foi
+desenhada para isso.
+
+\begin{enumerate}
+  \item Crie \arq{core/math/basis/minha\_base.py}:
+\begin{lstlisting}
+import numpy as np
+from .base_basis import BaseBasis, DELTA
+from .parameters import BasisParameters
+
+class MinhaBase(BaseBasis):
+    """phi(d) = ... (descreva a formula e cite a referencia, se houver)."""
+    PARAMS = ("epsilon",)  # os campos de BasisParameters que a formula usa
+
+    def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+        epsilon = self._require(params)["epsilon"]
+        dists = np.where(dists == 0, DELTA, dists)  # se houver risco de divisao por zero
+        return ...  # a formula em si
+\end{lstlisting}
+        Não implemente \code{compute\_weights} — a normalização já está pronta em
+        \code{BaseBasis} (Seção~\ref{sec:factory-basis}).
+  \item Registre em \code{core/math/basis/factory\_basis.py}:
+\begin{lstlisting}
+from .minha_base import MinhaBase
+_CLASSES = {
+    ...,
+    "minha_base": MinhaBase,
+}
+\end{lstlisting}
+  \item Adicione a entrada correspondente em \code{core/math/basis/\_\_init\_\_.py}
+        (\code{import} + \code{\_\_all\_\_}), para consistência com as demais bases.
+  \item Em \code{models/fema.py}, adicione a faixa de busca de hiperparâmetros em
+        \textbf{ambos} \code{PARAM\_GRIDS} e \code{RANDOM\_SEARCH\_SPACES}:
+\begin{lstlisting}
+PARAM_GRIDS["minha_base"] = {"epsilon": [0.1, 1.0, 5.0, 20.0]}
+RANDOM_SEARCH_SPACES["minha_base"] = {"epsilon": ("loguniform", 0.1, 50.0)}
+\end{lstlisting}
+        Se esquecer este passo, \code{\_validate\_basis\_entry} levanta um \code{ValueError}
+        claro assim que alguém tentar instanciar \code{FEMaPlugin(context=\ldots,
+        basis="minha\_base")} — o erro aparece na hora certa (construção do plugin), não no meio
+        de um tuning de horas.
+  \item (Recomendado) Adicione uma entrada em \code{SWEEP\_CONFIG}, em
+        \code{tests/linear\_algebra/validation.py}, para que a nova base seja incluída
+        automaticamente na varredura de validação matemática (partição da unidade,
+        monotonicidade, \emph{leakage}, \ldots — Capítulo~\ref{ch:legado}).
+\end{enumerate}
+
+A partir daqui, a nova base já aparece automaticamente em \code{Basis.available()}, e portanto:
+já pode ser usada em \code{basis: minha\_base} num YAML de experimento
+(Seção~\ref{sec:models-fema}); já é incluída quando alguém roda \code{all\_bases: true}; e já
+aparece automaticamente nas tabelas e gráficos de \code{reporting/compare\_bases.py}
+(Capítulo~\ref{ch:reporting}) — nenhum desses três lugares precisa ser editado manualmente.
+
+\section{Habilitando análise de regressão}
+\label{sec:expansao-regressao}
+
+Este é talvez o ponto mais importante deste capítulo: \textbf{a análise de regressão já está
+implementada} — \code{FEMaRegressor} existe em \arq{core/models/fema\_regressor.py}
+desde a base do projeto, \code{FEMaPlugin} já aceita \code{context="regressor"}
+(Seção~\ref{sec:models-fema}), e \code{metrics/regression.py} já define as cinco métricas de
+regressão (\code{mae}, \code{mse}, \code{rmse}, \code{r2}, \code{mape}). O que falta para rodar
+um experimento de regressão de ponta a ponta é apenas:
+
+\begin{enumerate}
+  \item Um dataset com alvo \textbf{contínuo} registrado em \code{datasets/registry.py}
+        (Seção~\ref{sec:expansao-dataset}) — nenhum dos quatro datasets atuais tem alvo contínuo,
+        então este é o único passo genuinamente necessário.
+  \item Rodar (ou escrever um YAML) com \code{context: regressor}:
+\begin{lstlisting}
+from pipeline.run_model import run_all_bases
+run_all_bases(context="regressor", dataset="meu_dataset_continuo")
+\end{lstlisting}
+        ou, via YAML:
+\begin{lstlisting}[style=yaml]
+context: regressor
+all_bases: true
+dataset: meu_dataset_continuo
+experiment_name: baseline
+\end{lstlisting}
+\end{enumerate}
+
+A partir daí, todo o resto do pipeline já se adapta automaticamente: \code{run\_basis\_experiment}
+já troca as métricas e a métrica de \emph{ranking} padrão para as de regressão
+(\code{DEFAULT\_REGRESSION\_METRICS}, \code{ranking\_metric="rmse"} — Capítulo~\ref{ch:pipeline});
+\code{\_FEMaEstimator} já instancia \code{FEMaRegressor} em vez de \code{FEMaClassifier}
+(Seção~\ref{sec:models-fema}); \code{evaluate\_fold}/\code{evaluate\_on\_test} já chamam
+\code{metrics.registry.compute\_all} com as métricas de regressão corretas; e os resultados vão
+para \code{results/regressor/<basis>/<dataset>/<experiment\_name>/}, paralelo à árvore de
+classificação, sem colidir com ela. \code{reporting.compare\_bases.run\_full\_comparison(context=
+"regressor", \ldots)} já produz a tabela e os gráficos comparando as bases também neste contexto.
+
+Em suma: nenhuma linha de \arq{core/}, \arq{pipeline/}, \arq{metrics/}, \arq{models/} ou
+\arq{reporting/} precisa ser alterada para habilitar regressão — a única lacuna real é a ausência,
+hoje, de um dataset de regressão cadastrado.
+
+\section{Comparando com outros modelos (baselines)}
+\label{sec:expansao-modelos}
+
+Existem dois casos distintos aqui, que vale diferenciar:
+
+\subsection{Re-habilitar um baseline já implementado (MLP)}
+
+Como observado no Capítulo~\ref{ch:legado}, \code{models/mlp.py} já existe e é funcional — só não
+está no registro. Basta:
+
+\begin{lstlisting}
+# models/registry.py
+from models.knn import KNNPlugin
+from models.logreg import LogRegPlugin
+from models.mlp import MLPPlugin          # adicionar este import
+
+_PLUGINS = {
+    "logreg": LogRegPlugin(),
+    "knn": KNNPlugin(),
+    "mlp": MLPPlugin(),                    # adicionar esta linha
+}
+\end{lstlisting}
+
+A partir daí, \code{model: mlp} já funciona em qualquer YAML de experimento, exatamente como
+\code{logreg}/\code{knn}.
+
+\subsection{Adicionar um baseline totalmente novo}
+
+Passos, usando como exemplo um \code{RandomForestClassifier} do scikit-learn:
+
+\begin{enumerate}
+  \item Crie \arq{models/random\_forest.py}:
+\begin{lstlisting}
+from typing import Any, Dict
+from sklearn.ensemble import RandomForestClassifier
+from models.base import ModelPlugin
+
+class RandomForestPlugin(ModelPlugin):
+    name = "random_forest"
+    supports_proba = True
+
+    def create_model(self, params: Dict[str, Any], random_state: int):
+        return RandomForestClassifier(
+            n_estimators=params.get("n_estimators", 200),
+            max_depth=params.get("max_depth", None),
+            random_state=random_state,
+        )
+
+    def parameter_grid(self) -> Dict[str, list]:
+        return {"n_estimators": [100, 200, 400], "max_depth": [None, 5, 10, 20]}
+
+    def random_search_space(self) -> Dict[str, Any]:
+        return {"n_estimators": ("randint", 50, 500), "max_depth": [None, 5, 10, 20, 40]}
+\end{lstlisting}
+  \item Registre em \code{models/registry.py::\_PLUGINS}, como acima.
+  \item Crie um YAML em \arq{configs/experiments/} com \code{model: random\_forest}, ou chame
+        \code{pipeline.run\_model.run\_baseline\_experiment(model\_name="random\_forest",
+        dataset=\ldots)} diretamente.
+\end{enumerate}
+
+Nenhuma outra camada precisa mudar: \code{training/}, \code{evaluation/},
+\code{tuning/} e \code{persistence/} já funcionam para qualquer \code{ModelPlugin}, seja ele o
+FEMa ou um baseline externo. A única diferença estrutural entre um baseline e o FEMa é que
+baselines usam um único nome fixo (\code{model\_name}) no registro, enquanto o FEMa é
+parametrizado por \code{(context, basis)} — mas isso é transparente para quem só quer adicionar
+\emph{mais um} baseline de comparação.
+
+Para incluir o novo baseline na mesma tabela comparativa das bases do FEMa, basta chamar
+\code{reporting.compare\_bases.compare} para o baseline separadamente (ele fica em
+\code{results/external\_baselines/random\_forest/\ldots}) e concatenar as linhas manualmente, ou
+escrever uma pequena função de comparação combinada — isso é o único ponto em que a separação
+deliberada entre ``comparação de bases'' e ``baselines externos'' (Seção~\ref{ch:reporting}) exige
+um passo manual extra, por design: o projeto não quer que um baseline externo apareça,
+por acidente, misturado no ranking de bases do FEMa.
+
+\section{Criando um novo experimento (YAML)}
+
+Para qualquer combinação já suportada pelo código (dataset $\times$ contexto $\times$ base, ou
+dataset $\times$ baseline), criar um novo experimento é só escrever um YAML novo em
+\arq{configs/experiments/}, seguindo um dos dois \emph{schemas} da
+Seção~\ref{ch:configs} — nunca é necessário editar \arq{pipeline/run\_model.py} para isso. Campos
+omitidos herdam de \code{configs/base.yaml}.
+
+\section{Adicionando uma nova métrica}
+
+\begin{enumerate}
+  \item Escreva a função em \code{metrics/classification.py} ou \code{metrics/regression.py},
+        seguindo o contrato de \code{metrics/contracts.py}
+        (\code{metric(y\_true, y\_pred, y\_score, n\_classes) -> Optional[float]}).
+  \item Registre em \code{metrics/registry.py}: uma entrada em \code{\_METRICS}, uma em
+        \code{HIGHER\_IS\_BETTER}, e inclua o nome em \code{CLASSIFICATION\_METRICS} ou
+        \code{REGRESSION\_METRICS}, conforme o caso.
+\end{enumerate}
+
+A partir daí, a métrica passa a estar disponível para \code{metric\_names} em qualquer YAML de
+experimento, para \code{ranking\_metric}, e é automaticamente incluída nas tabelas e nos gráficos
+de \code{reporting/compare\_bases.py} — nenhum desses três consumidores precisa ser editado.
+
+\section{Checklist resumo}
+
+\begin{center}
+\small
+\begin{longtable}{@{}p{4.3cm}p{9.5cm}@{}}
+\toprule
+\textbf{Quero...} & \textbf{Arquivo(s) a tocar} \\
+\midrule
+\endhead
+Novo dataset & \code{datasets/registry.py} (uma entrada) \\
+Nova base do FEMa & novo arquivo em \code{core/math/basis/} + \code{factory\_basis.py} +
+\code{core/math/basis/\_\_init\_\_.py} + \code{models/fema.py} (\code{PARAM\_GRIDS} e
+\code{RANDOM\_SEARCH\_SPACES}) \\
+Análise de regressão & apenas um dataset de alvo contínuo (Seção~\ref{sec:expansao-dataset}) +
+\code{context: regressor} na chamada/YAML \\
+Re-habilitar o MLP & \code{models/registry.py} (duas linhas) \\
+Novo baseline & novo arquivo em \code{models/} + \code{models/registry.py} \\
+Novo experimento & novo YAML em \code{configs/experiments/} \\
+Nova métrica & função em \code{metrics/classification.py} ou \code{regression.py} +
+\code{metrics/registry.py} \\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\chapter{Conclusão}
+
+A arquitetura descrita neste documento é o resultado de uma decisão de design consistente,
+repetida em cada camada: \textbf{isolar o que muda (experimentos, datasets, bases, métricas) do
+que não muda (a matemática em \arq{core/}, o motor de execução em
+\arq{pipeline/run\_model.py})}. Isso é o que torna o projeto extensível na prática, e não apenas
+em teoria — como ilustrado pelo Capítulo~\ref{ch:expansao}, cada uma das direções de expansão mais
+prováveis (novo dataset, nova base, regressão, novo baseline) se resume a um arquivo pequeno ou a
+uma entrada em um dicionário, nunca a uma reescrita de camadas já existentes.
+
+\end{document}
