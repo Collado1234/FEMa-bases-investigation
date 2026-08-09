@@ -26,7 +26,7 @@ linha de comando, sem precisar de um arquivo YAML.
 import argparse
 from pathlib import Path
 
-from pipeline.run_model import run_all_bases, run_baseline_experiment, run_basis_experiment, run_from_experiment_file
+from pipeline.run_model import run_all_bases, run_baseline_experiment, run_basis_experiment, run_from_experiment_file 
 from reporting.compare_bases import run_full_comparison
 
 

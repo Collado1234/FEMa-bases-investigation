@@ -73,6 +73,38 @@ def _make_synthetic(seed: int, n_samples=600, n_features=12, n_classes=3):
     )
 
 
+_SKLEARN_LOADERS = {
+    "digits": "load_digits",
+}
+
+
+def _load_sklearn_builtin(spec: DatasetSpec):
+    """Carrega um dataset embutido do sklearn (sempre a base COMPLETA,
+    todas as amostras) e, se `spec.class_filter` estiver definido, filtra
+    as LINHAS cujo rotulo esta nesse conjunto de classes - nao reduz o
+    numero de amostras dentro das classes mantidas."""
+    import sklearn.datasets as skds
+
+    loader_name = _SKLEARN_LOADERS.get(spec.sklearn_loader)
+    if loader_name is None:
+        raise ValueError(f"sklearn_loader '{spec.sklearn_loader}' nao suportado. Opcoes: {list(_SKLEARN_LOADERS)}")
+
+    bunch = getattr(skds, loader_name)()
+    X = np.asarray(bunch.data, dtype=np.float64)
+    y = np.asarray(bunch.target).astype(int)
+
+    if spec.class_filter is not None:
+        mask = np.isin(y, spec.class_filter)
+        X, y = X[mask], y[mask]
+        # remapeia os rotulos para 0..n_classes-1 contiguos (ex: digitos
+        # 0-4 ja sao 0..4, mas o remapeamento generico evita problemas
+        # caso o class_filter usado nao comece em 0 ou tenha buracos).
+        remap = {old: new for new, old in enumerate(sorted(spec.class_filter))}
+        y = np.array([remap[label] for label in y])
+
+    return X, y
+
+
 def load_dataset(
     dataset_name: str,
     seed: int = 42,
@@ -88,6 +120,8 @@ def load_dataset(
 
     if spec.synthetic:
         X, y = _make_synthetic(seed)
+    elif spec.sklearn_loader:
+        X, y = _load_sklearn_builtin(spec)
     else:
         X, y = _split_xy_from_csv(spec)
 

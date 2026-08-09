@@ -27,6 +27,13 @@ class DatasetSpec:
     drop_columns: Tuple[str, ...] = field(default_factory=tuple)
     delimiter: str = ","
     synthetic: bool = False
+    # Dataset embutido do sklearn (ex: "digits"), carregado via
+    # datasets/loader.py::_load_sklearn_builtin em vez de CSV. Usa sempre a
+    # base COMPLETA (todas as amostras) do sklearn; class_filter, se
+    # informado, apenas SELECIONA um subconjunto de classes dessa base
+    # completa (nao reduz amostras dentro das classes mantidas).
+    sklearn_loader: Optional[str] = None
+    class_filter: Optional[Tuple[int, ...]] = None
 
 
 _REGISTRY = {
@@ -53,6 +60,27 @@ _REGISTRY = {
         target_column=None,
         synthetic=True,
     ),
+    # Dataset de 5 classes do protocolo experimental (IC): base COMPLETA de
+    # digitos do sklearn (load_digits, 1797 amostras, 64 features/pixels,
+    # sem missing values, sem pre-processamento necessario alem do scale
+    # padrao ja feito por datasets/loader.py), filtrada para os digitos
+    # 0-4 (5 classes) - mantem TODAS as amostras dessas 5 classes na base
+    # completa, nao um subconjunto reduzido artificialmente.
+    "digits_5class": DatasetSpec(
+        name="digits_5class",
+        csv_path=None,
+        target_column=None,
+        sklearn_loader="digits",
+        class_filter=(0, 1, 2, 3, 4),
+    ),
+    # Base completa de digitos (10 classes), sem filtro - disponivel caso
+    # seja util para outras analises alem do protocolo de 3 datasets.
+    "digits": DatasetSpec(
+        name="digits",
+        csv_path=None,
+        target_column=None,
+        sklearn_loader="digits",
+    ),
 }
 
 
@@ -60,7 +88,7 @@ def get_dataset_spec(name: str) -> DatasetSpec:
     if name not in _REGISTRY:
         raise ValueError(f"Dataset '{name}' desconhecido. Opcoes: {available_datasets()}")
     spec = _REGISTRY[name]
-    if not spec.synthetic and not spec.csv_path.exists():
+    if not spec.synthetic and not spec.sklearn_loader and not spec.csv_path.exists():
         raise FileNotFoundError(f"Arquivo do dataset '{name}' nao encontrado em {spec.csv_path}.")
     return spec
 
