@@ -1,0 +1,19 @@
+{
+  "model": "knn",
+  "experiment": "baseline_knn",
+  "dataset": "fetal_health",
+  "best_hyperparameters": {
+    "n_neighbors": 5,
+    "weights": "distance",
+    "p": 1
+  },
+  "n_train_total": 1488,
+  "n_test": 319,
+  "metrics": {
+    "accuracy": 0.896551724137931,
+    "f1": 0.7935612429167446,
+    "balanced_accuracy": 0.7760037652510771,
+    "mcc": 0.7079246639443405
+  },
+  "timestamp": "2026-07-24T07:55:03.343234+00:00"
+}

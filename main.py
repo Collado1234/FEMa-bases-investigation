@@ -1,11 +1,17 @@
 """
-Ponto de entrada da linha de comando para o pipeline de treino, tuning e avaliação.
+Ponto de entrada da linha de comando para o pipeline de treino, tuning, avaliação e comparação de bases.
 
 Uso:
     # Comparação de bases do FEMa (objeto de estudo do projeto)
     python main.py --experiment configs/experiments/fema_baseline.yaml
     python main.py --context classifier --all-bases --dataset fetal_health
     python main.py --context classifier --basis shepard --dataset fetal_health
+
+    # Aciona a comparação entre bases já rodadas (CSV + JSON + plots)
+    python main.py --compare --context classifier --dataset fetal_health
+
+    # Roda todas as bases e já compara em seguida, num único comando
+    python main.py --context classifier --all-bases --dataset fetal_health --compare
 
     # Baseline externo (referência metodológica, fora da comparação de bases)
     python main.py --baseline-model knn --dataset fetal_health
@@ -20,7 +26,8 @@ linha de comando, sem precisar de um arquivo YAML.
 import argparse
 from pathlib import Path
 
-from pipeline.run_model import run_all_bases, run_baseline_experiment, run_basis_experiment, run_from_experiment_file
+from pipeline.run_model import run_all_bases, run_baseline_experiment, run_basis_experiment, run_from_experiment_file 
+from reporting.compare_bases import run_full_comparison
 
 
 def main():
@@ -61,13 +68,34 @@ def main():
     parser.add_argument(
         "--dataset",
         type=str,
-        choices=["fetal_health", "iris", "classification_data", "synthetic_demo"],
+        choices=[
+            "fetal_health", "iris", "classification_data",
+            "digits_5class", "digits", "breast_cancer", "wine",
+            "synthetic_demo",
+        ],
     )
     parser.add_argument(
         "--experiment-name",
         type=str,
         default="baseline",
-        help="Nome do experimento (usado quando --context/--basis ou --baseline-model são fornecidos).",
+        help="Nome do experimento (usado quando --context/--basis, --baseline-model ou --compare são fornecidos).",
+    )
+    parser.add_argument(
+        "--compare",
+        action="store_true",
+        help=(
+            "Aciona a comparacao entre bases (reporting/compare_bases.py::run_full_comparison) para "
+            "--context/--dataset/--experiment-name. NAO roda experimentos por si so' - le' resultados "
+            "ja' persistidos em results/<context>/<basis>/<dataset>/<experiment_name>/ e gera "
+            "tabela (CSV), JSON consolidado e plots em --output-dir. Pode ser combinado com "
+            "--all-bases (roda todas as bases e, em seguida, compara, num unico comando)."
+        ),
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default=None,
+        help="Diretorio de saida da comparacao (--compare). Default: reports/basis_comparison/<context>/<dataset>.",
     )
 
     args = parser.parse_args()
@@ -85,10 +113,23 @@ def main():
         run_baseline_experiment(
             model_name=args.baseline_model, dataset=args.dataset, experiment_name=args.experiment_name
         )
-    else:
+    elif not args.compare:
         parser.error(
             "Forneca --experiment <arquivo.yaml>, ou --context + (--basis|--all-bases) + --dataset, "
-            "ou --baseline-model + --dataset."
+            "ou --baseline-model + --dataset, ou --compare + --context + --dataset."
+        )
+
+    if args.compare:
+        if not (args.context and args.dataset):
+            parser.error("--compare precisa de --context e --dataset.")
+        output_dir = args.output_dir or f"reports/basis_comparison/{args.context}/{args.dataset}"
+        result = run_full_comparison(
+            context=args.context, dataset=args.dataset, experiment_name=args.experiment_name, output_dir=output_dir
+        )
+        print(f"Comparacao gravada em: {result['csv_path']}, {result['json_path']}")
+        print(
+            f"{len(result['bar_plot_paths'])} graficos de barra e {len(result['curve_plot_paths'])} "
+            f"curvas gerados em {output_dir}/plots/"
         )
 
 
