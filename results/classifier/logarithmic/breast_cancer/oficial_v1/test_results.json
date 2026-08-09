@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "logarithmic",
+  "experiment": "oficial_v1",
+  "dataset": "breast_cancer",
+  "best_hyperparameters": {
+    "k": 5,
+    "c": 0.01
+  },
+  "n_train_total": 397,
+  "n_test": 86,
+  "metrics": {
+    "accuracy": 0.9651162790697675,
+    "balanced_accuracy": 0.9594907407407407,
+    "precision": 0.9636363636363636,
+    "recall": 0.9814814814814815,
+    "f1": 0.9724770642201835,
+    "roc_auc": 0.9890046296296297,
+    "mcc": 0.9251591263913552,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9375,
+        "precision": 0.967741935483871,
+        "recall": 0.9375,
+        "f1": 0.9523809523809523,
+        "support": 32
+      },
+      "1": {
+        "accuracy": 0.9814814814814815,
+        "precision": 0.9636363636363636,
+        "recall": 0.9814814814814815,
+        "f1": 0.9724770642201835,
+        "support": 54
+      }
+    }
+  },
+  "timestamp": "2026-08-09T05:59:16.227314+00:00"
+}
