@@ -1,0 +1,94 @@
+{
+  "context": "classifier",
+  "basis": "cosine",
+  "experiment": "oficial_v1",
+  "dataset": "digits",
+  "best_hyperparameters": {
+    "k": 5,
+    "h": 5.0
+  },
+  "n_train_total": 1257,
+  "n_test": 270,
+  "metrics": {
+    "accuracy": 0.9666666666666667,
+    "balanced_accuracy": 0.9660968660968662,
+    "precision": 0.9684391534391533,
+    "recall": 0.9660968660968662,
+    "f1": 0.9659083612179588,
+    "roc_auc": 0.9935317732145299,
+    "mcc": 0.9632386046302993,
+    "per_class": {
+      "0": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 27
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.9,
+        "recall": 1.0,
+        "f1": 0.9473684210526315,
+        "support": 27
+      },
+      "2": {
+        "accuracy": 1.0,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "support": 27
+      },
+      "3": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 28
+      },
+      "4": {
+        "accuracy": 0.9629629629629629,
+        "precision": 0.9629629629629629,
+        "recall": 0.9629629629629629,
+        "f1": 0.9629629629629629,
+        "support": 27
+      },
+      "5": {
+        "accuracy": 1.0,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "support": 27
+      },
+      "6": {
+        "accuracy": 1.0,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "support": 27
+      },
+      "7": {
+        "accuracy": 0.9629629629629629,
+        "precision": 0.9285714285714286,
+        "recall": 0.9629629629629629,
+        "f1": 0.9454545454545454,
+        "support": 27
+      },
+      "8": {
+        "accuracy": 0.8461538461538461,
+        "precision": 1.0,
+        "recall": 0.8461538461538461,
+        "f1": 0.9166666666666666,
+        "support": 26
+      },
+      "9": {
+        "accuracy": 0.8888888888888888,
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "f1": 0.9411764705882353,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-08-09T06:27:09.073099+00:00"
+}
