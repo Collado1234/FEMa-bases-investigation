@@ -68,7 +68,11 @@ def main():
     parser.add_argument(
         "--dataset",
         type=str,
-        choices=["fetal_health", "iris", "classification_data", "synthetic_demo"],
+        choices=[
+            "fetal_health", "iris", "classification_data",
+            "digits_5class", "digits", "breast_cancer", "wine",
+            "synthetic_demo",
+        ],
     )
     parser.add_argument(
         "--experiment-name",

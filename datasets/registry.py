@@ -81,6 +81,22 @@ _REGISTRY = {
         target_column=None,
         sklearn_loader="digits",
     ),
+    # Breast Cancer Wisconsin (sklearn.load_breast_cancer): binario (2
+    # classes), 30 features, 569 amostras, sem missing values.
+    "breast_cancer": DatasetSpec(
+        name="breast_cancer",
+        csv_path=None,
+        target_column=None,
+        sklearn_loader="breast_cancer",
+    ),
+    # Wine (sklearn.load_wine): 3 classes, 13 features, 178 amostras, sem
+    # missing values.
+    "wine": DatasetSpec(
+        name="wine",
+        csv_path=None,
+        target_column=None,
+        sklearn_loader="wine",
+    ),
 }
 
 

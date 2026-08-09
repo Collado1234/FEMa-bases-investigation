@@ -61,7 +61,10 @@ def teardown_module(module):
 
 def test_compare_covers_all_registered_classification_metrics():
     """A linha de cada base deve trazer TODAS as metricas de
-    classificacao registradas em metrics.registry, nao um subconjunto."""
+    classificacao registradas em metrics.registry (mais o detalhamento
+    'per_class', que e' um campo suplementar - ver
+    metrics/classification.py::per_class_report - e nao faz parte do
+    registry generico de metricas escalares)."""
     rows = compare(context=CONTEXT, dataset=DATASET, experiment_name=EXPERIMENT_NAME, bases=BASES)
     expected_metrics = set(metrics_for_context(CONTEXT))
 
@@ -70,7 +73,9 @@ def test_compare_covers_all_registered_classification_metrics():
         assert row["status"] == "ok", row
         assert row["test_metrics"] is not None
         present = set(row["test_metrics"].keys())
-        assert present == expected_metrics, f"base={row['basis']}: esperado {expected_metrics}, obtido {present}"
+        missing = expected_metrics - present
+        assert not missing, f"base={row['basis']}: faltando {missing}, obtido {present}"
+        assert "per_class" in present, f"base={row['basis']}: 'per_class' deveria estar presente"
 
 
 def test_consolidate_and_save_json_json_contains_all_metrics():

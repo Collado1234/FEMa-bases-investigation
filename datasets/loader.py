@@ -75,6 +75,8 @@ def _make_synthetic(seed: int, n_samples=600, n_features=12, n_classes=3):
 
 _SKLEARN_LOADERS = {
     "digits": "load_digits",
+    "breast_cancer": "load_breast_cancer",
+    "wine": "load_wine",
 }
 
 
