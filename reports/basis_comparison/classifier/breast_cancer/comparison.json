@@ -1,0 +1,1378 @@
+{
+  "context": "classifier",
+  "dataset": "breast_cancer",
+  "experiment": "oficial_v1",
+  "generated_at": "2026-08-09T07:21:21.715082+00:00",
+  "metrics_compared": [
+    "accuracy",
+    "balanced_accuracy",
+    "precision",
+    "recall",
+    "f1",
+    "roc_auc",
+    "mcc"
+  ],
+  "bases": [
+    {
+      "context": "classifier",
+      "basis": "attention",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20
+      },
+      "n_combinations_evaluated": 4,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9918981481481481,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cauchy",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "epsilon": 1.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9918981481481481,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cosine",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9651162790697675,
+        "balanced_accuracy": 0.9594907407407407,
+        "precision": 0.9636363636363636,
+        "recall": 0.9814814814814815,
+        "f1": 0.9724770642201835,
+        "roc_auc": 0.9884259259259259,
+        "mcc": 0.9251591263913552,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 0.967741935483871,
+            "recall": 0.9375,
+            "f1": 0.9523809523809523,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 0.9814814814814815,
+            "precision": 0.9636363636363636,
+            "recall": 0.9814814814814815,
+            "f1": 0.9724770642201835,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cubic_spline",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 15,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9872685185185185,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "entropic",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 10,
+        "beta": 1.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9878472222222222,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "gen_exponential",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 10,
+        "epsilon": 1.0,
+        "p": 2.0
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9878472222222222,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "harmonic",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "nu": 1.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9918981481481481,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "inverse_multiquadratic",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 0.01
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9651162790697675,
+        "balanced_accuracy": 0.9594907407407407,
+        "precision": 0.9636363636363636,
+        "recall": 0.9814814814814815,
+        "f1": 0.9724770642201835,
+        "roc_auc": 0.9890046296296297,
+        "mcc": 0.9251591263913552,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 0.967741935483871,
+            "recall": 0.9375,
+            "f1": 0.9523809523809523,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 0.9814814814814815,
+            "precision": 0.9636363636363636,
+            "recall": 0.9814814814814815,
+            "f1": 0.9724770642201835,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "laplacian",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "epsilon": 1.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9918981481481481,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "logarithmic",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 0.01
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9651162790697675,
+        "balanced_accuracy": 0.9594907407407407,
+        "precision": 0.9636363636363636,
+        "recall": 0.9814814814814815,
+        "f1": 0.9724770642201835,
+        "roc_auc": 0.9890046296296297,
+        "mcc": 0.9251591263913552,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 0.967741935483871,
+            "recall": 0.9375,
+            "f1": 0.9523809523809523,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 0.9814814814814815,
+            "precision": 0.9636363636363636,
+            "recall": 0.9814814814814815,
+            "f1": 0.9724770642201835,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "lorentzian",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 10
+      },
+      "n_combinations_evaluated": 4,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9907407407407407,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "multiquadratic",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 0.1
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9651162790697675,
+        "balanced_accuracy": 0.9594907407407407,
+        "precision": 0.9636363636363636,
+        "recall": 0.9814814814814815,
+        "f1": 0.9724770642201835,
+        "roc_auc": 0.9884259259259259,
+        "mcc": 0.9251591263913552,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 0.967741935483871,
+            "recall": 0.9375,
+            "f1": 0.9523809523809523,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 0.9814814814814815,
+            "precision": 0.9636363636363636,
+            "recall": 0.9814814814814815,
+            "f1": 0.9724770642201835,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "quartic_spline",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 15,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9872685185185185,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "radial",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "z": 4.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9651162790697675,
+        "balanced_accuracy": 0.9594907407407407,
+        "precision": 0.9636363636363636,
+        "recall": 0.9814814814814815,
+        "f1": 0.9724770642201835,
+        "roc_auc": 0.9884259259259259,
+        "mcc": 0.9251591263913552,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 0.967741935483871,
+            "recall": 0.9375,
+            "f1": 0.9523809523809523,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 0.9814814814814815,
+            "precision": 0.9636363636363636,
+            "recall": 0.9814814814814815,
+            "f1": 0.9724770642201835,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rational_quadratic",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "alpha": 2.0,
+        "l": 0.01
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9907407407407407,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rbf_gaussian",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 10,
+        "epsilon": 1.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9878472222222222,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "shepard",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "z": 4.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9907407407407407,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "sigmoidal",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 10,
+        "alpha": 5.0,
+        "c": 2.0
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9861111111111112,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "softmax_radial",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "beta": 1.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9918981481481481,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "student_t",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "nu": 1.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9918981481481481,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "wendland_c2",
+      "dataset": "breast_cancer",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 15,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9767441860465116,
+        "balanced_accuracy": 0.96875,
+        "precision": 0.9642857142857143,
+        "recall": 1.0,
+        "f1": 0.9818181818181818,
+        "roc_auc": 0.9872685185185185,
+        "mcc": 0.9507985365695811,
+        "per_class": {
+          "0": {
+            "accuracy": 0.9375,
+            "precision": 1.0,
+            "recall": 0.9375,
+            "f1": 0.967741935483871,
+            "support": 32
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 54
+          }
+        }
+      }
+    }
+  ],
+  "ranking_per_metric": {
+    "accuracy": [
+      {
+        "basis": "attention",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9767441860465116
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9651162790697675
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9651162790697675
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9651162790697675
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9651162790697675
+      },
+      {
+        "basis": "radial",
+        "value": 0.9651162790697675
+      }
+    ],
+    "balanced_accuracy": [
+      {
+        "basis": "attention",
+        "value": 0.96875
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.96875
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.96875
+      },
+      {
+        "basis": "entropic",
+        "value": 0.96875
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.96875
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.96875
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.96875
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.96875
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.96875
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.96875
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.96875
+      },
+      {
+        "basis": "shepard",
+        "value": 0.96875
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.96875
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.96875
+      },
+      {
+        "basis": "student_t",
+        "value": 0.96875
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.96875
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9594907407407407
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9594907407407407
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9594907407407407
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9594907407407407
+      },
+      {
+        "basis": "radial",
+        "value": 0.9594907407407407
+      }
+    ],
+    "precision": [
+      {
+        "basis": "attention",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9642857142857143
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9636363636363636
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9636363636363636
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9636363636363636
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9636363636363636
+      },
+      {
+        "basis": "radial",
+        "value": 0.9636363636363636
+      }
+    ],
+    "recall": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9814814814814815
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9814814814814815
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9814814814814815
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9814814814814815
+      },
+      {
+        "basis": "radial",
+        "value": 0.9814814814814815
+      }
+    ],
+    "f1": [
+      {
+        "basis": "attention",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9818181818181818
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9724770642201835
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9724770642201835
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9724770642201835
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9724770642201835
+      },
+      {
+        "basis": "radial",
+        "value": 0.9724770642201835
+      }
+    ],
+    "roc_auc": [
+      {
+        "basis": "attention",
+        "value": 0.9918981481481481
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9918981481481481
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9918981481481481
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9918981481481481
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9918981481481481
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9918981481481481
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9907407407407407
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9907407407407407
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9907407407407407
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9890046296296297
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9890046296296297
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9884259259259259
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9884259259259259
+      },
+      {
+        "basis": "radial",
+        "value": 0.9884259259259259
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9878472222222222
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9878472222222222
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9878472222222222
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9872685185185185
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9872685185185185
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9872685185185185
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9861111111111112
+      }
+    ],
+    "mcc": [
+      {
+        "basis": "attention",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9507985365695811
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9251591263913552
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9251591263913552
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9251591263913552
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9251591263913552
+      },
+      {
+        "basis": "radial",
+        "value": 0.9251591263913552
+      }
+    ]
+  }
+}

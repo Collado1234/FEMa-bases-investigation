@@ -1,0 +1,2554 @@
+{
+  "context": "classifier",
+  "dataset": "digits",
+  "experiment": "oficial_v1",
+  "generated_at": "2026-08-09T07:25:50.612198+00:00",
+  "metrics_compared": [
+    "accuracy",
+    "balanced_accuracy",
+    "precision",
+    "recall",
+    "f1",
+    "roc_auc",
+    "mcc"
+  ],
+  "bases": [
+    {
+      "context": "classifier",
+      "basis": "attention",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5
+      },
+      "n_combinations_evaluated": 4,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9932324770372063,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cauchy",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "epsilon": 0.1
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9933925136169959,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cosine",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9660968660968662,
+        "precision": 0.9684391534391533,
+        "recall": 0.9660968660968662,
+        "f1": 0.9659083612179588,
+        "roc_auc": 0.9935317732145299,
+        "mcc": 0.9632386046302993,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.9473684210526315,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8461538461538461,
+            "precision": 1.0,
+            "recall": 0.8461538461538461,
+            "f1": 0.9166666666666666,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cubic_spline",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9660968660968662,
+        "precision": 0.9684391534391533,
+        "recall": 0.9660968660968662,
+        "f1": 0.9659083612179588,
+        "roc_auc": 0.9933864568671963,
+        "mcc": 0.9632386046302993,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.9473684210526315,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8461538461538461,
+            "precision": 1.0,
+            "recall": 0.8461538461538461,
+            "f1": 0.9166666666666666,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "entropic",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "beta": 20.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9629629629629629,
+        "balanced_accuracy": 0.9625356125356126,
+        "precision": 0.9652198503922642,
+        "recall": 0.9625356125356126,
+        "f1": 0.9627898868212889,
+        "roc_auc": 0.996848994536288,
+        "mcc": 0.9590785442584983,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.8666666666666667,
+            "recall": 0.9629629629629629,
+            "f1": 0.9122807017543859,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "gen_exponential",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "epsilon": 0.1,
+        "p": 1.0
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9932024774888752,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "harmonic",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "nu": 0.0001
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9677889071337347,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661791627559821,
+        "roc_auc": 0.9933925136169959,
+        "mcc": 0.9631363354610459,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "inverse_multiquadratic",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 0.01
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9677889071337347,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661791627559821,
+        "roc_auc": 0.9934839630911613,
+        "mcc": 0.9631363354610459,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "laplacian",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "epsilon": 0.1
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9932024774888752,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "logarithmic",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 0.01
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9677889071337347,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661791627559821,
+        "roc_auc": 0.9932248562476923,
+        "mcc": 0.9631363354610459,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "lorentzian",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5
+      },
+      "n_combinations_evaluated": 4,
+      "test_metrics": {
+        "accuracy": 0.9629629629629629,
+        "balanced_accuracy": 0.9623931623931623,
+        "precision": 0.9644637839810255,
+        "recall": 0.9623931623931623,
+        "f1": 0.9622788275022636,
+        "roc_auc": 0.9931175683742334,
+        "mcc": 0.9590773053252457,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.896551724137931,
+            "recall": 0.9629629629629629,
+            "f1": 0.9285714285714286,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8461538461538461,
+            "precision": 1.0,
+            "recall": 0.8461538461538461,
+            "f1": 0.9166666666666666,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "multiquadratic",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 0.1
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9629629629629629,
+        "balanced_accuracy": 0.9628103378103378,
+        "precision": 0.9637248677248678,
+        "recall": 0.9628103378103378,
+        "f1": 0.9627858067858067,
+        "roc_auc": 0.9931263073305845,
+        "mcc": 0.9589481778624939,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 0.9642857142857143,
+            "precision": 1.0,
+            "recall": 0.9642857142857143,
+            "f1": 0.9818181818181818,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.9230769230769231,
+            "precision": 1.0,
+            "recall": 0.9230769230769231,
+            "f1": 0.96,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "quartic_spline",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9660968660968662,
+        "precision": 0.9684391534391533,
+        "recall": 0.9660968660968662,
+        "f1": 0.9659083612179588,
+        "roc_auc": 0.9933864568671963,
+        "mcc": 0.9632386046302993,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.9473684210526315,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8461538461538461,
+            "precision": 1.0,
+            "recall": 0.8461538461538461,
+            "f1": 0.9166666666666666,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "radial",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "z": 0.05
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9629629629629629,
+        "balanced_accuracy": 0.9626678876678877,
+        "precision": 0.9640852034300309,
+        "recall": 0.9626678876678877,
+        "f1": 0.962544069686927,
+        "roc_auc": 0.9932937040266022,
+        "mcc": 0.9590206639755828,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 0.9642857142857143,
+            "precision": 1.0,
+            "recall": 0.9642857142857143,
+            "f1": 0.9818181818181818,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rational_quadratic",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "alpha": 0.5,
+        "l": 0.01
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9677889071337347,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661791627559821,
+        "roc_auc": 0.9934382383540786,
+        "mcc": 0.9631363354610459,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rbf_gaussian",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "epsilon": 0.1
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9931332935629852,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "shepard",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "z": 1.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9677889071337347,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661791627559821,
+        "roc_auc": 0.9932477186162337,
+        "mcc": 0.9631363354610459,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "sigmoidal",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "alpha": 0.5,
+        "c": 0.5
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9933924004064542,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "softmax_radial",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "beta": 0.1
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9932024774888752,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "student_t",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "nu": 0.0001
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9677889071337347,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661791627559821,
+        "roc_auc": 0.9933925136169959,
+        "mcc": 0.9631363354610459,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "wendland_c2",
+      "dataset": "digits",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9660968660968662,
+        "precision": 0.9684391534391533,
+        "recall": 0.9660968660968662,
+        "f1": 0.9659083612179588,
+        "roc_auc": 0.9935617350260134,
+        "mcc": 0.9632386046302993,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.9473684210526315,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8461538461538461,
+            "precision": 1.0,
+            "recall": 0.8461538461538461,
+            "f1": 0.9166666666666666,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 27
+          }
+        }
+      }
+    }
+  ],
+  "ranking_per_metric": {
+    "accuracy": [
+      {
+        "basis": "attention",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9666666666666667
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "radial",
+        "value": 0.9629629629629629
+      }
+    ],
+    "balanced_accuracy": [
+      {
+        "basis": "attention",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9628103378103378
+      },
+      {
+        "basis": "radial",
+        "value": 0.9626678876678877
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9625356125356126
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9623931623931623
+      }
+    ],
+    "precision": [
+      {
+        "basis": "cosine",
+        "value": 0.9684391534391533
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9684391534391533
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9684391534391533
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9684391534391533
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9677889071337347
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9677889071337347
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9677889071337347
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9677889071337347
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9677889071337347
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9677889071337347
+      },
+      {
+        "basis": "attention",
+        "value": 0.9676657544243753
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9676657544243753
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9676657544243753
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9676657544243753
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9676657544243753
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9676657544243753
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9676657544243753
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9652198503922642
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9644637839810255
+      },
+      {
+        "basis": "radial",
+        "value": 0.9640852034300309
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9637248677248678
+      }
+    ],
+    "recall": [
+      {
+        "basis": "attention",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9662393162393161
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9660968660968662
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9628103378103378
+      },
+      {
+        "basis": "radial",
+        "value": 0.9626678876678877
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9625356125356126
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9623931623931623
+      }
+    ],
+    "f1": [
+      {
+        "basis": "harmonic",
+        "value": 0.9661791627559821
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9661791627559821
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9661791627559821
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9661791627559821
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9661791627559821
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9661791627559821
+      },
+      {
+        "basis": "attention",
+        "value": 0.9661780235443167
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9661780235443167
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9661780235443167
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9661780235443167
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9661780235443167
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9661780235443167
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9661780235443167
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9659083612179588
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9659083612179588
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9659083612179588
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9659083612179588
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9627898868212889
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9627858067858067
+      },
+      {
+        "basis": "radial",
+        "value": 0.962544069686927
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9622788275022636
+      }
+    ],
+    "roc_auc": [
+      {
+        "basis": "entropic",
+        "value": 0.996848994536288
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9935617350260134
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9935317732145299
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9934839630911613
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9934382383540786
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9933925136169959
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9933925136169959
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9933925136169959
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9933924004064542
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9933864568671963
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9933864568671963
+      },
+      {
+        "basis": "radial",
+        "value": 0.9932937040266022
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9932477186162337
+      },
+      {
+        "basis": "attention",
+        "value": 0.9932324770372063
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9932248562476923
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9932024774888752
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9932024774888752
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9932024774888752
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9931332935629852
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9931263073305845
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9931175683742334
+      }
+    ],
+    "mcc": [
+      {
+        "basis": "cosine",
+        "value": 0.9632386046302993
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9632386046302993
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9632386046302993
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9632386046302993
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9631363354610459
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9631363354610459
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9631363354610459
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9631363354610459
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9631363354610459
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9631363354610459
+      },
+      {
+        "basis": "attention",
+        "value": 0.9631210899313987
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9631210899313987
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9631210899313987
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9631210899313987
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9631210899313987
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9631210899313987
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9631210899313987
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9590785442584983
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9590773053252457
+      },
+      {
+        "basis": "radial",
+        "value": 0.9590206639755828
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9589481778624939
+      }
+    ]
+  }
+}

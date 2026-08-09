@@ -1,0 +1,1525 @@
+{
+  "context": "classifier",
+  "dataset": "wine",
+  "experiment": "oficial_v1",
+  "generated_at": "2026-08-09T07:23:46.200623+00:00",
+  "metrics_compared": [
+    "accuracy",
+    "balanced_accuracy",
+    "precision",
+    "recall",
+    "f1",
+    "roc_auc",
+    "mcc"
+  ],
+  "bases": [
+    {
+      "context": "classifier",
+      "basis": "attention",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20
+      },
+      "n_combinations_evaluated": 4,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cauchy",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "epsilon": 0.1
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cosine",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "h": 5.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cubic_spline",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "h": 2.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "entropic",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "beta": 0.1
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "gen_exponential",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "epsilon": 1.0,
+        "p": 1.0
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "harmonic",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "nu": 0.0001
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "inverse_multiquadratic",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "c": 1.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "laplacian",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "epsilon": 1.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "logarithmic",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "c": 0.1
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "lorentzian",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20
+      },
+      "n_combinations_evaluated": 4,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "multiquadratic",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "c": 0.1
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "quartic_spline",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "h": 2.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "radial",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "z": 2.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rational_quadratic",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "alpha": 2.0,
+        "l": 0.01
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rbf_gaussian",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "epsilon": 0.1
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "shepard",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "z": 4.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "sigmoidal",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "alpha": 1.0,
+        "c": 2.0
+      },
+      "n_combinations_evaluated": 48,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "softmax_radial",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "beta": 1.0
+      },
+      "n_combinations_evaluated": 16,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "student_t",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "nu": 0.0001
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "wendland_c2",
+      "dataset": "wine",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 20,
+        "h": 2.0
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      }
+    }
+  ],
+  "ranking_per_metric": {
+    "accuracy": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ],
+    "balanced_accuracy": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ],
+    "precision": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ],
+    "recall": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ],
+    "f1": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ],
+    "roc_auc": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ],
+    "mcc": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ]
+  }
+}
