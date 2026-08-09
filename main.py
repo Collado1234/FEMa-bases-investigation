@@ -7,6 +7,10 @@ Uso:
     python main.py --context classifier --all-bases --dataset fetal_health
     python main.py --context classifier --basis shepard --dataset fetal_health
 
+    # Protocolo oficial (F1 como metrica de ranking, random search, 10 folds x 3 repeticoes)
+    python main.py --context classifier --all-bases --dataset digits \
+        --ranking-metric f1 --tuning-strategy random_search --n-splits 10 --n-repeats 3
+
     # Aciona a comparação entre bases já rodadas (CSV + JSON + plots)
     python main.py --compare --context classifier --dataset fetal_health
 
@@ -97,21 +101,80 @@ def main():
         default=None,
         help="Diretorio de saida da comparacao (--compare). Default: reports/basis_comparison/<context>/<dataset>.",
     )
+    parser.add_argument(
+        "--ranking-metric",
+        type=str,
+        choices=["accuracy", "balanced_accuracy", "precision", "recall", "f1", "roc_auc", "mcc",
+                 "mae", "mse", "rmse", "r2", "mape"],
+        default=None,
+        help=(
+            "Metrica usada para escolher a MELHOR combinacao de hiperparametros apos o CV "
+            "(persistence/summary_builder.py::build_summary). Default do pipeline: 'f1' para "
+            "classificacao, 'rmse' para regressao - ou seja, F1 ja' e' o default e nao precisa "
+            "ser passado explicitamente, mas fica disponivel para deixar isso explicito no comando "
+            "ou trocar para outra metrica sem editar codigo."
+        ),
+    )
+    parser.add_argument(
+        "--tuning-strategy",
+        type=str,
+        choices=["grid_search", "random_search"],
+        default=None,
+        help="Estrategia de busca de hiperparametros (tuning/param_space.py). Default do pipeline: 'random_search'.",
+    )
+    parser.add_argument(
+        "--tuning-n-iter",
+        type=int,
+        default=None,
+        help="Numero de combinacoes avaliadas quando --tuning-strategy=random_search (ignorado em grid_search, que e' exaustivo). Default do pipeline: 20.",
+    )
+    parser.add_argument(
+        "--n-splits",
+        type=int,
+        default=None,
+        help="Numero de folds do CV (tuning/cv_strategy.py). Default do pipeline: 5.",
+    )
+    parser.add_argument(
+        "--n-repeats",
+        type=int,
+        default=None,
+        help="Numero de repeticoes do CV. Default do pipeline: 3.",
+    )
 
     args = parser.parse_args()
+
+    # Kwargs opcionais de tuning/CV/ranking, repassados so' quando informados
+    # explicitamente no comando - se omitidos, prevalecem os defaults do
+    # proprio pipeline (pipeline/run_model.py::run_basis_experiment), que
+    # ja' usa 'f1' como ranking_metric padrao para classificacao.
+    tuning_kwargs = {}
+    if args.ranking_metric is not None:
+        tuning_kwargs["ranking_metric"] = args.ranking_metric
+    if args.tuning_strategy is not None:
+        tuning_kwargs["tuning_strategy"] = args.tuning_strategy
+    if args.tuning_n_iter is not None:
+        tuning_kwargs["tuning_n_iter"] = args.tuning_n_iter
+    if args.n_splits is not None:
+        tuning_kwargs["n_splits"] = args.n_splits
+    if args.n_repeats is not None:
+        tuning_kwargs["n_repeats"] = args.n_repeats
 
     if args.experiment:
         for exp_path in args.experiment:
             run_from_experiment_file(Path(exp_path))
     elif args.context and args.all_bases and args.dataset:
-        run_all_bases(context=args.context, dataset=args.dataset, experiment_name=args.experiment_name)
+        run_all_bases(
+            context=args.context, dataset=args.dataset, experiment_name=args.experiment_name, **tuning_kwargs
+        )
     elif args.context and args.basis and args.dataset:
         run_basis_experiment(
-            context=args.context, basis=args.basis, dataset=args.dataset, experiment_name=args.experiment_name
+            context=args.context, basis=args.basis, dataset=args.dataset, experiment_name=args.experiment_name,
+            **tuning_kwargs,
         )
     elif args.baseline_model and args.dataset:
         run_baseline_experiment(
-            model_name=args.baseline_model, dataset=args.dataset, experiment_name=args.experiment_name
+            model_name=args.baseline_model, dataset=args.dataset, experiment_name=args.experiment_name,
+            **tuning_kwargs,
         )
     elif not args.compare:
         parser.error(
