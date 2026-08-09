@@ -1,0 +1,352 @@
+{
+  "dataset": "digits",
+  "total_bases": 21,
+  "tied_groups": [
+    {
+      "bases": [
+        "gen_exponential",
+        "laplacian",
+        "softmax_radial"
+      ],
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9676657544243753,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661780235443167,
+        "roc_auc": 0.9932024774888752,
+        "mcc": 0.9631210899313987,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 0.9655172413793104,
+            "recall": 1.0,
+            "f1": 0.9824561403508771,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "gen_exponential": {
+          "k": 5,
+          "epsilon": 0.1,
+          "p": 1.0
+        },
+        "laplacian": {
+          "k": 5,
+          "epsilon": 0.1
+        },
+        "softmax_radial": {
+          "k": 5,
+          "beta": 0.1
+        }
+      },
+      "verdict": "DUPLICATA_ESTRUTURAL",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "gen_exponential",
+            "laplacian"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "softmax_radial"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        },
+        {
+          "pair": [
+            "laplacian",
+            "softmax_radial"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        }
+      ]
+    },
+    {
+      "bases": [
+        "cubic_spline",
+        "quartic_spline"
+      ],
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9660968660968662,
+        "precision": 0.9684391534391533,
+        "recall": 0.9660968660968662,
+        "f1": 0.9659083612179588,
+        "roc_auc": 0.9933864568671963,
+        "mcc": 0.9632386046302993,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.9473684210526315,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8461538461538461,
+            "precision": 1.0,
+            "recall": 0.8461538461538461,
+            "f1": 0.9166666666666666,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 27
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "cubic_spline": {
+          "k": 5,
+          "h": 5.0
+        },
+        "quartic_spline": {
+          "k": 5,
+          "h": 5.0
+        }
+      },
+      "verdict": "DUPLICATA_ESTRUTURAL",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "cubic_spline",
+            "quartic_spline"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        }
+      ]
+    },
+    {
+      "bases": [
+        "harmonic",
+        "student_t"
+      ],
+      "test_metrics": {
+        "accuracy": 0.9666666666666667,
+        "balanced_accuracy": 0.9662393162393161,
+        "precision": 0.9677889071337347,
+        "recall": 0.9662393162393161,
+        "f1": 0.9661791627559821,
+        "roc_auc": 0.9933925136169959,
+        "mcc": 0.9631363354610459,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 27
+          },
+          "1": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9285714285714286,
+            "recall": 0.9629629629629629,
+            "f1": 0.9454545454545454,
+            "support": 27
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "3": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 28
+          },
+          "4": {
+            "accuracy": 0.9629629629629629,
+            "precision": 0.9629629629629629,
+            "recall": 0.9629629629629629,
+            "f1": 0.9629629629629629,
+            "support": 27
+          },
+          "5": {
+            "accuracy": 0.9629629629629629,
+            "precision": 1.0,
+            "recall": 0.9629629629629629,
+            "f1": 0.9811320754716981,
+            "support": 27
+          },
+          "6": {
+            "accuracy": 1.0,
+            "precision": 0.9642857142857143,
+            "recall": 1.0,
+            "f1": 0.9818181818181818,
+            "support": 27
+          },
+          "7": {
+            "accuracy": 1.0,
+            "precision": 0.9310344827586207,
+            "recall": 1.0,
+            "f1": 0.9642857142857143,
+            "support": 27
+          },
+          "8": {
+            "accuracy": 0.8846153846153846,
+            "precision": 1.0,
+            "recall": 0.8846153846153846,
+            "f1": 0.9387755102040817,
+            "support": 26
+          },
+          "9": {
+            "accuracy": 0.8888888888888888,
+            "precision": 0.96,
+            "recall": 0.8888888888888888,
+            "f1": 0.9230769230769231,
+            "support": 27
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "harmonic": {
+          "k": 5,
+          "nu": 0.0001
+        },
+        "student_t": {
+          "k": 5,
+          "nu": 0.0001
+        }
+      },
+      "verdict": "DUPLICATA_ESTRUTURAL",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "harmonic",
+            "student_t"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        }
+      ]
+    }
+  ]
+}

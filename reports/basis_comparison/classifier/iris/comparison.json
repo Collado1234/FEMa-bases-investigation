@@ -1,0 +1,1525 @@
+{
+  "context": "classifier",
+  "dataset": "iris",
+  "experiment": "oficial_v1",
+  "generated_at": "2026-08-09T08:40:12.564325+00:00",
+  "metrics_compared": [
+    "accuracy",
+    "balanced_accuracy",
+    "precision",
+    "recall",
+    "f1",
+    "roc_auc",
+    "mcc"
+  ],
+  "bases": [
+    {
+      "context": "classifier",
+      "basis": "attention",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 6
+      },
+      "n_combinations_evaluated": 13,
+      "test_metrics": {
+        "accuracy": 0.9130434782608695,
+        "balanced_accuracy": 0.9166666666666666,
+        "precision": 0.9333333333333332,
+        "recall": 0.9166666666666666,
+        "f1": 0.9153439153439153,
+        "roc_auc": 1.0,
+        "mcc": 0.8793684368796316,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8,
+            "recall": 1.0,
+            "f1": 0.8888888888888888,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.75,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cauchy",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 22,
+        "epsilon": 42.97100021154878
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 0.9944444444444445,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cosine",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cubic_spline",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "entropic",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "beta": 1.8183018870845464
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9130434782608695,
+        "balanced_accuracy": 0.9166666666666666,
+        "precision": 0.9333333333333332,
+        "recall": 0.9166666666666666,
+        "f1": 0.9153439153439153,
+        "roc_auc": 0.9888888888888889,
+        "mcc": 0.8793684368796316,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8,
+            "recall": 1.0,
+            "f1": 0.8888888888888888,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.75,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "gen_exponential",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 15,
+        "epsilon": 3.139118461178404,
+        "p": 1.1276345122083506
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 0.9944444444444445,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "harmonic",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "nu": 0.005695262671673525
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "inverse_multiquadratic",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 0.1022992510826784
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "laplacian",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 15,
+        "epsilon": 3.139118461178404
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 0.9944444444444445,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "logarithmic",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "c": 0.23232604885522545
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "lorentzian",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 6
+      },
+      "n_combinations_evaluated": 13,
+      "test_metrics": {
+        "accuracy": 0.9130434782608695,
+        "balanced_accuracy": 0.9166666666666666,
+        "precision": 0.9333333333333332,
+        "recall": 0.9166666666666666,
+        "f1": 0.9153439153439153,
+        "roc_auc": 1.0,
+        "mcc": 0.8793684368796316,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8,
+            "recall": 1.0,
+            "f1": 0.8888888888888888,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.75,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "multiquadratic",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "c": 2.2505043547850567
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9130434782608695,
+        "balanced_accuracy": 0.9166666666666666,
+        "precision": 0.9333333333333332,
+        "recall": 0.9166666666666666,
+        "f1": 0.9153439153439153,
+        "roc_auc": 0.9888888888888889,
+        "mcc": 0.8793684368796316,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8,
+            "recall": 1.0,
+            "f1": 0.8888888888888888,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.75,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "quartic_spline",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "radial",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "z": 0.697474985125747
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rational_quadratic",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 23,
+        "alpha": 1.0556895590523032,
+        "l": 0.12035440948948699
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 0.9944444444444445,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rbf_gaussian",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "epsilon": 1.8183018870845464
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 0.9944444444444445,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "shepard",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 26,
+        "z": 2.1685911090466155
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 0.9944444444444445,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "sigmoidal",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 25,
+        "alpha": 6.199672459722209,
+        "c": 0.7096287254139647
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.8695652173913043,
+        "balanced_accuracy": 0.875,
+        "precision": 0.8783068783068783,
+        "recall": 0.875,
+        "f1": 0.8745098039215686,
+        "roc_auc": 0.9888888888888889,
+        "mcc": 0.8062710784519386,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 0.875,
+            "precision": 0.7777777777777778,
+            "recall": 0.875,
+            "f1": 0.8235294117647058,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.75,
+            "precision": 0.8571428571428571,
+            "recall": 0.75,
+            "f1": 0.8,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "softmax_radial",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 15,
+        "beta": 3.139118461178404
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 0.9944444444444445,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "student_t",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 5,
+        "nu": 0.005695262671673525
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "wendland_c2",
+      "dataset": "iris",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 4,
+        "h": 3.573720289591046
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.9565217391304348,
+        "balanced_accuracy": 0.9583333333333334,
+        "precision": 0.9629629629629629,
+        "recall": 0.9583333333333334,
+        "f1": 0.9581699346405229,
+        "roc_auc": 1.0,
+        "mcc": 0.9373257413805222,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353,
+            "support": 8
+          },
+          "2": {
+            "accuracy": 0.875,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333,
+            "support": 8
+          }
+        }
+      }
+    }
+  ],
+  "ranking_per_metric": {
+    "accuracy": [
+      {
+        "basis": "cauchy",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "radial",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9565217391304348
+      },
+      {
+        "basis": "attention",
+        "value": 0.9130434782608695
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9130434782608695
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9130434782608695
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9130434782608695
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.8695652173913043
+      }
+    ],
+    "balanced_accuracy": [
+      {
+        "basis": "cauchy",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "radial",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "attention",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.875
+      }
+    ],
+    "precision": [
+      {
+        "basis": "cauchy",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "radial",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9629629629629629
+      },
+      {
+        "basis": "attention",
+        "value": 0.9333333333333332
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9333333333333332
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9333333333333332
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9333333333333332
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.8783068783068783
+      }
+    ],
+    "recall": [
+      {
+        "basis": "cauchy",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "radial",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9583333333333334
+      },
+      {
+        "basis": "attention",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9166666666666666
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.875
+      }
+    ],
+    "f1": [
+      {
+        "basis": "cauchy",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "radial",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9581699346405229
+      },
+      {
+        "basis": "attention",
+        "value": 0.9153439153439153
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9153439153439153
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.9153439153439153
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9153439153439153
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.8745098039215686
+      }
+    ],
+    "roc_auc": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.9944444444444445
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9944444444444445
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9944444444444445
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9944444444444445
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9944444444444445
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9944444444444445
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9944444444444445
+      },
+      {
+        "basis": "entropic",
+        "value": 0.9888888888888889
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.9888888888888889
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.9888888888888889
+      }
+    ],
+    "mcc": [
+      {
+        "basis": "cauchy",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "cosine",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "radial",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "shepard",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "student_t",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.9373257413805222
+      },
+      {
+        "basis": "attention",
+        "value": 0.8793684368796316
+      },
+      {
+        "basis": "entropic",
+        "value": 0.8793684368796316
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.8793684368796316
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.8793684368796316
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.8062710784519386
+      }
+    ]
+  }
+}

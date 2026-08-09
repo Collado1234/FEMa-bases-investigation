@@ -1,0 +1,1833 @@
+{
+  "dataset": "wine",
+  "total_bases": 21,
+  "tied_groups": [
+    {
+      "bases": [
+        "attention",
+        "cauchy",
+        "cosine",
+        "cubic_spline",
+        "entropic",
+        "gen_exponential",
+        "harmonic",
+        "inverse_multiquadratic",
+        "laplacian",
+        "logarithmic",
+        "lorentzian",
+        "multiquadratic",
+        "quartic_spline",
+        "radial",
+        "rational_quadratic",
+        "rbf_gaussian",
+        "shepard",
+        "sigmoidal",
+        "softmax_radial",
+        "student_t",
+        "wendland_c2"
+      ],
+      "test_metrics": {
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "mcc": 1.0,
+        "per_class": {
+          "0": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 9
+          },
+          "1": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 11
+          },
+          "2": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 7
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "attention": {
+          "k": 20
+        },
+        "cauchy": {
+          "k": 20,
+          "epsilon": 0.1
+        },
+        "cosine": {
+          "k": 20,
+          "h": 5.0
+        },
+        "cubic_spline": {
+          "k": 20,
+          "h": 2.0
+        },
+        "entropic": {
+          "k": 20,
+          "beta": 0.1
+        },
+        "gen_exponential": {
+          "k": 20,
+          "epsilon": 1.0,
+          "p": 1.0
+        },
+        "harmonic": {
+          "k": 20,
+          "nu": 0.0001
+        },
+        "inverse_multiquadratic": {
+          "k": 20,
+          "c": 1.0
+        },
+        "laplacian": {
+          "k": 20,
+          "epsilon": 1.0
+        },
+        "logarithmic": {
+          "k": 20,
+          "c": 0.1
+        },
+        "lorentzian": {
+          "k": 20
+        },
+        "multiquadratic": {
+          "k": 20,
+          "c": 0.1
+        },
+        "quartic_spline": {
+          "k": 20,
+          "h": 2.0
+        },
+        "radial": {
+          "k": 20,
+          "z": 2.0
+        },
+        "rational_quadratic": {
+          "k": 20,
+          "alpha": 2.0,
+          "l": 0.01
+        },
+        "rbf_gaussian": {
+          "k": 20,
+          "epsilon": 0.1
+        },
+        "shepard": {
+          "k": 20,
+          "z": 4.0
+        },
+        "sigmoidal": {
+          "k": 20,
+          "alpha": 1.0,
+          "c": 2.0
+        },
+        "softmax_radial": {
+          "k": 20,
+          "beta": 1.0
+        },
+        "student_t": {
+          "k": 20,
+          "nu": 0.0001
+        },
+        "wendland_c2": {
+          "k": 20,
+          "h": 2.0
+        }
+      },
+      "verdict": "DUPLICATA_ESTRUTURAL",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "attention",
+            "cauchy"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.06686911488705463
+        },
+        {
+          "pair": [
+            "attention",
+            "cosine"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.059679759587380754
+        },
+        {
+          "pair": [
+            "attention",
+            "cubic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.24016207809116924
+        },
+        {
+          "pair": [
+            "attention",
+            "entropic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.059653292387486595
+        },
+        {
+          "pair": [
+            "attention",
+            "gen_exponential"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04202369910410397
+        },
+        {
+          "pair": [
+            "attention",
+            "harmonic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.36157327498454234
+        },
+        {
+          "pair": [
+            "attention",
+            "inverse_multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.03509272713782319
+        },
+        {
+          "pair": [
+            "attention",
+            "laplacian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04202369910410397
+        },
+        {
+          "pair": [
+            "attention",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.17369540407771378
+        },
+        {
+          "pair": [
+            "attention",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.027057013308281613
+        },
+        {
+          "pair": [
+            "attention",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.22070292038907863
+        },
+        {
+          "pair": [
+            "attention",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.24016207809116924
+        },
+        {
+          "pair": [
+            "attention",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.05762560951041673
+        },
+        {
+          "pair": [
+            "attention",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7291828456918474
+        },
+        {
+          "pair": [
+            "attention",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.06686676679148443
+        },
+        {
+          "pair": [
+            "attention",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7294339410823267
+        },
+        {
+          "pair": [
+            "attention",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.05081268210087614
+        },
+        {
+          "pair": [
+            "attention",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04202369910410397
+        },
+        {
+          "pair": [
+            "attention",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.36157327498454234
+        },
+        {
+          "pair": [
+            "attention",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.08794973375984999
+        },
+        {
+          "pair": [
+            "cauchy",
+            "cosine"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.007189355299673877
+        },
+        {
+          "pair": [
+            "cauchy",
+            "cubic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3070311929782239
+        },
+        {
+          "pair": [
+            "cauchy",
+            "entropic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.0072158224995680365
+        },
+        {
+          "pair": [
+            "cauchy",
+            "gen_exponential"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1088928139911586
+        },
+        {
+          "pair": [
+            "cauchy",
+            "harmonic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.428442389871597
+        },
+        {
+          "pair": [
+            "cauchy",
+            "inverse_multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.031776387749231444
+        },
+        {
+          "pair": [
+            "cauchy",
+            "laplacian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1088928139911586
+        },
+        {
+          "pair": [
+            "cauchy",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2405645189647684
+        },
+        {
+          "pair": [
+            "cauchy",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04347588817653347
+        },
+        {
+          "pair": [
+            "cauchy",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.15383380550202397
+        },
+        {
+          "pair": [
+            "cauchy",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3070311929782239
+        },
+        {
+          "pair": [
+            "cauchy",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.0092435053766379
+        },
+        {
+          "pair": [
+            "cauchy",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7960519605789022
+        },
+        {
+          "pair": [
+            "cauchy",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 3.061659122810534e-06
+        },
+        {
+          "pair": [
+            "cauchy",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7963030559693813
+        },
+        {
+          "pair": [
+            "cauchy",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.016056432786178493
+        },
+        {
+          "pair": [
+            "cauchy",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1088928139911586
+        },
+        {
+          "pair": [
+            "cauchy",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.428442389871597
+        },
+        {
+          "pair": [
+            "cauchy",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.15481884864690462
+        },
+        {
+          "pair": [
+            "cosine",
+            "cubic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.29984183767855
+        },
+        {
+          "pair": [
+            "cosine",
+            "entropic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 2.646719989415902e-05
+        },
+        {
+          "pair": [
+            "cosine",
+            "gen_exponential"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.10170345869148473
+        },
+        {
+          "pair": [
+            "cosine",
+            "harmonic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4212530345719231
+        },
+        {
+          "pair": [
+            "cosine",
+            "inverse_multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.024587032449557567
+        },
+        {
+          "pair": [
+            "cosine",
+            "laplacian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.10170345869148473
+        },
+        {
+          "pair": [
+            "cosine",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.23337516366509453
+        },
+        {
+          "pair": [
+            "cosine",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.03751612089190007
+        },
+        {
+          "pair": [
+            "cosine",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.16102316080169787
+        },
+        {
+          "pair": [
+            "cosine",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.29984183767855
+        },
+        {
+          "pair": [
+            "cosine",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.002054150076964023
+        },
+        {
+          "pair": [
+            "cosine",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7888626052792282
+        },
+        {
+          "pair": [
+            "cosine",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.007187007204103674
+        },
+        {
+          "pair": [
+            "cosine",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7891137006697074
+        },
+        {
+          "pair": [
+            "cosine",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.008867077486504615
+        },
+        {
+          "pair": [
+            "cosine",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.10170345869148473
+        },
+        {
+          "pair": [
+            "cosine",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4212530345719231
+        },
+        {
+          "pair": [
+            "cosine",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.14762949334723074
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "entropic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2998153704786558
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "gen_exponential"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.19813837898706527
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "harmonic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1214111968933731
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "inverse_multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2752548052289924
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "laplacian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.19813837898706527
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.06646667401345546
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2672190913994509
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.46086499848024787
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "quartic_spline"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.29778768760158597
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.48902076760067825
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3070288448826537
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.48927186299115744
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2909747601920454
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.19813837898706527
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1214111968933731
+        },
+        {
+          "pair": [
+            "cubic_spline",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.15221234433131925
+        },
+        {
+          "pair": [
+            "entropic",
+            "gen_exponential"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.10167699149159057
+        },
+        {
+          "pair": [
+            "entropic",
+            "harmonic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4212265673720289
+        },
+        {
+          "pair": [
+            "entropic",
+            "inverse_multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.024560565249663407
+        },
+        {
+          "pair": [
+            "entropic",
+            "laplacian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.10167699149159057
+        },
+        {
+          "pair": [
+            "entropic",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.23334869646520037
+        },
+        {
+          "pair": [
+            "entropic",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.03753114941254013
+        },
+        {
+          "pair": [
+            "entropic",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.161049628001592
+        },
+        {
+          "pair": [
+            "entropic",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2998153704786558
+        },
+        {
+          "pair": [
+            "entropic",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.002027682877069864
+        },
+        {
+          "pair": [
+            "entropic",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7888361380793341
+        },
+        {
+          "pair": [
+            "entropic",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.007213474403997833
+        },
+        {
+          "pair": [
+            "entropic",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7890872334698132
+        },
+        {
+          "pair": [
+            "entropic",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.008840610286610456
+        },
+        {
+          "pair": [
+            "entropic",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.10167699149159057
+        },
+        {
+          "pair": [
+            "entropic",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4212265673720289
+        },
+        {
+          "pair": [
+            "entropic",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.14760302614733659
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "harmonic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.31954957588043836
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "inverse_multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.07711642624192716
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "laplacian"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1316717049736098
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.06908071241238559
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2627266194931826
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.19813837898706527
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.0996493086145207
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6871591465877436
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1088904658955884
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6874102419782226
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.09283638120498011
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "softmax_radial"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.31954957588043836
+        },
+        {
+          "pair": [
+            "gen_exponential",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04592603465574602
+        },
+        {
+          "pair": [
+            "harmonic",
+            "inverse_multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3966660021223655
+        },
+        {
+          "pair": [
+            "harmonic",
+            "laplacian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.31954957588043836
+        },
+        {
+          "pair": [
+            "harmonic",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.18787787090682856
+        },
+        {
+          "pair": [
+            "harmonic",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.388630288292824
+        },
+        {
+          "pair": [
+            "harmonic",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.582276195373621
+        },
+        {
+          "pair": [
+            "harmonic",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1214111968933731
+        },
+        {
+          "pair": [
+            "harmonic",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.41919888449495907
+        },
+        {
+          "pair": [
+            "harmonic",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.36760957070730516
+        },
+        {
+          "pair": [
+            "harmonic",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4284400417760268
+        },
+        {
+          "pair": [
+            "harmonic",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.36786066609778434
+        },
+        {
+          "pair": [
+            "harmonic",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4123859570854185
+        },
+        {
+          "pair": [
+            "harmonic",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.31954957588043836
+        },
+        {
+          "pair": [
+            "harmonic",
+            "student_t"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        },
+        {
+          "pair": [
+            "harmonic",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.27362354122469235
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "laplacian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.07711642624192716
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.20878813121553697
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.0213716467669334
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.18561019325125544
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2752548052289924
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.022532882372593543
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7642755728296706
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.03177403965366124
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7645266682201499
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.01571995496305295
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.07711642624192716
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3966660021223655
+        },
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.12304246089767318
+        },
+        {
+          "pair": [
+            "laplacian",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1316717049736098
+        },
+        {
+          "pair": [
+            "laplacian",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.06908071241238559
+        },
+        {
+          "pair": [
+            "laplacian",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2627266194931826
+        },
+        {
+          "pair": [
+            "laplacian",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.19813837898706527
+        },
+        {
+          "pair": [
+            "laplacian",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.0996493086145207
+        },
+        {
+          "pair": [
+            "laplacian",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6871591465877436
+        },
+        {
+          "pair": [
+            "laplacian",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1088904658955884
+        },
+        {
+          "pair": [
+            "laplacian",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6874102419782226
+        },
+        {
+          "pair": [
+            "laplacian",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.09283638120498011
+        },
+        {
+          "pair": [
+            "laplacian",
+            "softmax_radial"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        },
+        {
+          "pair": [
+            "laplacian",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.31954957588043836
+        },
+        {
+          "pair": [
+            "laplacian",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04592603465574602
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2007524173859954
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3943983244667924
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.06646667401345546
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2313210135881305
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.5554874416141338
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2405621708691982
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.5557385370046128
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.22450808617858992
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1316717049736098
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.18787787090682856
+        },
+        {
+          "pair": [
+            "logarithmic",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.08574567031786379
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "multiquadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.193645907080797
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2672190913994509
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.03589256943315178
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7562398590001291
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04347282651741066
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7564909543906083
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.032949018749978465
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.06908071241238559
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.388630288292824
+        },
+        {
+          "pair": [
+            "lorentzian",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1150067470681316
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "quartic_spline"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.46086499848024787
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1630773108786619
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.9498857660809261
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.15383615359759417
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.9501368614714053
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1698902382882025
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2627266194931826
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.582276195373621
+        },
+        {
+          "pair": [
+            "multiquadratic",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3086526541489286
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.29778768760158597
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.48902076760067825
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.3070288448826537
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.48927186299115744
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.2909747601920454
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.19813837898706527
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1214111968933731
+        },
+        {
+          "pair": [
+            "quartic_spline",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.15221234433131925
+        },
+        {
+          "pair": [
+            "radial",
+            "rational_quadratic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7868084552022643
+        },
+        {
+          "pair": [
+            "radial",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.009241157281067697
+        },
+        {
+          "pair": [
+            "radial",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7870595505927434
+        },
+        {
+          "pair": [
+            "radial",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.006812927409540592
+        },
+        {
+          "pair": [
+            "radial",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.0996493086145207
+        },
+        {
+          "pair": [
+            "radial",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.41919888449495907
+        },
+        {
+          "pair": [
+            "radial",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.14557534327026672
+        },
+        {
+          "pair": [
+            "rational_quadratic",
+            "rbf_gaussian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.796049612483332
+        },
+        {
+          "pair": [
+            "rational_quadratic",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.0002510953904791835
+        },
+        {
+          "pair": [
+            "rational_quadratic",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7799955277927236
+        },
+        {
+          "pair": [
+            "rational_quadratic",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6871591465877436
+        },
+        {
+          "pair": [
+            "rational_quadratic",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.36760957070730516
+        },
+        {
+          "pair": [
+            "rational_quadratic",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6412331119319975
+        },
+        {
+          "pair": [
+            "rbf_gaussian",
+            "shepard"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7963007078738111
+        },
+        {
+          "pair": [
+            "rbf_gaussian",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.01605408469060829
+        },
+        {
+          "pair": [
+            "rbf_gaussian",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.1088904658955884
+        },
+        {
+          "pair": [
+            "rbf_gaussian",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4284400417760268
+        },
+        {
+          "pair": [
+            "rbf_gaussian",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.15481650055133442
+        },
+        {
+          "pair": [
+            "shepard",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.7802466231832028
+        },
+        {
+          "pair": [
+            "shepard",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6874102419782226
+        },
+        {
+          "pair": [
+            "shepard",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.36786066609778434
+        },
+        {
+          "pair": [
+            "shepard",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.6414842073224767
+        },
+        {
+          "pair": [
+            "sigmoidal",
+            "softmax_radial"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.09283638120498011
+        },
+        {
+          "pair": [
+            "sigmoidal",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.4123859570854185
+        },
+        {
+          "pair": [
+            "sigmoidal",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.13876241586072613
+        },
+        {
+          "pair": [
+            "softmax_radial",
+            "student_t"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.31954957588043836
+        },
+        {
+          "pair": [
+            "softmax_radial",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.04592603465574602
+        },
+        {
+          "pair": [
+            "student_t",
+            "wendland_c2"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.27362354122469235
+        }
+      ]
+    }
+  ]
+}
