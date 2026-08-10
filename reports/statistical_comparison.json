@@ -1,0 +1,734 @@
+[
+  {
+    "dataset": "breast_cancer",
+    "metric": "accuracy",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9647435897435896,
+        "std": 0.02538220388834959
+      },
+      "wendland_c2": {
+        "mean": 0.9663247863247865,
+        "std": 0.02860109747734722
+      },
+      "laplacian": {
+        "mean": 0.9638888888888888,
+        "std": 0.02168036527842365
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9639316239316238,
+        "std": 0.025321244957648387
+      },
+      "radial": {
+        "mean": 0.9639316239316238,
+        "std": 0.025321244957648387
+      }
+    },
+    "friedman": {
+      "statistic": 0.6415094339623242,
+      "p_value": 0.9583412165533632,
+      "significant": false
+    },
+    "kendalls_w": 0.005345911949686035,
+    "posthoc": []
+  },
+  {
+    "dataset": "breast_cancer",
+    "metric": "balanced_accuracy",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9541626984126984,
+        "std": 0.032481739749116015
+      },
+      "wendland_c2": {
+        "mean": 0.9577182539682536,
+        "std": 0.03469292258214028
+      },
+      "laplacian": {
+        "mean": 0.9534960317460316,
+        "std": 0.02734813631651061
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9571825396825396,
+        "std": 0.030447558988517733
+      },
+      "radial": {
+        "mean": 0.9571825396825396,
+        "std": 0.030447558988517733
+      }
+    },
+    "friedman": {
+      "statistic": 0.7831325301205915,
+      "p_value": 0.940694973956075,
+      "significant": false
+    },
+    "kendalls_w": 0.006526104417671596,
+    "posthoc": []
+  },
+  {
+    "dataset": "breast_cancer",
+    "metric": "f1",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9728201919065497,
+        "std": 0.019351919121061878
+      },
+      "wendland_c2": {
+        "mean": 0.9738449515268129,
+        "std": 0.022070658495431845
+      },
+      "laplacian": {
+        "mean": 0.9720383612255594,
+        "std": 0.016642060068500036
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9716949725880534,
+        "std": 0.019679736517608144
+      },
+      "radial": {
+        "mean": 0.9716949725880534,
+        "std": 0.019679736517608144
+      }
+    },
+    "friedman": {
+      "statistic": 0.831325301204885,
+      "p_value": 0.9341998188580077,
+      "significant": false
+    },
+    "kendalls_w": 0.006927710843374042,
+    "posthoc": []
+  },
+  {
+    "dataset": "digits",
+    "metric": "accuracy",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9806412698412698,
+        "std": 0.011194642304847489
+      },
+      "wendland_c2": {
+        "mean": 0.9779830687830687,
+        "std": 0.011213517396604275
+      },
+      "laplacian": {
+        "mean": 0.9793164021164021,
+        "std": 0.011564690607607146
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9806412698412698,
+        "std": 0.011194642304847489
+      },
+      "radial": {
+        "mean": 0.9777185185185182,
+        "std": 0.011144532527904453
+      }
+    },
+    "friedman": {
+      "statistic": 15.647058823529512,
+      "p_value": 0.003531235526653529,
+      "significant": true
+    },
+    "kendalls_w": 0.13039215686274594,
+    "posthoc": [
+      {
+        "pair": [
+          "shepard",
+          "wendland_c2"
+        ],
+        "wilcoxon_statistic": 11.5,
+        "p_value": 0.009512404872503379,
+        "p_value_holm": 0.07609923898002703,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.780952380952381,
+        "mean_diff": 0.0026582010582010263
+      },
+      {
+        "pair": [
+          "shepard",
+          "laplacian"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.039359508888249725,
+        "p_value_holm": 0.23615705332949835,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 1.0,
+        "mean_diff": 0.0013248677248676177
+      },
+      {
+        "pair": [
+          "shepard",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": null,
+        "p_value": 1.0,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.0,
+        "mean_diff": 0.0
+      },
+      {
+        "pair": [
+          "shepard",
+          "radial"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.006458954266892987,
+        "p_value_holm": 0.06458954266892987,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 1.0,
+        "mean_diff": 0.002922751322751549
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "laplacian"
+        ],
+        "wilcoxon_statistic": 28.0,
+        "p_value": 0.12144378295109239,
+        "p_value_holm": 0.48577513180436954,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -0.4666666666666667,
+        "mean_diff": -0.0013333333333334085
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": 11.5,
+        "p_value": 0.009512404872503379,
+        "p_value_holm": 0.07609923898002703,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -0.780952380952381,
+        "mean_diff": -0.0026582010582010263
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "radial"
+        ],
+        "wilcoxon_statistic": 54.0,
+        "p_value": 0.7284905670024218,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -0.1,
+        "mean_diff": 0.00026455026455052266
+      },
+      {
+        "pair": [
+          "laplacian",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.039359508888249725,
+        "p_value_holm": 0.23615705332949835,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -1.0,
+        "mean_diff": -0.0013248677248676177
+      },
+      {
+        "pair": [
+          "laplacian",
+          "radial"
+        ],
+        "wilcoxon_statistic": 22.5,
+        "p_value": 0.18061060022349074,
+        "p_value_holm": 0.5418318006704722,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.4230769230769231,
+        "mean_diff": 0.0015978835978839312
+      },
+      {
+        "pair": [
+          "inverse_multiquadratic",
+          "radial"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.006458954266892987,
+        "p_value_holm": 0.06458954266892987,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 1.0,
+        "mean_diff": 0.002922751322751549
+      }
+    ]
+  },
+  {
+    "dataset": "digits",
+    "metric": "balanced_accuracy",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.980576923076923,
+        "std": 0.011407735244370545
+      },
+      "wendland_c2": {
+        "mean": 0.9779700854700855,
+        "std": 0.011446587929247213
+      },
+      "laplacian": {
+        "mean": 0.9792307692307691,
+        "std": 0.011832628991225903
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.980576923076923,
+        "std": 0.011407735244370545
+      },
+      "radial": {
+        "mean": 0.9776282051282051,
+        "std": 0.0114228787018102
+      }
+    },
+    "friedman": {
+      "statistic": 11.531135531135538,
+      "p_value": 0.021200689366322377,
+      "significant": true
+    },
+    "kendalls_w": 0.09609279609279615,
+    "posthoc": [
+      {
+        "pair": [
+          "shepard",
+          "wendland_c2"
+        ],
+        "wilcoxon_statistic": 37.0,
+        "p_value": 0.05928985381256069,
+        "p_value_holm": 0.35573912287536413,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.5163398692810458,
+        "mean_diff": 0.002606837606837553
+      },
+      {
+        "pair": [
+          "shepard",
+          "laplacian"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.04122683333716367,
+        "p_value_holm": 0.32981466669730936,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 1.0,
+        "mean_diff": 0.0013461538461538858
+      },
+      {
+        "pair": [
+          "shepard",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": null,
+        "p_value": 1.0,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.0,
+        "mean_diff": 0.0
+      },
+      {
+        "pair": [
+          "shepard",
+          "radial"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.007264382942252025,
+        "p_value_holm": 0.07264382942252025,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 1.0,
+        "mean_diff": 0.0029487179487178716
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "laplacian"
+        ],
+        "wilcoxon_statistic": 74.0,
+        "p_value": 0.3959510250893422,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -0.22105263157894736,
+        "mean_diff": -0.0012606837606836674
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": 37.0,
+        "p_value": 0.05928985381256069,
+        "p_value_holm": 0.35573912287536413,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -0.5163398692810458,
+        "mean_diff": -0.002606837606837553
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "radial"
+        ],
+        "wilcoxon_statistic": 88.0,
+        "p_value": 0.7771645408098408,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.07368421052631578,
+        "mean_diff": 0.00034188034188031846
+      },
+      {
+        "pair": [
+          "laplacian",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.04122683333716367,
+        "p_value_holm": 0.32981466669730936,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -1.0,
+        "mean_diff": -0.0013461538461538858
+      },
+      {
+        "pair": [
+          "laplacian",
+          "radial"
+        ],
+        "wilcoxon_statistic": 26.0,
+        "p_value": 0.16886751049186977,
+        "p_value_holm": 0.6754700419674791,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.42857142857142855,
+        "mean_diff": 0.0016025641025639858
+      },
+      {
+        "pair": [
+          "inverse_multiquadratic",
+          "radial"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.007264382942252025,
+        "p_value_holm": 0.07264382942252025,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 1.0,
+        "mean_diff": 0.0029487179487178716
+      }
+    ]
+  },
+  {
+    "dataset": "digits",
+    "metric": "f1",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9805196327022414,
+        "std": 0.011452533511972516
+      },
+      "wendland_c2": {
+        "mean": 0.9778524347364927,
+        "std": 0.011469533009661458
+      },
+      "laplacian": {
+        "mean": 0.9791311244311243,
+        "std": 0.011925008304540784
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9805196327022414,
+        "std": 0.011452533511972516
+      },
+      "radial": {
+        "mean": 0.9775084491997534,
+        "std": 0.011438454734095204
+      }
+    },
+    "friedman": {
+      "statistic": 17.709198813056467,
+      "p_value": 0.001406485674210131,
+      "significant": true
+    },
+    "kendalls_w": 0.14757665677547055,
+    "posthoc": [
+      {
+        "pair": [
+          "shepard",
+          "wendland_c2"
+        ],
+        "wilcoxon_statistic": 78.0,
+        "p_value": 0.06801654474625562,
+        "p_value_holm": 0.40809926847753375,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.43478260869565216,
+        "mean_diff": 0.0026671979657486578
+      },
+      {
+        "pair": [
+          "shepard",
+          "laplacian"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.04216819709715596,
+        "p_value_holm": 0.3373455767772477,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 1.0,
+        "mean_diff": 0.0013885082711171393
+      },
+      {
+        "pair": [
+          "shepard",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": null,
+        "p_value": 1.0,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.0,
+        "mean_diff": 0.0
+      },
+      {
+        "pair": [
+          "shepard",
+          "radial"
+        ],
+        "wilcoxon_statistic": 3.0,
+        "p_value": 0.002976637011170516,
+        "p_value_holm": 0.029766370111705163,
+        "significant_after_holm": true,
+        "effect_size_rank_biserial_r": 0.9340659340659341,
+        "mean_diff": 0.0030111835024879685
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "laplacian"
+        ],
+        "wilcoxon_statistic": 127.0,
+        "p_value": 0.5110890641174397,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -0.15333333333333332,
+        "mean_diff": -0.0012786896946315185
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": 78.0,
+        "p_value": 0.06801654474625562,
+        "p_value_holm": 0.40809926847753375,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -0.43478260869565216,
+        "mean_diff": -0.0026671979657486578
+      },
+      {
+        "pair": [
+          "wendland_c2",
+          "radial"
+        ],
+        "wilcoxon_statistic": 102.0,
+        "p_value": 0.6389064772442071,
+        "p_value_holm": 1.0,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.11688311688311688,
+        "mean_diff": 0.00034398553673931076
+      },
+      {
+        "pair": [
+          "laplacian",
+          "inverse_multiquadratic"
+        ],
+        "wilcoxon_statistic": 0.0,
+        "p_value": 0.04216819709715596,
+        "p_value_holm": 0.3373455767772477,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": -1.0,
+        "mean_diff": -0.0013885082711171393
+      },
+      {
+        "pair": [
+          "laplacian",
+          "radial"
+        ],
+        "wilcoxon_statistic": 38.5,
+        "p_value": 0.22194815136169888,
+        "p_value_holm": 0.8877926054467955,
+        "significant_after_holm": false,
+        "effect_size_rank_biserial_r": 0.35833333333333334,
+        "mean_diff": 0.0016226752313708293
+      },
+      {
+        "pair": [
+          "inverse_multiquadratic",
+          "radial"
+        ],
+        "wilcoxon_statistic": 3.0,
+        "p_value": 0.002976637011170516,
+        "p_value_holm": 0.029766370111705163,
+        "significant_after_holm": true,
+        "effect_size_rank_biserial_r": 0.9340659340659341,
+        "mean_diff": 0.0030111835024879685
+      }
+    ]
+  },
+  {
+    "dataset": "iris",
+    "metric": "accuracy",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9612121212121211,
+        "std": 0.0483959477549067
+      },
+      "wendland_c2": {
+        "mean": 0.9545454545454545,
+        "std": 0.06633335505302351
+      },
+      "laplacian": {
+        "mean": 0.9512121212121212,
+        "std": 0.07148162613226669
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9581818181818181,
+        "std": 0.06575514395823184
+      },
+      "radial": {
+        "mean": 0.9545454545454545,
+        "std": 0.06633335505302351
+      }
+    },
+    "friedman": {
+      "statistic": 3.2500000000004556,
+      "p_value": 0.5168931474109366,
+      "significant": false
+    },
+    "kendalls_w": 0.02708333333333713,
+    "posthoc": []
+  },
+  {
+    "dataset": "iris",
+    "metric": "balanced_accuracy",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9638888888888889,
+        "std": 0.045643546458763874
+      },
+      "wendland_c2": {
+        "mean": 0.9555555555555557,
+        "std": 0.06589592785438683
+      },
+      "laplacian": {
+        "mean": 0.9527777777777778,
+        "std": 0.07040523099688079
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9583333333333335,
+        "std": 0.06595646615640988
+      },
+      "radial": {
+        "mean": 0.9555555555555557,
+        "std": 0.06589592785438683
+      }
+    },
+    "friedman": {
+      "statistic": 3.2500000000004556,
+      "p_value": 0.5168931474109366,
+      "significant": false
+    },
+    "kendalls_w": 0.02708333333333713,
+    "posthoc": []
+  },
+  {
+    "dataset": "iris",
+    "metric": "f1",
+    "n_folds_paired": 30,
+    "bases": [
+      "shepard",
+      "wendland_c2",
+      "laplacian",
+      "inverse_multiquadratic",
+      "radial"
+    ],
+    "descriptive": {
+      "shepard": {
+        "mean": 0.9607054673721341,
+        "std": 0.04908858461354675
+      },
+      "wendland_c2": {
+        "mean": 0.9539594356261023,
+        "std": 0.06689042342320785
+      },
+      "laplacian": {
+        "mean": 0.9509347442680777,
+        "std": 0.0714817905132996
+      },
+      "inverse_multiquadratic": {
+        "mean": 0.9571340388007055,
+        "std": 0.06673481410405802
+      },
+      "radial": {
+        "mean": 0.9539594356261023,
+        "std": 0.06689042342320785
+      }
+    },
+    "friedman": {
+      "statistic": 3.2500000000004556,
+      "p_value": 0.5168931474109366,
+      "significant": false
+    },
+    "kendalls_w": 0.02708333333333713,
+    "posthoc": []
+  }
+]
