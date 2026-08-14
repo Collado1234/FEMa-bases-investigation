@@ -15,4 +15,6 @@ class SoftmaxRadialBasis(BaseBasis):
 
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         beta = self._require(params)["beta"]
-        return np.exp(-beta * dists)
+        soma = np.sum(np.exp(-beta * dists), axis=1, keepdims=True)
+
+        return np.exp((-beta * dists)/soma)

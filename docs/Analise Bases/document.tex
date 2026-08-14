@@ -1,0 +1,1671 @@
+```latex
+\documentclass[12pt,a4paper]{article}
+
+% ============================================================
+% PACOTES
+% ============================================================
+
+% Codificação e idioma
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+
+% Matemática
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+
+% Figuras
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+
+% Tabelas
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+% Layout
+\usepackage[a4paper,
+top=2.5cm,
+bottom=2.5cm,
+left=2.5cm,
+right=2.5cm]{geometry}
+
+% Espaçamento
+\usepackage{setspace}
+\onehalfspacing
+
+% Links e referências
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+% Listas
+\usepackage{enumitem}
+
+% Citações
+\usepackage[backend=biber,
+style=abnt,
+sorting=none]{biblatex}
+
+% Unidades
+\usepackage{siunitx}
+
+% Código
+\usepackage{xcolor}
+\usepackage{listings}
+
+% ============================================================
+% CONFIGURAÇÕES
+% ============================================================
+
+\graphicspath{{figuras/}}
+
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+% Configuração para código
+\lstset{
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	frame=single,
+	columns=fullflexible
+}
+
+% ============================================================
+% COMANDOS PERSONALIZADOS
+% ============================================================
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\X}{\mathbf{x}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+% ============================================================
+% ARQUIVO DE REFERÊNCIAS
+% ============================================================
+
+\addbibresource{referencias.bib}
+
+% ============================================================
+% INFORMAÇÕES DO DOCUMENTO
+% ============================================================
+
+\title{
+	\textbf{Análise Matemática das Funções de Base\\
+		do Algoritmo FEMa}
+}
+
+\author{
+	Rennan Furlaneto Collado
+}
+
+\date{\today}
+
+% ============================================================
+% DOCUMENTO
+% ============================================================
+
+\begin{document}
+	
+	\maketitle
+	
+	\tableofcontents
+	
+	\newpage
+	
+	% ============================================================
+	% 1. INTRODUÇÃO
+	% ============================================================
+	
+	\section{Introdução}
+	
+	O algoritmo FEMa (\textit{Finite Element Machine}) utiliza funções de
+	base para determinar a influência das amostras do conjunto de treinamento
+	sobre uma nova amostra. Diferentes funções de base produzem diferentes
+	comportamentos em relação à distância entre os pontos, podendo alterar a
+	forma como as informações locais e globais do conjunto de dados são
+	consideradas pelo modelo.
+	
+	Este documento apresenta uma análise matemática das 21 funções de base
+	implementadas no FEMa. O objetivo é caracterizar matematicamente cada
+	função e investigar propriedades que possam auxiliar na interpretação dos
+	resultados experimentais obtidos pelo algoritmo.
+	
+	A análise considera propriedades como domínio, valor na origem,
+	positividade, monotonicidade, continuidade, comportamento assintótico,
+	suporte, taxa de decaimento e influência dos parâmetros.
+	
+	Além da análise analítica, são utilizados gráficos para visualizar o
+	comportamento das funções e facilitar a comparação entre diferentes bases.
+	
+	% ============================================================
+	% 2. FUNDAMENTAÇÃO MATEMÁTICA
+	% ============================================================
+	
+	\section{Fundamentação Matemática}
+	
+	\subsection{Representação das amostras}
+	
+	Considere um conjunto de treinamento definido por
+	
+	\begin{equation}
+		\mathcal{D}
+		=
+		\left\{
+		(\mathbf{x}_i,y_i)
+		\right\}_{i=1}^{n},
+	\end{equation}
+	
+	em que
+	
+	\begin{equation}
+		\mathbf{x}_i \in \R^d
+	\end{equation}
+	
+	representa o vetor de características da $i$-ésima amostra e
+	$y_i$ representa seu respectivo rótulo.
+	
+	Para uma nova amostra $\mathbf{x}$, a distância entre $\mathbf{x}$ e
+	uma amostra de treinamento $\mathbf{x}_i$ pode ser representada por
+	
+	\begin{equation}
+		r_i =
+		\norm{\mathbf{x}-\mathbf{x}_i}.
+	\end{equation}
+	
+	No caso da distância Euclidiana,
+	
+	\begin{equation}
+		r_i =
+		\sqrt{
+			\sum_{j=1}^{d}
+			(x_j-x_{ij})^2
+		}.
+	\end{equation}
+	
+	\subsection{Funções de base radiais}
+	
+	Uma função de base radial pode ser representada genericamente por
+	
+	\begin{equation}
+		\phi(r),
+	\end{equation}
+	
+	em que $r$ representa a distância entre dois pontos.
+	
+	Consequentemente, o peso associado à $i$-ésima amostra pode ser escrito
+	como
+	
+	\begin{equation}
+		w_i(\mathbf{x})
+		=
+		\phi(r_i).
+	\end{equation}
+	
+	A forma específica de $\phi$ determina como a influência de uma amostra
+	varia conforme sua distância em relação ao ponto avaliado.
+	
+	\subsection{Normalização dos pesos}
+	
+	Quando aplicável, os pesos podem ser normalizados segundo
+	
+	\begin{equation}
+		\widetilde{w}_i(\mathbf{x})
+		=
+		\frac{
+			w_i(\mathbf{x})
+		}{
+			\displaystyle\sum_{j=1}^{n}w_j(\mathbf{x})
+		}.
+	\end{equation}
+	
+	Nesse caso,
+	
+	\begin{equation}
+		\sum_{i=1}^{n}
+		\widetilde{w}_i(\mathbf{x})
+		=
+		1.
+	\end{equation}
+	
+	A normalização permite interpretar os pesos como contribuições relativas
+	das diferentes amostras.
+	
+	% ============================================================
+	% 3. CRITÉRIOS DE ANÁLISE
+	% ============================================================
+	
+	\section{Critérios de Análise}
+	
+	As funções de base serão analisadas segundo um conjunto de propriedades
+	matemáticas.
+	
+	\subsection{Domínio}
+	
+	O primeiro aspecto analisado será o domínio da função,
+	
+	\begin{equation}
+		\mathcal{D}_{\phi}
+		=
+		\left\{
+		r \in \R :
+		\phi(r) \text{ está definida}
+		\right\}.
+	\end{equation}
+	
+	Também serão identificadas possíveis restrições sobre os parâmetros.
+	
+	\subsection{Valor na origem}
+	
+	Será analisado o valor
+	
+	\begin{equation}
+		\phi(0).
+	\end{equation}
+	
+	Essa propriedade é importante porque $r=0$ representa o caso em que o
+	ponto avaliado coincide com uma amostra de treinamento.
+	
+	\subsection{Positividade}
+	
+	Será investigado se
+	
+	\begin{equation}
+		\phi(r)\geq0
+	\end{equation}
+	
+	para todo $r$ pertencente ao domínio.
+	
+	Funções positivas podem apresentar uma interpretação direta como pesos
+	de influência.
+	
+	\subsection{Monotonicidade}
+	
+	A monotonicidade será investigada por meio da primeira derivada,
+	
+	\begin{equation}
+		\phi'(r).
+	\end{equation}
+	
+	Quando
+	
+	\begin{equation}
+		\phi'(r)\leq0,
+	\end{equation}
+	
+	a função é não crescente em relação à distância.
+	
+	\subsection{Continuidade e regularidade}
+	
+	Será analisada a continuidade de $\phi(r)$ e, quando pertinente, de suas
+	derivadas.
+	
+	Quando possível, será determinada a maior classe de regularidade
+	
+	\begin{equation}
+		\phi \in C^k.
+	\end{equation}
+	
+	\subsection{Comportamento assintótico}
+	
+	Será analisado o limite
+	
+	\begin{equation}
+		\lim_{r\rightarrow\infty}\phi(r).
+	\end{equation}
+	
+	Esse comportamento permite avaliar a influência de pontos cada vez mais
+	distantes.
+	
+	\subsection{Comportamento local}
+	
+	O comportamento da função próximo da origem também será investigado.
+	
+	Quando aplicável, será utilizada a expansão de Taylor
+	
+	\begin{equation}
+		\phi(r)
+		=
+		\phi(0)
+		+
+		\phi'(0)r
+		+
+		\frac{\phi''(0)}{2}r^2
+		+
+		O(r^3).
+	\end{equation}
+	
+	\subsection{Suporte}
+	
+	Quando aplicável, será determinado o suporte da função,
+	
+	\begin{equation}
+		\operatorname{supp}(\phi)
+		=
+		\left\{
+		r:
+		\phi(r)\neq0
+		\right\}.
+	\end{equation}
+	
+	Será verificado especialmente se a função possui suporte compacto.
+	
+	\subsection{Interpolação}
+	
+	Será investigado o comportamento da função no ponto $r=0$ e sua
+	capacidade de produzir pesos compatíveis com a interpolação dos pontos
+	de treinamento.
+	
+	\subsection{Partição da unidade}
+	
+	Quando houver normalização dos pesos, será verificada a propriedade
+	
+	\begin{equation}
+		\sum_{i=1}^{n}
+		\widetilde{w}_i(\mathbf{x})
+		=
+		1.
+	\end{equation}
+	
+	% ============================================================
+	% 4. VISUALIZAÇÃO
+	% ============================================================
+	
+	\section{Metodologia de Visualização}
+	
+	Para complementar a análise analítica, serão produzidas representações
+	gráficas das funções de base.
+	
+	A primeira visualização consiste na representação unidimensional
+	
+	\begin{equation}
+		y=\phi(r),
+	\end{equation}
+	
+	em função da distância $r$.
+	
+	Quando pertinente, também serão utilizadas visualizações bidimensionais
+	ou mapas de superfície para representar
+	
+	\begin{equation}
+		z=\phi\left(
+		\sqrt{x^2+y^2}
+		\right).
+	\end{equation}
+	
+	Os gráficos deverão utilizar os mesmos intervalos de distância sempre
+	que a comparação direta entre diferentes funções for desejada.
+	
+	% ============================================================
+	% 5. BASES DE ELEMENTOS FINITOS
+	% ============================================================
+	
+	\section{Análise das Funções de Base}
+	
+	Esta seção apresenta a análise individual das 21 funções de base.
+	
+	% ============================================================
+	% 5.1 SHEPARD
+	% ============================================================
+	
+	\subsection{Shepard}
+	
+	\subsubsection{Definição}
+	
+	A função de base Shepard utilizada no FEMa é definida por
+	
+	\begin{equation}
+		\phi_{\mathrm{Shepard}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	em que $r$ representa a distância entre o ponto avaliado e a amostra
+	de treinamento.
+	
+	\subsubsection{Parâmetros}
+	
+	Os parâmetros da função são
+	
+	\begin{equation}
+		\boxed{
+			\theta = \text{INSERIR PARÂMETROS}
+		}
+	\end{equation}
+	
+	Descrever o significado de cada parâmetro.
+	
+	\subsubsection{Domínio}
+	
+	\begin{equation}
+		\boxed{
+			r\in\text{INSERIR DOMÍNIO}
+		}
+	\end{equation}
+	
+	\subsubsection{Valor na origem}
+	
+	\begin{equation}
+		\phi_{\mathrm{Shepard}}(0)
+		=
+		\boxed{\text{INSERIR RESULTADO}}
+	\end{equation}
+	
+	\subsubsection{Positividade}
+	
+	\begin{equation}
+		\phi_{\mathrm{Shepard}}(r)
+		\geq0
+	\end{equation}
+	
+	\textbf{Conclusão:} \textit{INSERIR ANÁLISE.}
+	
+	\subsubsection{Monotonicidade}
+	
+	A primeira derivada é
+	
+	\begin{equation}
+		\phi_{\mathrm{Shepard}}'(r)
+		=
+		\boxed{\text{INSERIR DERIVADA}}
+	\end{equation}
+	
+	\textbf{Conclusão:} \textit{INSERIR ANÁLISE.}
+	
+	\subsubsection{Comportamento assintótico}
+	
+	\begin{equation}
+		\lim_{r\rightarrow\infty}
+		\phi_{\mathrm{Shepard}}(r)
+		=
+		\boxed{\text{INSERIR RESULTADO}}
+	\end{equation}
+	
+	\subsubsection{Continuidade e regularidade}
+	
+	\textit{INSERIR ANÁLISE.}
+	
+	\subsubsection{Suporte}
+	
+	\textit{INSERIR ANÁLISE.}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{shepard.png}
+		\caption{
+			Comportamento da função de base Shepard em função da distância.
+		}
+		\label{fig:shepard}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\begin{itemize}
+		\item \textit{INSERIR OBSERVAÇÃO SOBRE A REGIÃO PRÓXIMA À ORIGEM.}
+		\item \textit{INSERIR OBSERVAÇÃO SOBRE O DECAIMENTO.}
+		\item \textit{INSERIR OBSERVAÇÃO SOBRE OS PARÂMETROS.}
+		\item \textit{INSERIR OBSERVAÇÃO SOBRE O FEMa.}
+	\end{itemize}
+	
+	% ============================================================
+	% 5.2 RADIAL
+	% ============================================================
+	
+	\subsection{Radial}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Radial}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise matemática}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item $\phi(0)$: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Continuidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+		\item Suporte: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{radial.png}
+		\caption{
+			Comportamento da função de base Radial.
+		}
+		\label{fig:radial}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.3 RBF GAUSSIAN
+	% ============================================================
+	
+	\subsection{RBF Gaussian}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Gaussian}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise matemática}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item $\phi(0)$: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Continuidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+		\item Suporte: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{rbf_gaussian.png}
+		\caption{
+			Comportamento da função RBF Gaussian.
+		}
+		\label{fig:rbf-gaussian}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.4 MULTIQUADRATIC
+	% ============================================================
+	
+	\subsection{Multiquadratic}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Multiquadratic}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{multiquadratic.png}
+		\caption{
+			Comportamento da função Multiquadratic.
+		}
+		\label{fig:multiquadratic}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.5 INVERSE MULTIQUADRATIC
+	% ============================================================
+	
+	\subsection{Inverse Multiquadratic}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{InverseMultiquadratic}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{inverse_multiquadratic.png}
+		\caption{
+			Comportamento da função Inverse Multiquadratic.
+		}
+		\label{fig:inverse-multiquadratic}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.6 WENDLAND C2
+	% ============================================================
+	
+	\subsection{Wendland C2}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Wendland}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Suporte compacto: \textit{SIM/NÃO}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{wendland_c2.png}
+		\caption{
+			Comportamento da função Wendland C2.
+		}
+		\label{fig:wendland-c2}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.7 CUBIC SPLINE
+	% ============================================================
+	
+	\subsection{Cubic Spline}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{CubicSpline}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Suporte: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{cubic_spline.png}
+		\caption{
+			Comportamento da função Cubic Spline.
+		}
+		\label{fig:cubic-spline}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.8 QUARTIC SPLINE
+	% ============================================================
+	
+	\subsection{Quartic Spline}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{QuarticSpline}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Suporte: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{quartic_spline.png}
+		\caption{
+			Comportamento da função Quartic Spline.
+		}
+		\label{fig:quartic-spline}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.9 GENERALIZED EXPONENTIAL
+	% ============================================================
+	
+	\subsection{Generalized Exponential}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{GenExp}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{gen_exponential.png}
+		\caption{
+			Comportamento da função Generalized Exponential.
+		}
+		\label{fig:gen-exponential}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.10 SOFTMAX RADIAL
+	% ============================================================
+	
+	\subsection{Softmax Radial}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{SoftmaxRadial}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{softmax_radial.png}
+		\caption{
+			Comportamento da função Softmax Radial.
+		}
+		\label{fig:softmax-radial}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.11 ATTENTION
+	% ============================================================
+	
+	\subsection{Attention}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Attention}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{attention.png}
+		\caption{
+			Comportamento da função Attention.
+		}
+		\label{fig:attention}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.12 LOGARITHMIC
+	% ============================================================
+	
+	\subsection{Logarithmic}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Logarithmic}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{logarithmic.png}
+		\caption{
+			Comportamento da função Logarithmic.
+		}
+		\label{fig:logarithmic}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.13 HARMONIC
+	% ============================================================
+	
+	\subsection{Harmonic}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Harmonic}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{harmonic.png}
+		\caption{
+			Comportamento da função Harmonic.
+		}
+		\label{fig:harmonic}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.14 LAPLACIAN
+	% ============================================================
+	
+	\subsection{Laplacian}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Laplacian}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{laplacian.png}
+		\caption{
+			Comportamento da função Laplacian.
+		}
+		\label{fig:laplacian}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.15 CAUCHY
+	% ============================================================
+	
+	\subsection{Cauchy}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Cauchy}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{cauchy.png}
+		\caption{
+			Comportamento da função Cauchy.
+		}
+		\label{fig:cauchy}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.16 STUDENT-T
+	% ============================================================
+	
+	\subsection{Student-t}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{StudentT}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{student_t.png}
+		\caption{
+			Comportamento da função Student-t.
+		}
+		\label{fig:student-t}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.17 COSINE
+	% ============================================================
+	
+	\subsection{Cosine}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Cosine}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{cosine.png}
+		\caption{
+			Comportamento da função Cosine.
+		}
+		\label{fig:cosine}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.18 SIGMOIDAL
+	% ============================================================
+	
+	\subsection{Sigmoidal}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Sigmoidal}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{sigmoidal.png}
+		\caption{
+			Comportamento da função Sigmoidal.
+		}
+		\label{fig:sigmoidal}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.19 LORENTZIAN
+	% ============================================================
+	
+	\subsection{Lorentzian}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Lorentzian}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{lorentzian.png}
+		\caption{
+			Comportamento da função Lorentzian.
+		}
+		\label{fig:lorentzian}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.20 ENTROPIC
+	% ============================================================
+	
+	\subsection{Entropic}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{Entropic}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{entropic.png}
+		\caption{
+			Comportamento da função Entropic.
+		}
+		\label{fig:entropic}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 5.21 RATIONAL QUADRATIC
+	% ============================================================
+	
+	\subsection{Rational Quadratic}
+	
+	\subsubsection{Definição}
+	
+	\begin{equation}
+		\phi_{\mathrm{RationalQuadratic}}(r)
+		=
+		\boxed{\text{INSERIR EXPRESSÃO}}
+	\end{equation}
+	
+	\subsubsection{Análise}
+	
+	\begin{itemize}
+		\item Domínio: \textit{INSERIR}.
+		\item Valor na origem: \textit{INSERIR}.
+		\item Positividade: \textit{INSERIR}.
+		\item Monotonicidade: \textit{INSERIR}.
+		\item Regularidade: \textit{INSERIR}.
+		\item Comportamento assintótico: \textit{INSERIR}.
+	\end{itemize}
+	
+	\subsubsection{Gráfico}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]
+		{rational_quadratic.png}
+		\caption{
+			Comportamento da função Rational Quadratic.
+		}
+		\label{fig:rational-quadratic}
+	\end{figure}
+	
+	\subsubsection{Observações}
+	
+	\textit{INSERIR OBSERVAÇÕES.}
+	
+	% ============================================================
+	% 6. TABELA COMPARATIVA
+	% ============================================================
+	
+	\section{Comparação das Funções de Base}
+	
+	A Tabela~\ref{tab:comparacao-bases} apresenta uma síntese das
+	propriedades matemáticas identificadas nas 21 funções.
+	
+	\begin{table}[H]
+		\centering
+		\small
+		\caption{
+			Comparação das propriedades matemáticas das funções de base.
+		}
+		\label{tab:comparacao-bases}
+		\begin{tabular}{lcccccc}
+			\toprule
+			\textbf{Base}
+			&
+			\textbf{Positiva}
+			&
+			\textbf{Monotônica}
+			&
+			$\boldsymbol{\phi(0)}$
+			&
+			\textbf{Decaimento}
+			&
+			\textbf{Suporte}
+			&
+			\textbf{Interpolativa}
+			\\
+			\midrule
+			
+			Shepard
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Radial
+			& -- & -- & -- & -- & -- & -- \\
+			
+			RBF Gaussian
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Multiquadratic
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Inverse Multiquadratic
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Wendland C2
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Cubic Spline
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Quartic Spline
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Generalized Exponential
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Softmax Radial
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Attention
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Logarithmic
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Harmonic
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Laplacian
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Cauchy
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Student-t
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Cosine
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Sigmoidal
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Lorentzian
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Entropic
+			& -- & -- & -- & -- & -- & -- \\
+			
+			Rational Quadratic
+			& -- & -- & -- & -- & -- & -- \\
+			
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	% ============================================================
+	% 7. COMPARAÇÃO GRÁFICA
+	% ============================================================
+	
+	\section{Comparação Gráfica}
+	
+	\subsection{Comparação das funções}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]
+		{comparacao_21_bases.png}
+		\caption{
+			Comparação do comportamento das 21 funções de base em função
+			da distância.
+		}
+		\label{fig:comparacao-21}
+	\end{figure}
+	
+	\subsection{Funções de decaimento rápido}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]
+		{decaimento_rapido.png}
+		\caption{
+			Funções de base caracterizadas por maior concentração da
+			influência em distâncias próximas.
+		}
+		\label{fig:decaimento-rapido}
+	\end{figure}
+	
+	\subsection{Funções de decaimento lento}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]
+		{decaimento_lento.png}
+		\caption{
+			Funções de base com decaimento mais gradual da influência.
+		}
+		\label{fig:decaimento-lento}
+	\end{figure}
+	
+	\subsection{Funções com suporte compacto}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]
+		{suporte_compacto.png}
+		\caption{
+			Funções de base com suporte compacto.
+		}
+		\label{fig:suporte-compacto}
+	\end{figure}
+	
+	% ============================================================
+	% 8. INFLUÊNCIA DOS PARÂMETROS
+	% ============================================================
+	
+	\section{Influência dos Parâmetros}
+	
+	Para as funções que possuem parâmetros de escala, será analisado como
+	a variação desses parâmetros modifica o comportamento da função.
+	
+	Considere uma função genérica
+	
+	\begin{equation}
+		\phi(r;\theta),
+	\end{equation}
+	
+	em que $\theta$ representa um ou mais parâmetros.
+	
+	\subsection{Variação da largura}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]
+		{influencia_largura.png}
+		\caption{
+			Influência do parâmetro de escala sobre a largura da função.
+		}
+		\label{fig:influencia-largura}
+	\end{figure}
+	
+	\subsection{Variação da taxa de decaimento}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]
+		{influencia_decaimento.png}
+		\caption{
+			Influência dos parâmetros sobre a taxa de decaimento.
+		}
+		\label{fig:influencia-decaimento}
+	\end{figure}
+	
+	\subsection{Observações}
+	
+	\textit{INSERIR ANÁLISE DOS EFEITOS DOS PARÂMETROS.}
+	
+	% ============================================================
+	% 9. RELAÇÃO COM OS RESULTADOS EXPERIMENTAIS
+	% ============================================================
+	
+	\section{Relação entre as Propriedades Matemáticas e os
+		Resultados Experimentais}
+	
+	A análise matemática será posteriormente relacionada aos resultados
+	experimentais obtidos para as diferentes bases.
+	
+	O objetivo é investigar se determinadas características matemáticas
+	apresentam relação com o desempenho observado nos diferentes conjuntos
+	de dados.
+	
+	Entre os aspectos a serem comparados estão:
+	
+	\begin{itemize}
+		\item taxa de decaimento;
+		\item concentração da influência em pontos próximos;
+		\item influência de pontos distantes;
+		\item suporte compacto;
+		\item monotonicidade;
+		\item positividade;
+		\item comportamento próximo à origem;
+		\item regularidade;
+		\item sensibilidade aos parâmetros.
+	\end{itemize}
+	
+	\subsection{Comparação com a acurácia}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]
+		{relacao_acuracia.png}
+		\caption{
+			Relação entre características matemáticas das funções e
+			desempenho experimental.
+		}
+		\label{fig:relacao-acuracia}
+	\end{figure}
+	
+	\subsection{Comparação com F1-score}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]
+		{relacao_f1.png}
+		\caption{
+			Relação entre características matemáticas das funções e
+			F1-score.
+		}
+		\label{fig:relacao-f1}
+	\end{figure}
+	
+	% ============================================================
+	% 10. DISCUSSÃO
+	% ============================================================
+	
+	\section{Discussão}
+	
+	Os resultados da análise matemática serão discutidos conjuntamente com
+	os resultados experimentais.
+	
+	\subsection{Influência da distância}
+	
+	\textit{INSERIR DISCUSSÃO.}
+	
+	\subsection{Influência das propriedades matemáticas}
+	
+	\textit{INSERIR DISCUSSÃO.}
+	
+	\subsection{Comportamento entre diferentes conjuntos de dados}
+	
+	\textit{INSERIR DISCUSSÃO.}
+	
+	\subsection{Semelhanças e diferenças entre as bases}
+	
+	\textit{INSERIR DISCUSSÃO.}
+	
+	\subsection{Hipóteses sobre o desempenho do FEMa}
+	
+	\textit{INSERIR DISCUSSÃO.}
+	
+	% ============================================================
+	% 11. CONCLUSÃO
+	% ============================================================
+	
+	\section{Conclusão}
+	
+	Este documento apresentou uma proposta de análise matemática das
+	21 funções de base utilizadas no algoritmo FEMa.
+	
+	A caracterização matemática permite identificar diferenças no
+	comportamento das funções em relação à distância, seus parâmetros,
+	regularidade, suporte e demais propriedades relevantes.
+	
+	\textit{INSERIR CONCLUSÕES OBTIDAS APÓS A ANÁLISE.}
+	
+	% ============================================================
+	% REFERÊNCIAS
+	% ============================================================
+	
+	\newpage
+	
+	\printbibliography
+	
+	% ============================================================
+	% APÊNDICES
+	% ============================================================
+	
+	\appendix
+	
+	\section{Definições Matemáticas Completas}
+	
+	Esta seção poderá conter as expressões matemáticas completas das
+	21 funções, caso seja necessário separar as definições da análise
+	principal.
+	
+	\section{Dados Utilizados nos Gráficos}
+	
+	Inserir tabelas ou informações referentes aos valores utilizados na
+	geração das figuras.
+	
+	\section{Resultados Computacionais}
+	
+	Inserir resultados adicionais das verificações matemáticas realizadas
+	computacionalmente.
+	
+\end{document}
+```

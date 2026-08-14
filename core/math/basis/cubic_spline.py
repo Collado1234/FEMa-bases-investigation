@@ -4,9 +4,7 @@ from .parameters import BasisParameters
 
 class CubicSplineBasis(CompactSupportBasis):
     """
-    Suporte compacto: phi(r) = (1-r)^4, r = d/h, 0 caso r > 1.
-    NOTA: hoje idêntica a QuarticSplineBasis — decisão de fórmula
-    pendente com o orientador.
+    Suporte compacto: phi(r) = (1-r)^3, r = d/h, 0 caso r > 1.
     """
     PARAMS = ()
 
@@ -15,4 +13,4 @@ class CubicSplineBasis(CompactSupportBasis):
 
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         r = self._normalized_distance(dists, params.h)
-        return np.where(r <= 1, (1 - r) ** 4, 0.0)
+        return np.where(r <= 1, (1 - r) ** 3, 0.0)

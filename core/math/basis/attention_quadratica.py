@@ -16,4 +16,5 @@ class AttentionQuadraticBasis(BaseBasis):
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         self._require(params)
         dists = np.where(dists == 0, DELTA, dists)
-        return 1 / (1 + dists ** 2)
+        soma = np.sum(1 / (1 + dists ** 2), axis=1, keepdims=True)
+        return (1 / (1 + dists ** 2)) / soma

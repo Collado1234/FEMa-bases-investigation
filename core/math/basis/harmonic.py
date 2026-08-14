@@ -4,7 +4,7 @@ from .parameters import BasisParameters
 
 class HarmonicBasis(BaseBasis):
     """
-    phi(d) = (1 + d^2/nu)^(-(nu+1)/2).
+    phi(d) = (1/1+dists)
     NOTA: formalmente idêntica ao Student-t kernel (ver student_t.py) —
     decisão de fórmula pendente com o orientador.
     """
@@ -14,5 +14,4 @@ class HarmonicBasis(BaseBasis):
         super().__init__(search)
 
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
-        nu = self._require(params)["nu"]
-        return (1 + (dists ** 2) / nu) ** -((nu + 1.0) / 2.0)
+        return 1/(1+dists)
