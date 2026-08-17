@@ -1,4 +1,4 @@
-from .base_basis import BaseBasis, DELTA
+from .base_basis import BaseBasis, DELTA,NeighborhoodContext
 from .parameters import BasisParameters
 from .factory_basis import Basis
 
