@@ -5,8 +5,9 @@ from .parameters import BasisParameters
 class QuarticSplineBasis(CompactSupportBasis):
     """
     Suporte compacto: phi(r) = (1-r)^4, r = d/h, 0 caso r > 1.
-    NOTA: hoje idêntica a CubicSplineBasis (ver ali) — decisão de
-    fórmula pendente com o orientador.
+
+    Família Wendland C0/C2 de ordem crescente de suavidade — CubicSpline
+    usa expoente 3, esta usa expoente 4.
     """
     PARAMS = ()
 
