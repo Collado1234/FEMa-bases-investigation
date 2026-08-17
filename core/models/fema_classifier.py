@@ -1,6 +1,6 @@
 from typing import Tuple
 import numpy as np
-from ..math.basis.base_basis import BaseBasis
+from ..math.basis.base_basis import BaseBasis, NeighborhoodContext
 from ..math.basis.parameters import BasisParameters
 from ..math.neighboor_search.base_search import BaseSearch
 from .base_model import FEMaBaseModel
@@ -65,7 +65,13 @@ class FEMaClassifier(FEMaBaseModel):
         for i in range(num_test_samples):
             indices, dists = self.search.query(X[i], k)
 
-            weights = self.basis.compute_weights(dists, params)
+            # context é opcional e, hoje, ignorado por todas as bases
+            # radiais existentes — existe para bases futuras
+            # (anisotrópicas, density-aware, manifold-aware) que
+            # precisem de mais do que a distância escalar já reduzida.
+            # Ver NeighborhoodContext em core/math/basis/base_basis.py.
+            context = NeighborhoodContext(indices=indices, query_point=X[i], k=k)
+            weights = self.basis.compute_weights(dists, params, context=context)
 
             # interpola a probabilidade de cada classe com os mesmos pesos
             for c in range(self.num_classes):
