@@ -1,0 +1,53 @@
+{
+  "context": "classifier",
+  "basis": "gen_exponential",
+  "experiment": "experiments_v2",
+  "dataset": "fetal_health",
+  "best_hyperparameters": {
+    "k": 30,
+    "epsilon": 0.2217046753718674,
+    "p": 1.9007718757911343
+  },
+  "n_train_total": 1488,
+  "n_test": 319,
+  "metrics": {
+    "accuracy": 0.8369905956112853,
+    "balanced_accuracy": 0.5084310850439883,
+    "precision": 0.3701086956521739,
+    "recall": 0.3813233137829912,
+    "f1": 0.37472737186477645,
+    "roc_auc": null,
+    "mcc": 0.49847185298093627,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.9798387096774194,
+        "precision": 0.8804347826086957,
+        "recall": 0.9798387096774194,
+        "f1": 0.9274809160305344,
+        "support": 248
+      },
+      "2": {
+        "accuracy": 0.5454545454545454,
+        "precision": 0.6,
+        "recall": 0.5454545454545454,
+        "f1": 0.5714285714285714,
+        "support": 44
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-08-18T20:43:49.987496+00:00"
+}

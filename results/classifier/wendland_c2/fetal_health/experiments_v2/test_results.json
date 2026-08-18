@@ -1,0 +1,52 @@
+{
+  "context": "classifier",
+  "basis": "wendland_c2",
+  "experiment": "experiments_v2",
+  "dataset": "fetal_health",
+  "best_hyperparameters": {
+    "k": 4,
+    "h": 3.573720289591046
+  },
+  "n_train_total": 1488,
+  "n_test": 319,
+  "metrics": {
+    "accuracy": 0.8369905956112853,
+    "balanced_accuracy": 0.527126099706745,
+    "precision": 0.39148351648351654,
+    "recall": 0.3953445747800587,
+    "f1": 0.39319721662699136,
+    "roc_auc": null,
+    "mcc": 0.5424276240723791,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.967741935483871,
+        "precision": 0.9230769230769231,
+        "recall": 0.967741935483871,
+        "f1": 0.9448818897637795,
+        "support": 248
+      },
+      "2": {
+        "accuracy": 0.6136363636363636,
+        "precision": 0.6428571428571429,
+        "recall": 0.6136363636363636,
+        "f1": 0.627906976744186,
+        "support": 44
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-08-18T20:59:35.920480+00:00"
+}

@@ -1,0 +1,52 @@
+{
+  "context": "classifier",
+  "basis": "cosine",
+  "experiment": "experiments_v2",
+  "dataset": "fetal_health",
+  "best_hyperparameters": {
+    "k": 4,
+    "h": 3.573720289591046
+  },
+  "n_train_total": 1488,
+  "n_test": 319,
+  "metrics": {
+    "accuracy": 0.8338557993730408,
+    "balanced_accuracy": 0.5195503421309873,
+    "precision": 0.388421642837118,
+    "recall": 0.38966275659824046,
+    "f1": 0.38869756153935053,
+    "roc_auc": null,
+    "mcc": 0.5310080819652342,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.967741935483871,
+        "precision": 0.9195402298850575,
+        "recall": 0.967741935483871,
+        "f1": 0.9430255402750491,
+        "support": 248
+      },
+      "2": {
+        "accuracy": 0.5909090909090909,
+        "precision": 0.6341463414634146,
+        "recall": 0.5909090909090909,
+        "f1": 0.611764705882353,
+        "support": 44
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-08-18T20:41:39.693238+00:00"
+}

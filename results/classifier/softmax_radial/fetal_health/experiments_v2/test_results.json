@@ -1,0 +1,52 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "fetal_health",
+  "best_hyperparameters": {
+    "k": 27,
+    "beta": 5.068077717443547
+  },
+  "n_train_total": 1488,
+  "n_test": 319,
+  "metrics": {
+    "accuracy": 0.8338557993730408,
+    "balanced_accuracy": 0.5320136852394918,
+    "precision": 0.3657035848047084,
+    "recall": 0.3990102639296188,
+    "f1": 0.3816055955736507,
+    "roc_auc": null,
+    "mcc": 0.5074612485365817,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.9596774193548387,
+        "precision": 0.8913857677902621,
+        "recall": 0.9596774193548387,
+        "f1": 0.9242718446601942,
+        "support": 248
+      },
+      "2": {
+        "accuracy": 0.6363636363636364,
+        "precision": 0.5714285714285714,
+        "recall": 0.6363636363636364,
+        "f1": 0.6021505376344086,
+        "support": 44
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-08-18T20:57:27.131733+00:00"
+}
