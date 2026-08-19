@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "cubic_spline",
+  "experiment": "experiments_v2",
+  "dataset": "diabetes",
+  "best_hyperparameters": {
+    "k": 23,
+    "h": 4.037289373746292
+  },
+  "n_train_total": 536,
+  "n_test": 116,
+  "metrics": {
+    "accuracy": 0.7931034482758621,
+    "balanced_accuracy": 0.7592105263157896,
+    "precision": 0.7222222222222222,
+    "recall": 0.65,
+    "f1": 0.6842105263157895,
+    "roc_auc": 0.8220394736842105,
+    "mcc": 0.532626999379337,
+    "per_class": {
+      "0": {
+        "accuracy": 0.868421052631579,
+        "precision": 0.825,
+        "recall": 0.868421052631579,
+        "f1": 0.8461538461538461,
+        "support": 76
+      },
+      "1": {
+        "accuracy": 0.65,
+        "precision": 0.7222222222222222,
+        "recall": 0.65,
+        "f1": 0.6842105263157895,
+        "support": 40
+      }
+    }
+  },
+  "timestamp": "2026-08-19T18:08:50.874272+00:00"
+}

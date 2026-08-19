@@ -1,24 +1,11 @@
-did,name,file,target,n_samples,n_features,n_classes,imbalance_ratio,balance,categorical_features,status,error
-46799,AVIDa-hIL6,data/raw\avida-hil6.csv,label,573891.0,3.0,2.0,26.35419447092469,N,0.0,EXISTING,
-162,SEA(50000),data/raw\sea_50000.csv,class,1000000.0,3.0,2.0,1.5929037410415177,N,0.0,EXISTING,
-1502,skin-segmentation,,,,,,,,,ERROR,"Unexpected server error when calling https://www.openml.org/api/v1/xml/data/1502. Please contact the developers!
-Status code: 503
-<html>
-<head><title>503 Service Temporarily Unavailable</title></head>
-<body>
-<center><h1>503 Service Temporarily Unavailable</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>
-"
-45927,Products,data/raw\products.csv,Product,73503.0,3.0,5.0,1.3008077311409203,S,1.0,OK,
-1509,walking-activity,data/raw\walking-activity.csv,Class,149332.0,4.0,22.0,24.13940724478595,N,0.0,OK,
-1235,Agrawal1,data/raw\agrawal1.csv,class,1000000.0,9.0,2.0,2.049198823009254,N,0.0,EXISTING,
-42553,BitcoinHeist_Ransomware,data/raw\bitcoinheist_ransomware.csv,label,2916697.0,9.0,29.0,2875284.0,N,0.0,EXISTING,
-265,BNG(glass),data/raw\bng_glass.csv,Type,137781.0,9.0,7.0,155.82747603833866,N,0.0,OK,
-46955,SDSS17,data/raw\sdss17.csv,ObjectType,78053.0,11.0,3.0,3.402386737173074,N,2.0,OK,
-46361,Risk_Level_Classification,data/raw\risk_level_classification.csv,anomaly,78600.0,18.0,3.0,9.775827559661279,N,0.0,OK,
-47264,US_Inter_State_Migration,data/raw\us_inter_state_migration.csv,last_state,500000.0,2.0,54.0,2658.5833333333335,N,0.0,EXISTING,
-1169,airlines,data/raw\airlines.csv,Delay,539383.0,7.0,2.0,1.2449597109845836,S,4.0,OK,
-351,codrna,,,,,,,,,ERROR,"factorize requires a Series, Index, ExtensionArray, np.ndarray or NumpyExtensionArray got list."
-46649,DDXPlus,data/raw\ddxplus.csv,PATHOLOGY,1292579.0,5.0,49.0,251.59076923076924,N,0.0,OK,
+did,name,file,target,n_samples,n_features,n_classes,imbalance_ratio,balance,categorical_features,status
+37,Diabetes,data/raw\diabetes.csv,class,768,8,2,1.8656716417910448,N,0,EXISTING
+44,Spambase,data/raw\spambase.csv,class,4601,57,2,1.5377826806398236,N,0,EXISTING
+1120,MagicTelescope,data/raw\magictelescope.csv,class:,19020,10,2,1.8438995215311005,N,0,EXISTING
+187,Wine,data/raw\wine.csv,class,178,13,3,1.4791666666666667,S,0,EXISTING
+1499,Seeds,data/raw\seeds.csv,Class,210,7,3,1.0,S,0,EXISTING
+1523,VertebraColumn,data/raw\vertebracolumn.csv,Class,310,6,3,2.5,N,0,EXISTING
+30,PageBlocks,data/raw\pageblocks.csv,class,5473,10,5,175.46428571428572,N,0,EXISTING
+36,Segment,data/raw\segment.csv,class,2310,19,7,1.0,S,0,EXISTING
+6,Letter,data/raw\letter.csv,class,20000,16,26,1.1076294277929155,S,0,EXISTING
+300,isolet,data/raw\isolet.csv,class,7797,617,26,1.0067114093959733,S,0,OK
