@@ -55,6 +55,83 @@ DATASETS = {
     300: "ISOLET",
     # 617 features | 26 classes | 7797 amostras
     # Real | balanceado
+
+     # ========================================================
+    # NOVAS BASES — PEQUENAS / BAIXA DIMENSIONALIDADE
+    # ========================================================
+
+    43: "Haberman",
+    # 3 features | 2 classes | 306 amostras
+    # Real | desbalanceado (~73/27)
+
+    1464: "BloodTransfusionServiceCenter",
+    # 4 features | 2 classes | 748 amostras
+    # Real | desbalanceado (~76/24)
+
+    333: "MonksProblems1",
+    # 6 features | 2 classes | 556 amostras
+    # Sintético | balanceamento relativamente equilibrado
+
+    334: "MonksProblems2",
+    # 6 features | 2 classes | 601 amostras
+    # Sintético | balanceamento relativamente equilibrado
+
+    1467: "ClimateModelSimulationCrashes",
+    # 21 features | 2 classes | 540 amostras
+    # Real | muito desbalanceado (~91/9)
+
+    50: "TicTacToe",
+    # 9 features | 2 classes | 958 amostras
+    # Categóricas | desbalanceado
+
+    15: "BreastW",
+    # 9 features | 2 classes | 699 amostras
+    # Real | desbalanceado (~65/35)
+
+    62: "Zoo",
+    # 16 features | 7 classes | 101 amostras
+    # Real | desbalanceado
+    # Nenhuma classe extremamente pequena
+
+
+    # ========================================================
+    # MFEAT — DIMENSIONALIDADE CONTROLADA
+    #
+    # 2000 amostras | 10 classes | balanceado
+    # ========================================================
+
+    22: "MfeatZernike",
+    # 47 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    16: "MfeatKarhunen",
+    # 64 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    14: "MfeatFourier",
+    # 76 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    12: "MfeatFactors",
+    # 216 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    20: "MfeatPixel",
+    # 240 features | 10 classes | 2000 amostras
+    # Balanceado
+
+
+    # ========================================================
+    # ALTA DIMENSIONALIDADE
+    # ========================================================
+
+    1038: "GinaAgnostic",
+    # 971 features | 2 classes | 3468 amostras
+    # Real | desbalanceado
+
+    1116: "MuskVersion2",
+    # ~166 features | 2 classes | 6598 amostras
+    # Real | desbalanceado
 }
 
 
