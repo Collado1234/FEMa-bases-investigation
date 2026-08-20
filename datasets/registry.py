@@ -153,6 +153,127 @@ _REGISTRY = {
         csv_path=DATA_RAW / "isolet.csv",
         target_column="class",
     ),
+
+        # ============================================================
+    # NOVOS DATASETS OPENML — EXPANSÃO DO PROTOCOLO FEMa
+    # ============================================================
+
+    # 3 features | 2 classes | 306 amostras
+    # Real | desbalanceado
+    "haberman": DatasetSpec(
+        name="haberman",
+        csv_path=DATA_RAW / "haberman.csv",
+        target_column="Survival_status",
+    ),
+
+    # 4 features | 2 classes | 748 amostras
+    # Real | desbalanceado
+    "blood_transfusion_service_center": DatasetSpec(
+        name="blood_transfusion_service_center",
+        csv_path=DATA_RAW / "bloodtransfusionservicecenter.csv",
+        target_column="Class",
+    ),
+
+    # 6 features | 2 classes | 556 amostras
+    # Sintético | balanceado
+    "monks_problems_1": DatasetSpec(
+        name="monks_problems_1",
+        csv_path=DATA_RAW / "monksproblems1.csv",
+        target_column="class",
+    ),
+
+    # 6 features | 2 classes | 601 amostras
+    # Sintético | desbalanceado
+    "monks_problems_2": DatasetSpec(
+        name="monks_problems_2",
+        csv_path=DATA_RAW / "monksproblems2.csv",
+        target_column="class",
+    ),
+
+    # 20 features | 2 classes | 540 amostras
+    # Real | extremamente desbalanceado
+    "climate_model_simulation_crashes": DatasetSpec(
+        name="climate_model_simulation_crashes",
+        csv_path=DATA_RAW / "climatemodelsimulationcrashes.csv",
+        target_column="Class",
+    ),
+
+    # 9 features | 2 classes | 958 amostras
+    # Categórico | desbalanceado
+    "tic_tac_toe": DatasetSpec(
+        name="tic_tac_toe",
+        csv_path=DATA_RAW / "tictactoe.csv",
+        target_column="Class",
+    ),
+
+    # 16 features | 7 classes | 101 amostras
+    # Real | extremamente desbalanceado
+    "zoo": DatasetSpec(
+        name="zoo",
+        csv_path=DATA_RAW / "zoo.csv",
+        target_column="type",
+    ),
+
+    # ============================================================
+    # MFEAT — DIMENSIONALIDADE CONTROLADA
+    #
+    # 2000 amostras | 10 classes | balanceado
+    # ============================================================
+
+    # 47 features | 10 classes | 2000 amostras
+    "mfeat_zernike": DatasetSpec(
+        name="mfeat_zernike",
+        csv_path=DATA_RAW / "mfeatzernike.csv",
+        target_column="class",
+    ),
+
+    # 64 features | 10 classes | 2000 amostras
+    "mfeat_karhunen": DatasetSpec(
+        name="mfeat_karhunen",
+        csv_path=DATA_RAW / "mfeatkarhunen.csv",
+        target_column="class",
+    ),
+
+    # 76 features | 10 classes | 2000 amostras
+    "mfeat_fourier": DatasetSpec(
+        name="mfeat_fourier",
+        csv_path=DATA_RAW / "mfeatfourier.csv",
+        target_column="class",
+    ),
+
+    # 216 features | 10 classes | 2000 amostras
+    "mfeat_factors": DatasetSpec(
+        name="mfeat_factors",
+        csv_path=DATA_RAW / "mfeatfactors.csv",
+        target_column="class",
+    ),
+
+    # 240 features | 10 classes | 2000 amostras
+    "mfeat_pixel": DatasetSpec(
+        name="mfeat_pixel",
+        csv_path=DATA_RAW / "mfeatpixel.csv",
+        target_column="class",
+    ),
+
+    # ============================================================
+    # ALTA DIMENSIONALIDADE
+    # ============================================================
+
+    # 970 features | 2 classes | 3468 amostras
+    # Real | balanceado
+    "gina_agnostic": DatasetSpec(
+        name="gina_agnostic",
+        csv_path=DATA_RAW / "ginaagnostic.csv",
+        target_column="label",
+    ),
+
+    # 167 features | 2 classes | 6598 amostras
+    # Real | desbalanceado
+    "musk": DatasetSpec(
+        name="musk",
+        csv_path=DATA_RAW / "muskversion2.csv",
+        target_column="class",
+    ),
     # ============================================================
     # DATASETS SKLEARN
     # ============================================================
