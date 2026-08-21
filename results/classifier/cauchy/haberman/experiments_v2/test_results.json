@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "cauchy",
+  "experiment": "experiments_v2",
+  "dataset": "haberman",
+  "best_hyperparameters": {
+    "k": 24,
+    "epsilon": 20.764908972522903
+  },
+  "n_train_total": 214,
+  "n_test": 46,
+  "metrics": {
+    "accuracy": 0.7391304347826086,
+    "balanced_accuracy": 0.5,
+    "precision": 0.7391304347826086,
+    "recall": 1.0,
+    "f1": 0.85,
+    "roc_auc": 0.5392156862745099,
+    "mcc": 0.0,
+    "per_class": {
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "support": 34
+      },
+      "2": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 12
+      }
+    }
+  },
+  "timestamp": "2026-08-20T17:22:52.466153+00:00"
+}
