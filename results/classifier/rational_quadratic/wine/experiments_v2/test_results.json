@@ -1,0 +1,53 @@
+{
+  "context": "classifier",
+  "basis": "rational_quadratic",
+  "experiment": "experiments_v2",
+  "dataset": "wine",
+  "best_hyperparameters": {
+    "k": 28,
+    "alpha": 1.951264598651315,
+    "l": 0.056199690315221415
+  },
+  "n_train_total": 124,
+  "n_test": 27,
+  "metrics": {
+    "accuracy": 0.7407407407407407,
+    "balanced_accuracy": 0.6666666666666666,
+    "precision": 0.4117647058823529,
+    "recall": 0.5,
+    "f1": 0.4464285714285714,
+    "roc_auc": null,
+    "mcc": 0.6575267751156013,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 9
+      },
+      "2": {
+        "accuracy": 1.0,
+        "precision": 0.6470588235294118,
+        "recall": 1.0,
+        "f1": 0.7857142857142857,
+        "support": 11
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7
+      }
+    }
+  },
+  "timestamp": "2026-08-20T09:09:42.007277+00:00"
+}

@@ -1,0 +1,52 @@
+{
+  "context": "classifier",
+  "basis": "cauchy",
+  "experiment": "experiments_v2",
+  "dataset": "seeds",
+  "best_hyperparameters": {
+    "k": 27,
+    "epsilon": 5.068077717443547
+  },
+  "n_train_total": 146,
+  "n_test": 32,
+  "metrics": {
+    "accuracy": 0.625,
+    "balanced_accuracy": 0.6333333333333333,
+    "precision": 0.35416666666666663,
+    "recall": 0.475,
+    "f1": 0.39984472049689446,
+    "roc_auc": null,
+    "mcc": 0.5345792748157364,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.9,
+        "precision": 0.5,
+        "recall": 0.9,
+        "f1": 0.6428571428571429,
+        "support": 10
+      },
+      "2": {
+        "accuracy": 1.0,
+        "precision": 0.9166666666666666,
+        "recall": 1.0,
+        "f1": 0.9565217391304348,
+        "support": 11
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 11
+      }
+    }
+  },
+  "timestamp": "2026-08-20T14:31:26.553157+00:00"
+}
