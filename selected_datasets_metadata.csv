@@ -1,24 +1,16 @@
 did,name,file,target,n_samples,n_features,n_classes,imbalance_ratio,balance,categorical_features,status,error
-46799,AVIDa-hIL6,data/raw\avida-hil6.csv,label,573891.0,3.0,2.0,26.35419447092469,N,0.0,EXISTING,
-162,SEA(50000),data/raw\sea_50000.csv,class,1000000.0,3.0,2.0,1.5929037410415177,N,0.0,EXISTING,
-1502,skin-segmentation,,,,,,,,,ERROR,"Unexpected server error when calling https://www.openml.org/api/v1/xml/data/1502. Please contact the developers!
-Status code: 503
-<html>
-<head><title>503 Service Temporarily Unavailable</title></head>
-<body>
-<center><h1>503 Service Temporarily Unavailable</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>
-"
-45927,Products,data/raw\products.csv,Product,73503.0,3.0,5.0,1.3008077311409203,S,1.0,OK,
-1509,walking-activity,data/raw\walking-activity.csv,Class,149332.0,4.0,22.0,24.13940724478595,N,0.0,OK,
-1235,Agrawal1,data/raw\agrawal1.csv,class,1000000.0,9.0,2.0,2.049198823009254,N,0.0,EXISTING,
-42553,BitcoinHeist_Ransomware,data/raw\bitcoinheist_ransomware.csv,label,2916697.0,9.0,29.0,2875284.0,N,0.0,EXISTING,
-265,BNG(glass),data/raw\bng_glass.csv,Type,137781.0,9.0,7.0,155.82747603833866,N,0.0,OK,
-46955,SDSS17,data/raw\sdss17.csv,ObjectType,78053.0,11.0,3.0,3.402386737173074,N,2.0,OK,
-46361,Risk_Level_Classification,data/raw\risk_level_classification.csv,anomaly,78600.0,18.0,3.0,9.775827559661279,N,0.0,OK,
-47264,US_Inter_State_Migration,data/raw\us_inter_state_migration.csv,last_state,500000.0,2.0,54.0,2658.5833333333335,N,0.0,EXISTING,
-1169,airlines,data/raw\airlines.csv,Delay,539383.0,7.0,2.0,1.2449597109845836,S,4.0,OK,
-351,codrna,,,,,,,,,ERROR,"factorize requires a Series, Index, ExtensionArray, np.ndarray or NumpyExtensionArray got list."
-46649,DDXPlus,data/raw\ddxplus.csv,PATHOLOGY,1292579.0,5.0,49.0,251.59076923076924,N,0.0,OK,
+43,haberman,data/raw\haberman.csv,Survival_status,306.0,3.0,2.0,2.7777777777777777,N,1.0,OK,
+1464,blood-transfusion-service-center,data/raw\bloodtransfusionservicecenter.csv,Class,748.0,4.0,2.0,3.202247191011236,N,0.0,OK,
+333,monks-problems-1,data/raw\monksproblems1.csv,class,556.0,6.0,2.0,1.0,S,6.0,OK,
+334,monks-problems-2,data/raw\monksproblems2.csv,class,601.0,6.0,2.0,1.9174757281553398,N,6.0,OK,
+1467,climate-model-simulation-crashes,data/raw\climatemodelsimulationcrashes.csv,Class,540.0,20.0,2.0,10.73913043478261,N,0.0,OK,
+50,tic-tac-toe,data/raw\tictactoe.csv,Class,958.0,9.0,2.0,1.8855421686746987,N,9.0,OK,
+15,BreastW,,,,,,,,,ERROR,"Dataset possui missing values: X=16, y=0"
+62,zoo,data/raw\zoo.csv,type,101.0,16.0,7.0,10.25,N,0.0,OK,
+22,mfeat-zernike,data/raw\mfeatzernike.csv,class,2000.0,47.0,10.0,1.0,S,0.0,OK,
+16,mfeat-karhunen,data/raw\mfeatkarhunen.csv,class,2000.0,64.0,10.0,1.0,S,0.0,OK,
+14,mfeat-fourier,data/raw\mfeatfourier.csv,class,2000.0,76.0,10.0,1.0,S,0.0,OK,
+12,mfeat-factors,data/raw\mfeatfactors.csv,class,2000.0,216.0,10.0,1.0,S,0.0,OK,
+20,mfeat-pixel,data/raw\mfeatpixel.csv,class,2000.0,240.0,10.0,1.0,S,240.0,OK,
+1038,gina_agnostic,data/raw\ginaagnostic.csv,label,3468.0,970.0,2.0,1.0340175953079178,S,0.0,OK,
+1116,musk,data/raw\muskversion2.csv,class,6598.0,167.0,2.0,5.487708947885939,N,1.0,OK,

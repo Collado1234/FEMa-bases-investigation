@@ -1,0 +1,45 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "gina_agnostic",
+  "best_hyperparameters": {
+    "k": 5,
+    "beta": 1.5293952761249943
+  },
+  "n_train_total": 2426,
+  "n_test": 521,
+  "metrics": {
+    "accuracy": 0.02111324376199616,
+    "balanced_accuracy": 0.021484375,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": null,
+    "mcc": 0.02859905098460549,
+    "per_class": {
+      "-1": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 265
+      },
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.04296875,
+        "precision": 0.6470588235294118,
+        "recall": 0.04296875,
+        "f1": 0.08058608058608059,
+        "support": 256
+      }
+    }
+  },
+  "timestamp": "2026-08-21T12:16:13.994094+00:00"
+}

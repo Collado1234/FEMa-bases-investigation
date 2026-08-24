@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "quartic_spline",
+  "experiment": "experiments_v2",
+  "dataset": "musk",
+  "best_hyperparameters": {
+    "k": 4,
+    "h": 3.573720289591046
+  },
+  "n_train_total": 4618,
+  "n_test": 990,
+  "metrics": {
+    "accuracy": 0.997979797979798,
+    "balanced_accuracy": 0.998805256869773,
+    "precision": 0.9870967741935484,
+    "recall": 1.0,
+    "f1": 0.9935064935064936,
+    "roc_auc": 0.9993792020989997,
+    "mcc": 0.9923397200625774,
+    "per_class": {
+      "0": {
+        "accuracy": 0.997610513739546,
+        "precision": 1.0,
+        "recall": 0.997610513739546,
+        "f1": 0.9988038277511961,
+        "support": 837
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.9870967741935484,
+        "recall": 1.0,
+        "f1": 0.9935064935064936,
+        "support": 153
+      }
+    }
+  },
+  "timestamp": "2026-08-21T02:49:29.467972+00:00"
+}

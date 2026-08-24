@@ -12,99 +12,126 @@ import pandas as pd
 RAW_DIR = "data/raw"
 
 DATASETS = {
+        # ========================================================
+    # DATASETS FEMa — BASES PEQUENAS/MÉDIAS E FÁCEIS
     # ========================================================
-    # BAIXA DIMENSIONALIDADE — 2 a 5 features
-    # ========================================================
 
-    46799: "AVIDa-hIL6",
-    # 3 features | 2 classes | 573k amostras
-    # Real | extremamente desbalanceado
-
-    162: "SEA(50000)",
-    # 3 features | 2 classes | 1M amostras
-    # SINTÉTICO | levemente desbalanceado
-    # NÃO ideal para o conjunto final se o objetivo for usar
-    # exclusivamente bases reais
-
-    1502: "skin-segmentation",
-    # 4 features | 2 classes | 245k amostras
+    37: "Diabetes",
+    # 8 features | 2 classes | 768 amostras
     # Real | desbalanceado
 
-    45927: "Products",
-    # 4 features | 5 classes | 73k amostras
-    # Real | baixa dimensionalidade | multiclasses
+    44: "Spambase",
+    # 57 features | 2 classes | 4601 amostras
+    # Real | desbalanceado
 
-    1509: "walking-activity",
-    # 5 features | 22 classes | 149k amostras
-    # Real | baixa dimensionalidade | muitas classes
+    1120: "MagicTelescope",
+    # 10 features | 2 classes | 19020 amostras
+    # Real | desbalanceado
 
-    # ========================================================
-    # DIMENSIONALIDADE BAIXA/MÉDIA — 5 a 10 features
-    # ========================================================
+    187: "Wine",
+    # 13 features | 3 classes | 178 amostras
+    # Real | balanceado
 
-    1235: "Agrawal1",
-    # 9 features | 2 classes | 1M amostras
-    # SINTÉTICO | desbalanceado
-    # NÃO ideal para o conjunto final se o objetivo for usar
-    # exclusivamente bases reais
+    1499: "Seeds",
+    # 7 features | 3 classes | 210 amostras
+    # Real | balanceado
 
-    42553: "BitcoinHeist_Ransomware",
-    # 9 features | 29 classes | 2,9M amostras
-    # Real | EXTREMAMENTE desbalanceado
-    # Muitas classes | grande volume de dados
+    1523: "VertebraColumn",
+    # 6 features | 3 classes | 310 amostras
+    # Real | levemente desbalanceado
 
-    265: "BNG(glass)",
-    # 10 features | 7 classes | 138k amostras
-    # BNG / gerado | multiclasses
+    30: "PageBlocks",
+    # 10 features | 5 classes | 5473 amostras
+    # Real | desbalanceado
 
-    # ========================================================
-    # DIMENSIONALIDADE MÉDIA — 10 a 20 features
-    # ========================================================
+    36: "Segment",
+    # 19 features | 7 classes | 2310 amostras
+    # Real | balanceado
 
-    46955: "SDSS17",
-    # 12 features | 3 classes | 78k amostras
-    # Real | multiclasses | dimensão média
+    6: "Letter",
+    # 16 features | 26 classes | 20000 amostras
+    # Real | balanceado
 
-    46361: "Risk_Level_Classification",
-    # 19 features | 3 classes | 78,6k amostras
-    # Real | multiclasses | dimensão média
+    300: "ISOLET",
+    # 617 features | 26 classes | 7797 amostras
+    # Real | balanceado
 
-    # ========================================================
-    # DIMENSIONALIDADE MÉDIA/ALTA — 20+ features
+     # ========================================================
+    # NOVAS BASES — PEQUENAS / BAIXA DIMENSIONALIDADE
     # ========================================================
 
-    # fetal_health:
-    # 21 features | 3 classes | 2.126 amostras
-    # Real | multiclasses
-    # Dataset já existente em data/raw
+    43: "Haberman",
+    # 3 features | 2 classes | 306 amostras
+    # Real | desbalanceado (~73/27)
+
+    1464: "BloodTransfusionServiceCenter",
+    # 4 features | 2 classes | 748 amostras
+    # Real | desbalanceado (~76/24)
+
+    333: "MonksProblems1",
+    # 6 features | 2 classes | 556 amostras
+    # Sintético | balanceamento relativamente equilibrado
+
+    334: "MonksProblems2",
+    # 6 features | 2 classes | 601 amostras
+    # Sintético | balanceamento relativamente equilibrado
+
+    1467: "ClimateModelSimulationCrashes",
+    # 21 features | 2 classes | 540 amostras
+    # Real | muito desbalanceado (~91/9)
+
+    50: "TicTacToe",
+    # 9 features | 2 classes | 958 amostras
+    # Categóricas | desbalanceado
+
+    15: "BreastW",
+    # 9 features | 2 classes | 699 amostras
+    # Real | desbalanceado (~65/35)
+
+    62: "Zoo",
+    # 16 features | 7 classes | 101 amostras
+    # Real | desbalanceado
+    # Nenhuma classe extremamente pequena
+
 
     # ========================================================
-    # BAIXA DIMENSIONALIDADE / MUITAS CLASSES
+    # MFEAT — DIMENSIONALIDADE CONTROLADA
+    #
+    # 2000 amostras | 10 classes | balanceado
     # ========================================================
 
-    47264: "US_Inter_State_Migration",
-    # 2 features | 54 classes | 500k amostras
-    # Real | EXTREMAMENTE desbalanceado
-    # Excelente para testar muitas classes com poucas features
+    22: "MfeatZernike",
+    # 47 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    16: "MfeatKarhunen",
+    # 64 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    14: "MfeatFourier",
+    # 76 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    12: "MfeatFactors",
+    # 216 features | 10 classes | 2000 amostras
+    # Balanceado
+
+    20: "MfeatPixel",
+    # 240 features | 10 classes | 2000 amostras
+    # Balanceado
+
 
     # ========================================================
-    # OUTROS / AINDA NÃO CLASSIFICADOS
+    # ALTA DIMENSIONALIDADE
     # ========================================================
 
-    1169: "airlines",
-    # Muitas amostras | baixa/média dimensionalidade
-    # Dataset de companhias aéreas
-    # Download pode apresentar erro no OpenML
+    1038: "GinaAgnostic",
+    # 971 features | 2 classes | 3468 amostras
+    # Real | desbalanceado
 
-    351: "codrna",
-    # Muitas amostras | baixa/média dimensionalidade
-    # 2 classes | real
-    # Download pode apresentar incompatibilidade no processamento
-
-    46649: "DDXPlus",
-    # Dataset grande | múltiplas classes
-    # Alta dimensionalidade | real
-    # Download bastante pesado
+    1116: "MuskVersion2",
+    # ~166 features | 2 classes | 6598 amostras
+    # Real | desbalanceado
 }
 
 

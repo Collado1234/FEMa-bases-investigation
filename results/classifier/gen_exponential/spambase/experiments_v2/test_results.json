@@ -1,0 +1,39 @@
+{
+  "context": "classifier",
+  "basis": "gen_exponential",
+  "experiment": "experiments_v2",
+  "dataset": "spambase",
+  "best_hyperparameters": {
+    "k": 24,
+    "epsilon": 1.8183018870845464,
+    "p": 1.0876075315744576
+  },
+  "n_train_total": 3220,
+  "n_test": 691,
+  "metrics": {
+    "accuracy": 0.9015918958031838,
+    "balanced_accuracy": 0.8930577004071318,
+    "precision": 0.8923076923076924,
+    "recall": 0.8529411764705882,
+    "f1": 0.8721804511278195,
+    "roc_auc": 0.9610680190930787,
+    "mcc": 0.792779586899717,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9331742243436754,
+        "precision": 0.9071925754060325,
+        "recall": 0.9331742243436754,
+        "f1": 0.92,
+        "support": 419
+      },
+      "1": {
+        "accuracy": 0.8529411764705882,
+        "precision": 0.8923076923076924,
+        "recall": 0.8529411764705882,
+        "f1": 0.8721804511278195,
+        "support": 272
+      }
+    }
+  },
+  "timestamp": "2026-08-20T03:11:00.234623+00:00"
+}

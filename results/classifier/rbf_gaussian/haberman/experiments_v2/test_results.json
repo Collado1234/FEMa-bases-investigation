@@ -1,0 +1,45 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "haberman",
+  "best_hyperparameters": {
+    "k": 22,
+    "epsilon": 42.97100021154878
+  },
+  "n_train_total": 214,
+  "n_test": 46,
+  "metrics": {
+    "accuracy": 0.6956521739130435,
+    "balanced_accuracy": 0.47058823529411764,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.4693627450980392,
+    "mcc": -0.06333004963811237,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.9411764705882353,
+        "precision": 0.7272727272727273,
+        "recall": 0.9411764705882353,
+        "f1": 0.8205128205128205,
+        "support": 34
+      },
+      "2": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 12
+      }
+    }
+  },
+  "timestamp": "2026-08-20T17:25:01.133891+00:00"
+}

@@ -1,0 +1,72 @@
+{
+  "context": "classifier",
+  "basis": "harmonic",
+  "experiment": "experiments_v2",
+  "dataset": "zoo",
+  "best_hyperparameters": {
+    "k": 8
+  },
+  "n_train_total": 69,
+  "n_test": 16,
+  "metrics": {
+    "accuracy": 0.875,
+    "balanced_accuracy": 0.7142857142857143,
+    "precision": 0.6309523809523808,
+    "recall": 0.7142857142857143,
+    "f1": 0.6653061224489795,
+    "roc_auc": 0.980952380952381,
+    "mcc": 0.8464321404702521,
+    "per_class": {
+      "0": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "support": 3
+      },
+      "2": {
+        "accuracy": 1.0,
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "support": 2
+      },
+      "3": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 1
+      },
+      "4": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 2
+      },
+      "5": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 6
+      },
+      "6": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1
+      }
+    }
+  },
+  "timestamp": "2026-08-20T17:26:53.461829+00:00"
+}
