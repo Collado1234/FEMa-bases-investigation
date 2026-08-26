@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "cauchy",
+  "experiment": "experiments_v2",
+  "dataset": "magic_telescope",
+  "best_hyperparameters": {
+    "k": 12,
+    "epsilon": 25.733989337994114
+  },
+  "n_train_total": 13314,
+  "n_test": 2853,
+  "metrics": {
+    "accuracy": 0.8566421310900806,
+    "balanced_accuracy": 0.8123162943601627,
+    "precision": 0.9035326086956522,
+    "recall": 0.6630109670987039,
+    "f1": 0.7648073605520413,
+    "roc_auc": 0.9072253509741046,
+    "mcc": 0.6816503048924183,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9616216216216216,
+        "precision": 0.8403401039206424,
+        "recall": 0.9616216216216216,
+        "f1": 0.8968994202167885,
+        "support": 1850
+      },
+      "1": {
+        "accuracy": 0.6630109670987039,
+        "precision": 0.9035326086956522,
+        "recall": 0.6630109670987039,
+        "f1": 0.7648073605520413,
+        "support": 1003
+      }
+    }
+  },
+  "timestamp": "2026-08-20T14:40:19.751767+00:00"
+}
