@@ -1,0 +1,39 @@
+{
+  "context": "classifier",
+  "basis": "rational_quadratic",
+  "experiment": "experiments_v2",
+  "dataset": "tic_tac_toe",
+  "best_hyperparameters": {
+    "k": 13,
+    "alpha": 1.734142419906245,
+    "l": 0.10478747414378216
+  },
+  "n_train_total": 670,
+  "n_test": 144,
+  "metrics": {
+    "accuracy": 0.9236111111111112,
+    "balanced_accuracy": 0.8946808510638298,
+    "precision": 0.9029126213592233,
+    "recall": 0.9893617021276596,
+    "f1": 0.9441624365482234,
+    "roc_auc": 0.9887234042553191,
+    "mcc": 0.8327496137654615,
+    "per_class": {
+      "0": {
+        "accuracy": 0.8,
+        "precision": 0.975609756097561,
+        "recall": 0.8,
+        "f1": 0.8791208791208791,
+        "support": 50
+      },
+      "1": {
+        "accuracy": 0.9893617021276596,
+        "precision": 0.9029126213592233,
+        "recall": 0.9893617021276596,
+        "f1": 0.9441624365482234,
+        "support": 94
+      }
+    }
+  },
+  "timestamp": "2026-08-25T18:33:22.473099+00:00"
+}
