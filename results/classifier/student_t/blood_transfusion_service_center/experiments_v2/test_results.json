@@ -1,0 +1,45 @@
+{
+  "context": "classifier",
+  "basis": "student_t",
+  "experiment": "experiments_v2",
+  "dataset": "blood_transfusion_service_center",
+  "best_hyperparameters": {
+    "k": 5,
+    "nu": 0.005695262671673525
+  },
+  "n_train_total": 522,
+  "n_test": 113,
+  "metrics": {
+    "accuracy": 0.7522123893805309,
+    "balanced_accuracy": 0.4941860465116279,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.3046942291128337,
+    "mcc": -0.026472420300094408,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.9883720930232558,
+        "precision": 0.7589285714285714,
+        "recall": 0.9883720930232558,
+        "f1": 0.8585858585858586,
+        "support": 86
+      },
+      "2": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-08-25T18:22:38.658406+00:00"
+}
