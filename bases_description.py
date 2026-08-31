@@ -110,6 +110,23 @@ def classify_classes(n):
         return "Muitas"
 
 
+def classify_imbalance(ir):
+    """
+    IR = contagem da classe majoritaria / contagem da classe minoritaria.
+
+    ~1.0        : balanceado
+    1.0 - 1.5   : leve desbalanceamento
+    1.5 - 3.0   : moderado
+    > 3.0       : severo
+    """
+    if ir <= 1.5:
+        return "Balanceado"
+    elif ir <= 3.0:
+        return "Moderado"
+    else:
+        return "Severo"
+
+
 # ============================================================
 # RESOLVER DID A PARTIR DO NOME (para os "None" acima)
 # ============================================================
@@ -172,14 +189,25 @@ def get_metadata(did, expected_name, max_retries=2):
             n_features = X.shape[1]
 
             if y is not None:
-                n_classes = int(y.nunique())
+                class_counts = y.value_counts()
+                n_classes = int(class_counts.shape[0])
+                maj = int(class_counts.max())
+                min_ = int(class_counts.min())
+                imbalance_ratio = round(maj / min_, 3) if min_ > 0 else None
             else:
                 n_classes = None
+                class_counts = None
+                imbalance_ratio = None
 
             sample_category = classify_samples(n_samples)
             feature_category = classify_features(n_features)
             class_category = (
                 classify_classes(n_classes) if n_classes is not None else None
+            )
+            imbalance_category = (
+                classify_imbalance(imbalance_ratio)
+                if imbalance_ratio is not None
+                else None
             )
 
             result = {
@@ -192,6 +220,11 @@ def get_metadata(did, expected_name, max_retries=2):
                 "feature_category": feature_category,
                 "n_classes": n_classes,
                 "class_category": class_category,
+                "class_distribution": (
+                    dict(class_counts) if class_counts is not None else None
+                ),
+                "imbalance_ratio": imbalance_ratio,
+                "imbalance_category": imbalance_category,
                 "target": target,
                 "status": "OK",
             }
@@ -200,6 +233,7 @@ def get_metadata(did, expected_name, max_retries=2):
             print(f"Amostras : {n_samples}  -> {sample_category}")
             print(f"Features : {n_features}  -> {feature_category}")
             print(f"Classes  : {n_classes}  -> {class_category}")
+            print(f"IR (maj/min): {imbalance_ratio}  -> {imbalance_category}")
 
             return result
 
