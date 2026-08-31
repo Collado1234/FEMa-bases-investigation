@@ -1,11 +1,11 @@
 {
   "context": "classifier",
-  "basis": "laplacian",
+  "basis": "softmax_radial",
   "experiment": "experiments_v2",
   "dataset": "bng_glass",
   "best_hyperparameters": {
     "k": 15,
-    "epsilon": 3.139118461178404
+    "beta": 3.139118461178404
   },
   "n_train_total": 96446,
   "n_test": 20668,
@@ -69,5 +69,5 @@
       }
     }
   },
-  "timestamp": "2026-08-28T19:06:27.523897+00:00"
+  "timestamp": "2026-08-30T12:35:51.032967+00:00"
 }
