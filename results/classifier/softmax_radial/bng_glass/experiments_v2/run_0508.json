@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "bng_glass",
+  "combo_id": "beta=0.33521545557804855,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "beta": 0.33521545557804855
+  },
+  "repeat_idx": 2,
+  "fold_idx": 7,
+  "seed": 1485573920,
+  "n_train_fold": 86802,
+  "n_val_fold": 9644,
+  "metrics": {
+    "accuracy": 0.6783492326835338,
+    "balanced_accuracy": 0.45694646192136273,
+    "precision": 0.537017463335914,
+    "recall": 0.45694646192136273,
+    "f1": 0.4748625407028218,
+    "roc_auc": 0.820341328814713,
+    "mcc": 0.5537307186390111
+  },
+  "execution_time_seconds": 82.11647919999086,
+  "timestamp": "2026-08-30T10:26:05.635988+00:00"
+}

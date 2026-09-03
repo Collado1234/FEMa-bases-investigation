@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "student_t",
+  "experiment": "experiments_v2",
+  "dataset": "bng_glass",
+  "combo_id": "k=15,nu=0.016532523475753853",
+  "hyperparameters": {
+    "k": 15,
+    "nu": 0.016532523475753853
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 1926176163,
+  "n_train_fold": 86801,
+  "n_val_fold": 9645,
+  "metrics": {
+    "accuracy": 0.6764126490409539,
+    "balanced_accuracy": 0.4646930952721184,
+    "precision": 0.5338879889142092,
+    "recall": 0.4646930952721184,
+    "f1": 0.48338345282020934,
+    "roc_auc": 0.8232189732482391,
+    "mcc": 0.5518851926757521
+  },
+  "execution_time_seconds": 81.56290590000572,
+  "timestamp": "2026-08-30T20:05:16.329533+00:00"
+}

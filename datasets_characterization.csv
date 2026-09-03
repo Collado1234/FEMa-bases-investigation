@@ -1,29 +1,29 @@
-did,name,openml_name,n_samples,sample_category,n_features,feature_category,n_classes,class_category,target,status
-62.0,zoo,zoo,101.0,Pequena,16.0,Baixa,7.0,Medias,type,OK
-61.0,iris,iris,150.0,Pequena,4.0,Baixa,3.0,Poucas,class,OK
-187.0,wine,wine,178.0,Pequena,13.0,Baixa,3.0,Poucas,class,OK
-1499.0,seeds,seeds,210.0,Pequena,7.0,Baixa,3.0,Poucas,Class,OK
-43.0,haberman,haberman,306.0,Pequena,3.0,Baixa,2.0,Poucas,Survival_status,OK
-1523.0,vertebra_column,vertebra-column,310.0,Pequena,6.0,Baixa,3.0,Poucas,Class,OK
-1467.0,climate_model_simulation_crashes,climate-model-simulation-crashes,540.0,Pequena,20.0,Baixa,2.0,Poucas,Class,OK
-333.0,monks_problems_1,monks-problems-1,556.0,Pequena,6.0,Baixa,2.0,Poucas,class,OK
-334.0,monks_problems_2,monks-problems-2,601.0,Pequena,6.0,Baixa,2.0,Poucas,class,OK
-1464.0,blood_transfusion_service_center,blood-transfusion-service-center,748.0,Pequena,4.0,Baixa,2.0,Poucas,Class,OK
-37.0,diabetes,diabetes,768.0,Pequena,8.0,Baixa,2.0,Poucas,class,OK
-50.0,tic_tac_toe,tic-tac-toe,958.0,Pequena,9.0,Baixa,2.0,Poucas,Class,OK
-22.0,mfeat_zernike,mfeat-zernike,2000.0,Media,47.0,Media,10.0,Medias,class,OK
-16.0,mfeat_karhunen,mfeat-karhunen,2000.0,Media,64.0,Media,10.0,Medias,class,OK
-20.0,mfeat_pixel,mfeat-pixel,2000.0,Media,240.0,Alta,10.0,Medias,class,OK
-12.0,mfeat_factors,mfeat-factors,2000.0,Media,216.0,Alta,10.0,Medias,class,OK
-14.0,mfeat_fourier,mfeat-fourier,2000.0,Media,76.0,Media,10.0,Medias,class,OK
-36.0,segment,segment,2310.0,Media,19.0,Baixa,7.0,Medias,class,OK
-1038.0,gina_agnostic,gina_agnostic,3468.0,Media,970.0,Alta,2.0,Poucas,label,OK
-44.0,spambase,spambase,4601.0,Media,57.0,Media,2.0,Poucas,class,OK
-30.0,page_blocks,page-blocks,5473.0,Media,10.0,Baixa,5.0,Medias,class,OK
-1116.0,musk,musk,6598.0,Media,167.0,Alta,2.0,Poucas,class,OK
-300.0,isolet,isolet,7797.0,Media,617.0,Alta,26.0,Muitas,class,OK
-1120.0,magic_telescope,MagicTelescope,19020.0,Grande,10.0,Baixa,2.0,Poucas,class:,OK
-6.0,letter,letter,20000.0,Grande,16.0,Baixa,26.0,Muitas,class,OK
-,bng_glass,,,,,,,,,SKIPPED_NO_DID
-,fetal_health,,,,,,,,,SKIPPED_NO_DID
-,classification_data,,,,,,,,,SKIPPED_NO_DID
+did,name,openml_name,n_samples,sample_category,n_features,feature_category,n_classes,class_category,class_distribution,imbalance_ratio,imbalance_category,target,status
+62.0,zoo,zoo,101.0,Pequena,16.0,Baixa,7.0,Medias,"{'mammal': np.int64(41), 'bird': np.int64(20), 'fish': np.int64(13), 'invertebrate': np.int64(10), 'insect': np.int64(8), 'reptile': np.int64(5), 'amphibian': np.int64(4)}",10.25,Severo,type,OK
+61.0,iris,iris,150.0,Pequena,4.0,Baixa,3.0,Poucas,"{'Iris-setosa': np.int64(50), 'Iris-versicolor': np.int64(50), 'Iris-virginica': np.int64(50)}",1.0,Balanceado,class,OK
+187.0,wine,wine,178.0,Pequena,13.0,Baixa,3.0,Poucas,"{'2': np.int64(71), '1': np.int64(59), '3': np.int64(48)}",1.479,Balanceado,class,OK
+1499.0,seeds,seeds,210.0,Pequena,7.0,Baixa,3.0,Poucas,"{'1': np.int64(70), '2': np.int64(70), '3': np.int64(70)}",1.0,Balanceado,Class,OK
+43.0,haberman,haberman,306.0,Pequena,3.0,Baixa,2.0,Poucas,"{'1': np.int64(225), '2': np.int64(81)}",2.778,Moderado,Survival_status,OK
+1523.0,vertebra_column,vertebra-column,310.0,Pequena,6.0,Baixa,3.0,Poucas,"{'3': np.int64(150), '2': np.int64(100), '1': np.int64(60)}",2.5,Moderado,Class,OK
+1467.0,climate_model_simulation_crashes,climate-model-simulation-crashes,540.0,Pequena,20.0,Baixa,2.0,Poucas,"{'2': np.int64(494), '1': np.int64(46)}",10.739,Severo,Class,OK
+333.0,monks_problems_1,monks-problems-1,556.0,Pequena,6.0,Baixa,2.0,Poucas,"{'0': np.int64(278), '1': np.int64(278)}",1.0,Balanceado,class,OK
+334.0,monks_problems_2,monks-problems-2,601.0,Pequena,6.0,Baixa,2.0,Poucas,"{'0': np.int64(395), '1': np.int64(206)}",1.917,Moderado,class,OK
+1464.0,blood_transfusion_service_center,blood-transfusion-service-center,748.0,Pequena,4.0,Baixa,2.0,Poucas,"{'1': np.int64(570), '2': np.int64(178)}",3.202,Severo,Class,OK
+37.0,diabetes,diabetes,768.0,Pequena,8.0,Baixa,2.0,Poucas,"{'tested_negative': np.int64(500), 'tested_positive': np.int64(268)}",1.866,Moderado,class,OK
+50.0,tic_tac_toe,tic-tac-toe,958.0,Pequena,9.0,Baixa,2.0,Poucas,"{'positive': np.int64(626), 'negative': np.int64(332)}",1.886,Moderado,Class,OK
+22.0,mfeat_zernike,mfeat-zernike,2000.0,Media,47.0,Media,10.0,Medias,"{'1': np.int64(200), '2': np.int64(200), '3': np.int64(200), '4': np.int64(200), '5': np.int64(200), '6': np.int64(200), '7': np.int64(200), '8': np.int64(200), '9': np.int64(200), '10': np.int64(200)}",1.0,Balanceado,class,OK
+16.0,mfeat_karhunen,mfeat-karhunen,2000.0,Media,64.0,Media,10.0,Medias,"{'1': np.int64(200), '2': np.int64(200), '3': np.int64(200), '4': np.int64(200), '5': np.int64(200), '6': np.int64(200), '7': np.int64(200), '8': np.int64(200), '9': np.int64(200), '10': np.int64(200)}",1.0,Balanceado,class,OK
+20.0,mfeat_pixel,mfeat-pixel,2000.0,Media,240.0,Alta,10.0,Medias,"{'1': np.int64(200), '2': np.int64(200), '3': np.int64(200), '4': np.int64(200), '5': np.int64(200), '6': np.int64(200), '7': np.int64(200), '8': np.int64(200), '9': np.int64(200), '10': np.int64(200)}",1.0,Balanceado,class,OK
+12.0,mfeat_factors,mfeat-factors,2000.0,Media,216.0,Alta,10.0,Medias,"{'1': np.int64(200), '2': np.int64(200), '3': np.int64(200), '4': np.int64(200), '5': np.int64(200), '6': np.int64(200), '7': np.int64(200), '8': np.int64(200), '9': np.int64(200), '10': np.int64(200)}",1.0,Balanceado,class,OK
+14.0,mfeat_fourier,mfeat-fourier,2000.0,Media,76.0,Media,10.0,Medias,"{'1': np.int64(200), '2': np.int64(200), '3': np.int64(200), '4': np.int64(200), '5': np.int64(200), '6': np.int64(200), '7': np.int64(200), '8': np.int64(200), '9': np.int64(200), '10': np.int64(200)}",1.0,Balanceado,class,OK
+36.0,segment,segment,2310.0,Media,19.0,Baixa,7.0,Medias,"{'brickface': np.int64(330), 'sky': np.int64(330), 'foliage': np.int64(330), 'cement': np.int64(330), 'window': np.int64(330), 'path': np.int64(330), 'grass': np.int64(330)}",1.0,Balanceado,class,OK
+1038.0,gina_agnostic,gina_agnostic,3468.0,Media,970.0,Alta,2.0,Poucas,"{'-1': np.int64(1763), '1': np.int64(1705)}",1.034,Balanceado,label,OK
+44.0,spambase,spambase,4601.0,Media,57.0,Media,2.0,Poucas,"{'0': np.int64(2788), '1': np.int64(1813)}",1.538,Moderado,class,OK
+30.0,page_blocks,page-blocks,5473.0,Media,10.0,Baixa,5.0,Medias,"{'1': np.int64(4913), '2': np.int64(329), '5': np.int64(115), '4': np.int64(88), '3': np.int64(28)}",175.464,Severo,class,OK
+1116.0,musk,musk,6598.0,Media,167.0,Alta,2.0,Poucas,"{'0': np.int64(5581), '1': np.int64(1017)}",5.488,Severo,class,OK
+300.0,isolet,isolet,7797.0,Media,617.0,Alta,26.0,Muitas,"{'1': np.int64(300), '2': np.int64(300), '3': np.int64(300), '4': np.int64(300), '5': np.int64(300), '7': np.int64(300), '8': np.int64(300), '9': np.int64(300), '10': np.int64(300), '11': np.int64(300), '12': np.int64(300), '14': np.int64(300), '15': np.int64(300), '16': np.int64(300), '17': np.int64(300), '18': np.int64(300), '19': np.int64(300), '20': np.int64(300), '21': np.int64(300), '22': np.int64(300), '23': np.int64(300), '24': np.int64(300), '25': np.int64(300), '26': np.int64(300), '13': np.int64(299), '6': np.int64(298)}",1.007,Balanceado,class,OK
+1120.0,magic_telescope,MagicTelescope,19020.0,Grande,10.0,Baixa,2.0,Poucas,"{'g': np.int64(12332), 'h': np.int64(6688)}",1.844,Moderado,class:,OK
+6.0,letter,letter,20000.0,Grande,16.0,Baixa,26.0,Muitas,"{'U': np.int64(813), 'D': np.int64(805), 'P': np.int64(803), 'T': np.int64(796), 'M': np.int64(792), 'A': np.int64(789), 'X': np.int64(787), 'Y': np.int64(786), 'N': np.int64(783), 'Q': np.int64(783), 'F': np.int64(775), 'G': np.int64(773), 'E': np.int64(768), 'B': np.int64(766), 'V': np.int64(764), 'L': np.int64(761), 'R': np.int64(758), 'I': np.int64(755), 'O': np.int64(753), 'W': np.int64(752), 'S': np.int64(748), 'J': np.int64(747), 'K': np.int64(739), 'C': np.int64(736), 'H': np.int64(734), 'Z': np.int64(734)}",1.108,Balanceado,class,OK
+,bng_glass,,,,,,,,,,,,SKIPPED_NO_DID
+,fetal_health,,,,,,,,,,,,SKIPPED_NO_DID
+,classification_data,,,,,,,,,,,,SKIPPED_NO_DID
