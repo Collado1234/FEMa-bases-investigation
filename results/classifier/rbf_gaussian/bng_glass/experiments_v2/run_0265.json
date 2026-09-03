@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "bng_glass",
+  "combo_id": "epsilon=16.61915410478564,k=24",
+  "hyperparameters": {
+    "k": 24,
+    "epsilon": 16.61915410478564
+  },
+  "repeat_idx": 2,
+  "fold_idx": 4,
+  "seed": 1180270807,
+  "n_train_fold": 86801,
+  "n_val_fold": 9645,
+  "metrics": {
+    "accuracy": 0.6199066874027994,
+    "balanced_accuracy": 0.4440862650780767,
+    "precision": 0.45119117124223207,
+    "recall": 0.4440862650780767,
+    "f1": 0.44714196130836775,
+    "roc_auc": 0.7786375801734058,
+    "mcc": 0.4836203322351365
+  },
+  "execution_time_seconds": 81.93655260000378,
+  "timestamp": "2026-08-28T06:50:24.735185+00:00"
+}

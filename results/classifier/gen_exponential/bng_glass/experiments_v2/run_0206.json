@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "gen_exponential",
+  "experiment": "experiments_v2",
+  "dataset": "bng_glass",
+  "combo_id": "epsilon=3.139118461178404,k=15,p=1.1276345122083506",
+  "hyperparameters": {
+    "k": 15,
+    "epsilon": 3.139118461178404,
+    "p": 1.1276345122083506
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 1516341792,
+  "n_train_fold": 86801,
+  "n_val_fold": 9645,
+  "metrics": {
+    "accuracy": 0.6738206324520477,
+    "balanced_accuracy": 0.46808922743363185,
+    "precision": 0.5307329989303126,
+    "recall": 0.46808922743363185,
+    "f1": 0.48616745831220026,
+    "roc_auc": 0.8187617393389909,
+    "mcc": 0.5488159642384897
+  },
+  "execution_time_seconds": 84.604685600003,
+  "timestamp": "2026-08-21T23:25:38.065873+00:00"
+}

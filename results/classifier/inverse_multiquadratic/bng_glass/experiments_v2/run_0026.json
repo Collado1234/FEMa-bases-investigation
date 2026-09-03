@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "inverse_multiquadratic",
+  "experiment": "experiments_v2",
+  "dataset": "bng_glass",
+  "combo_id": "c=0.1022992510826784,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "c": 0.1022992510826784
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 761313107,
+  "n_train_fold": 86801,
+  "n_val_fold": 9645,
+  "metrics": {
+    "accuracy": 0.6657335406946604,
+    "balanced_accuracy": 0.46944663689533994,
+    "precision": 0.5094158647869395,
+    "recall": 0.46944663689533994,
+    "f1": 0.48306145898836234,
+    "roc_auc": 0.7785489351741509,
+    "mcc": 0.5396564082099732
+  },
+  "execution_time_seconds": 82.64939520001644,
+  "timestamp": "2026-08-22T23:10:37.321633+00:00"
+}

@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "attention",
+  "experiment": "experiments_v2",
+  "dataset": "fetal_health",
+  "combo_id": "k=22",
+  "hyperparameters": {
+    "k": 22
+  },
+  "repeat_idx": 2,
+  "fold_idx": 6,
+  "seed": 169718196,
+  "n_train_fold": 1339,
+  "n_val_fold": 149,
+  "metrics": {
+    "accuracy": 0.8389261744966443,
+    "balanced_accuracy": 0.4971264367816092,
+    "precision": 0.38283208020050125,
+    "recall": 0.3728448275862069,
+    "f1": 0.37378083763625936,
+    "roc_auc": null,
+    "mcc": 0.48938648369491017
+  },
+  "execution_time_seconds": 0.026023800000075425,
+  "timestamp": "2026-08-18T22:44:52.988825+00:00"
+}
