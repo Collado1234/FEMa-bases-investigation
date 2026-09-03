@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "gina_agnostic",
+  "combo_id": "epsilon=1.0017808951943048,k=26",
+  "hyperparameters": {
+    "k": 26,
+    "epsilon": 1.0017808951943048
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 843132318,
+  "n_train_fold": 2183,
+  "n_val_fold": 243,
+  "metrics": {
+    "accuracy": 0.46502057613168724,
+    "balanced_accuracy": 0.47478991596638653,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.8238682569802114,
+    "mcc": 0.15082895960629644
+  },
+  "execution_time_seconds": 4.418048999999883,
+  "timestamp": "2026-08-21T19:56:37.841679+00:00"
+}

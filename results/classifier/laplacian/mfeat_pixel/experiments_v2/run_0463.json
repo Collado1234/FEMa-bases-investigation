@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "laplacian",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_pixel",
+  "combo_id": "epsilon=25.733989337994114,k=12",
+  "hyperparameters": {
+    "k": 12,
+    "epsilon": 25.733989337994114
+  },
+  "repeat_idx": 1,
+  "fold_idx": 2,
+  "seed": 1532472412,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8714285714285714,
+    "balanced_accuracy": 0.8714285714285716,
+    "precision": 0.7658008658008658,
+    "recall": 0.7922077922077922,
+    "f1": 0.775889424976646,
+    "roc_auc": null,
+    "mcc": 0.8654074991407338
+  },
+  "execution_time_seconds": 0.3799637000192888,
+  "timestamp": "2026-08-25T20:51:00.454216+00:00"
+}

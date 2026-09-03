@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_fourier",
+  "combo_id": "beta=6.974749851257469,k=4",
+  "hyperparameters": {
+    "k": 4,
+    "beta": 6.974749851257469
+  },
+  "repeat_idx": 1,
+  "fold_idx": 5,
+  "seed": 227606024,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.7714285714285715,
+    "balanced_accuracy": 0.7714285714285714,
+    "precision": 0.7354543825627418,
+    "recall": 0.7714285714285714,
+    "f1": 0.7431147787655018,
+    "roc_auc": null,
+    "mcc": 0.7539810488272279
+  },
+  "execution_time_seconds": 0.04009780002525076,
+  "timestamp": "2026-08-25T19:05:59.350501+00:00"
+}

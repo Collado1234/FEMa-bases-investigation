@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "climate_model_simulation_crashes",
+  "combo_id": "beta=0.17954852306126248,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "beta": 0.17954852306126248
+  },
+  "repeat_idx": 2,
+  "fold_idx": 7,
+  "seed": 1426429321,
+  "n_train_fold": 340,
+  "n_val_fold": 38,
+  "metrics": {
+    "accuracy": 0.05263157894736842,
+    "balanced_accuracy": 0.25,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.3823529411764706,
+    "mcc": 0.09224100694021363
+  },
+  "execution_time_seconds": 0.006013899983372539,
+  "timestamp": "2026-08-25T18:37:14.208440+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "beta=1.5293952761249943,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "beta": 1.5293952761249943
+  },
+  "repeat_idx": 2,
+  "fold_idx": 7,
+  "seed": 271669059,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8642857142857143,
+    "balanced_accuracy": 0.8642857142857142,
+    "precision": 0.8182600732600733,
+    "recall": 0.8642857142857142,
+    "f1": 0.8330505382229519,
+    "roc_auc": null,
+    "mcc": 0.8589018058969222
+  },
+  "execution_time_seconds": 0.03197300003375858,
+  "timestamp": "2026-08-25T18:39:20.420679+00:00"
+}

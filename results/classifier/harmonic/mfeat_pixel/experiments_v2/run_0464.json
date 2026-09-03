@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "harmonic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_pixel",
+  "combo_id": "k=25",
+  "hyperparameters": {
+    "k": 25
+  },
+  "repeat_idx": 1,
+  "fold_idx": 3,
+  "seed": 1111029211,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8571428571428571,
+    "balanced_accuracy": 0.8571428571428571,
+    "precision": 0.7141265597147949,
+    "recall": 0.7792207792207794,
+    "f1": 0.7443691643914113,
+    "roc_auc": null,
+    "mcc": 0.8469481223329426
+  },
+  "execution_time_seconds": 0.3886125000426546,
+  "timestamp": "2026-08-25T20:43:33.125646+00:00"
+}

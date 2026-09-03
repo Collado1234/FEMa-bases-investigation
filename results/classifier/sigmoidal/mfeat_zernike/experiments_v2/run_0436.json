@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "alpha=0.8074433276053008,c=1.2135573893389007,k=25",
+  "hyperparameters": {
+    "k": 25,
+    "alpha": 0.8074433276053008,
+    "c": 1.2135573893389007
+  },
+  "repeat_idx": 1,
+  "fold_idx": 5,
+  "seed": 621721141,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8357142857142857,
+    "balanced_accuracy": 0.8357142857142857,
+    "precision": 0.7823214285714286,
+    "recall": 0.8357142857142857,
+    "f1": 0.8040510279530244,
+    "roc_auc": null,
+    "mcc": 0.8246441337076489
+  },
+  "execution_time_seconds": 0.03167330002179369,
+  "timestamp": "2026-08-25T18:44:52.841766+00:00"
+}

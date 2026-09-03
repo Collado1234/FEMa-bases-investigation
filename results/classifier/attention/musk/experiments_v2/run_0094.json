@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "attention",
+  "experiment": "experiments_v2",
+  "dataset": "musk",
+  "combo_id": "k=15",
+  "hyperparameters": {
+    "k": 15
+  },
+  "repeat_idx": 0,
+  "fold_idx": 3,
+  "seed": 1585830317,
+  "n_train_fold": 4156,
+  "n_val_fold": 462,
+  "metrics": {
+    "accuracy": 0.9956709956709957,
+    "balanced_accuracy": 0.9974424552429668,
+    "precision": 0.9726027397260274,
+    "recall": 1.0,
+    "f1": 0.9861111111111112,
+    "roc_auc": 0.9990994560714671,
+    "mcc": 0.9836807356305717
+  },
+  "execution_time_seconds": 4.331275900000037,
+  "timestamp": "2026-08-20T17:35:54.242636+00:00"
+}

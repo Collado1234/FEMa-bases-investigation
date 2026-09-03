@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "attention",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "k=8",
+  "hyperparameters": {
+    "k": 8
+  },
+  "repeat_idx": 0,
+  "fold_idx": 5,
+  "seed": 1173065671,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8,
+    "balanced_accuracy": 0.8,
+    "precision": 0.7484074014221073,
+    "recall": 0.8,
+    "f1": 0.7639238777948456,
+    "roc_auc": null,
+    "mcc": 0.7861563970603381
+  },
+  "execution_time_seconds": 0.02954479999607429,
+  "timestamp": "2026-08-25T18:37:49.940764+00:00"
+}

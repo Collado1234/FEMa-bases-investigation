@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_pixel",
+  "combo_id": "beta=11.118752706560784,k=26",
+  "hyperparameters": {
+    "k": 26,
+    "beta": 11.118752706560784
+  },
+  "repeat_idx": 1,
+  "fold_idx": 1,
+  "seed": 592777483,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8785714285714286,
+    "balanced_accuracy": 0.8785714285714287,
+    "precision": 0.7507703081232493,
+    "recall": 0.7987012987012988,
+    "f1": 0.7725306992270284,
+    "roc_auc": null,
+    "mcc": 0.8716705300434767
+  },
+  "execution_time_seconds": 0.37048199999844655,
+  "timestamp": "2026-08-25T21:27:14.656100+00:00"
+}

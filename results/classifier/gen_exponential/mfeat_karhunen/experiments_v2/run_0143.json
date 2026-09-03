@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "gen_exponential",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_karhunen",
+  "combo_id": "epsilon=31.71837329014025,k=17,p=2.287730240161329",
+  "hyperparameters": {
+    "k": 17,
+    "epsilon": 31.71837329014025,
+    "p": 2.287730240161329
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 783059073,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8214285714285714,
+    "balanced_accuracy": 0.8214285714285715,
+    "precision": 0.7086031193686696,
+    "recall": 0.7467532467532468,
+    "f1": 0.721130837118298,
+    "roc_auc": null,
+    "mcc": 0.8093168065620449
+  },
+  "execution_time_seconds": 0.0387899000197649,
+  "timestamp": "2026-08-25T18:48:47.283731+00:00"
+}

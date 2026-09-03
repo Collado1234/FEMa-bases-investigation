@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "laplacian",
+  "experiment": "experiments_v2",
+  "dataset": "climate_model_simulation_crashes",
+  "combo_id": "epsilon=0.17954852306126248,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "epsilon": 0.17954852306126248
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 1793755686,
+  "n_train_fold": 340,
+  "n_val_fold": 38,
+  "metrics": {
+    "accuracy": 0.05263157894736842,
+    "balanced_accuracy": 0.3333333333333333,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.36190476190476195,
+    "mcc": 0.08143807531137374
+  },
+  "execution_time_seconds": 0.006221999996341765,
+  "timestamp": "2026-08-25T18:35:45.784231+00:00"
+}

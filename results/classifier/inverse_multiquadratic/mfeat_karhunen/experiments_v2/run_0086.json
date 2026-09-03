@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "inverse_multiquadratic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_karhunen",
+  "combo_id": "c=0.016470428664554334,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "c": 0.016470428664554334
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 634214072,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8642857142857143,
+    "balanced_accuracy": 0.8642857142857142,
+    "precision": 0.766100076394194,
+    "recall": 0.7857142857142857,
+    "f1": 0.7739308563557731,
+    "roc_auc": null,
+    "mcc": 0.8580188337201026
+  },
+  "execution_time_seconds": 0.03832719998899847,
+  "timestamp": "2026-08-25T18:49:41.767899+00:00"
+}

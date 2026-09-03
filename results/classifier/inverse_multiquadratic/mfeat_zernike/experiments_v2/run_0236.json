@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "inverse_multiquadratic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "c=1.3567943870407957,k=15",
+  "hyperparameters": {
+    "k": 15,
+    "c": 1.3567943870407957
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 4312737,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8214285714285714,
+    "balanced_accuracy": 0.8214285714285715,
+    "precision": 0.7839270152505446,
+    "recall": 0.8214285714285715,
+    "f1": 0.7932287839954354,
+    "roc_auc": null,
+    "mcc": 0.8106920761778917
+  },
+  "execution_time_seconds": 0.03148850001161918,
+  "timestamp": "2026-08-25T18:40:40.972979+00:00"
+}

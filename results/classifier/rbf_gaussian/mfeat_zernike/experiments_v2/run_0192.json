@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "epsilon=1.0017808951943048,k=26",
+  "hyperparameters": {
+    "k": 26,
+    "epsilon": 1.0017808951943048
+  },
+  "repeat_idx": 1,
+  "fold_idx": 1,
+  "seed": 1115976521,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8071428571428572,
+    "balanced_accuracy": 0.8071428571428572,
+    "precision": 0.7575981888481889,
+    "recall": 0.8071428571428572,
+    "f1": 0.7725176278414294,
+    "roc_auc": null,
+    "mcc": 0.7944084843804432
+  },
+  "execution_time_seconds": 0.03132670000195503,
+  "timestamp": "2026-08-25T18:43:54.845240+00:00"
+}

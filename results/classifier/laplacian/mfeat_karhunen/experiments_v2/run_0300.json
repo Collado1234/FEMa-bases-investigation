@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "laplacian",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_karhunen",
+  "combo_id": "epsilon=1.5731191654258474,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "epsilon": 1.5731191654258474
+  },
+  "repeat_idx": 2,
+  "fold_idx": 9,
+  "seed": 543089313,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8785714285714286,
+    "balanced_accuracy": 0.8785714285714287,
+    "precision": 0.7529163818637502,
+    "recall": 0.7987012987012986,
+    "f1": 0.7730216028021669,
+    "roc_auc": null,
+    "mcc": 0.8719192022107025
+  },
+  "execution_time_seconds": 0.036544399976264685,
+  "timestamp": "2026-08-25T18:50:18.916977+00:00"
+}

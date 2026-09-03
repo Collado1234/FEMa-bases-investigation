@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "cosine",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_fourier",
+  "combo_id": "h=0.9237980654944229,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "h": 0.9237980654944229
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 1537704390,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.7642857142857142,
+    "balanced_accuracy": 0.7642857142857143,
+    "precision": 0.7300162337662337,
+    "recall": 0.7642857142857143,
+    "f1": 0.7374460288652667,
+    "roc_auc": null,
+    "mcc": 0.7459167836145087
+  },
+  "execution_time_seconds": 0.04856369999470189,
+  "timestamp": "2026-08-25T18:57:22.672258+00:00"
+}

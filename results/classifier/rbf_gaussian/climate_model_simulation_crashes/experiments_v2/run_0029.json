@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "climate_model_simulation_crashes",
+  "combo_id": "epsilon=1.5293952761249943,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "epsilon": 1.5293952761249943
+  },
+  "repeat_idx": 2,
+  "fold_idx": 8,
+  "seed": 1501093617,
+  "n_train_fold": 341,
+  "n_val_fold": 37,
+  "metrics": {
+    "accuracy": 0.08108108108108109,
+    "balanced_accuracy": 0.5,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.13725490196078433,
+    "mcc": 0.21437323142813602
+  },
+  "execution_time_seconds": 0.00611020001815632,
+  "timestamp": "2026-08-25T18:36:47.168274+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_karhunen",
+  "combo_id": "beta=1.5731191654258474,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "beta": 1.5731191654258474
+  },
+  "repeat_idx": 1,
+  "fold_idx": 2,
+  "seed": 64881910,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.85,
+    "balanced_accuracy": 0.85,
+    "precision": 0.7243114373549155,
+    "recall": 0.7727272727272727,
+    "f1": 0.7423337380233932,
+    "roc_auc": null,
+    "mcc": 0.8408039673048745
+  },
+  "execution_time_seconds": 0.03709070000331849,
+  "timestamp": "2026-08-25T18:48:23.619601+00:00"
+}

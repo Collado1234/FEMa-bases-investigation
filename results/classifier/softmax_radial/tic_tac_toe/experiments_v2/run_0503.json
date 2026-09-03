@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "tic_tac_toe",
+  "combo_id": "beta=0.33521545557804855,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "beta": 0.33521545557804855
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 1500642447,
+  "n_train_fold": 603,
+  "n_val_fold": 67,
+  "metrics": {
+    "accuracy": 0.8208955223880597,
+    "balanced_accuracy": 0.7391304347826086,
+    "precision": 0.7857142857142857,
+    "recall": 1.0,
+    "f1": 0.88,
+    "roc_auc": 0.8962450592885376,
+    "mcc": 0.6130060338328881
+  },
+  "execution_time_seconds": 0.010613500024192035,
+  "timestamp": "2026-08-25T18:34:04.740796+00:00"
+}

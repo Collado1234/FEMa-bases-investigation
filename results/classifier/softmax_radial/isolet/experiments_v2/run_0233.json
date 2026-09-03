@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "isolet",
+  "combo_id": "beta=31.71837329014025,k=15",
+  "hyperparameters": {
+    "k": 15,
+    "beta": 31.71837329014025
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 405975790,
+  "n_train_fold": 4911,
+  "n_val_fold": 546,
+  "metrics": {
+    "accuracy": 0.815018315018315,
+    "balanced_accuracy": 0.815018315018315,
+    "precision": 0.7707366802639707,
+    "recall": 0.7848324514991182,
+    "f1": 0.773903573089587,
+    "roc_auc": null,
+    "mcc": 0.8088128678267298
+  },
+  "execution_time_seconds": 13.919780399999581,
+  "timestamp": "2026-08-27T16:04:07.483365+00:00"
+}

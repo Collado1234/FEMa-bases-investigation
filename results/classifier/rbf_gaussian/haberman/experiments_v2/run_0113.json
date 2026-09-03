@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "haberman",
+  "combo_id": "epsilon=42.97100021154878,k=22",
+  "hyperparameters": {
+    "k": 22,
+    "epsilon": 42.97100021154878
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 1111768601,
+  "n_train_fold": 192,
+  "n_val_fold": 22,
+  "metrics": {
+    "accuracy": 0.6818181818181818,
+    "balanced_accuracy": 0.46875,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.41666666666666663,
+    "mcc": -0.0668153104781061
+  },
+  "execution_time_seconds": 0.0063499999998839485,
+  "timestamp": "2026-08-20T17:24:53.169694+00:00"
+}

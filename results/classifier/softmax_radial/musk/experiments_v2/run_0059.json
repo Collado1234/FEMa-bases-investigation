@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "musk",
+  "combo_id": "beta=20.764908972522903,k=24",
+  "hyperparameters": {
+    "k": 24,
+    "beta": 20.764908972522903
+  },
+  "repeat_idx": 2,
+  "fold_idx": 8,
+  "seed": 163929588,
+  "n_train_fold": 4157,
+  "n_val_fold": 461,
+  "metrics": {
+    "accuracy": 0.9978308026030369,
+    "balanced_accuracy": 0.9987179487179487,
+    "precision": 0.9861111111111112,
+    "recall": 1.0,
+    "f1": 0.993006993006993,
+    "roc_auc": 1.0,
+    "mcc": 0.9917573398178715
+  },
+  "execution_time_seconds": 4.2794729999950505,
+  "timestamp": "2026-08-21T06:30:03.039541+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "musk",
+  "combo_id": "beta=25.733989337994114,k=12",
+  "hyperparameters": {
+    "k": 12,
+    "beta": 25.733989337994114
+  },
+  "repeat_idx": 1,
+  "fold_idx": 1,
+  "seed": 393963440,
+  "n_train_fold": 4156,
+  "n_val_fold": 462,
+  "metrics": {
+    "accuracy": 0.9588744588744589,
+    "balanced_accuracy": 0.8661971830985915,
+    "precision": 1.0,
+    "recall": 0.7323943661971831,
+    "f1": 0.8455284552845529,
+    "roc_auc": null,
+    "mcc": 0.8357356875657351
+  },
+  "execution_time_seconds": 4.267171999999846,
+  "timestamp": "2026-08-20T20:55:06.523292+00:00"
+}

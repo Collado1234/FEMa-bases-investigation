@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_fourier",
+  "combo_id": "epsilon=0.33521545557804855,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "epsilon": 0.33521545557804855
+  },
+  "repeat_idx": 2,
+  "fold_idx": 6,
+  "seed": 865764113,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.7928571428571428,
+    "balanced_accuracy": 0.7928571428571429,
+    "precision": 0.7511904761904763,
+    "recall": 0.7928571428571429,
+    "f1": 0.7617730861715062,
+    "roc_auc": null,
+    "mcc": 0.777774103885089
+  },
+  "execution_time_seconds": 0.04055259999586269,
+  "timestamp": "2026-08-25T19:04:23.681348+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "climate_model_simulation_crashes",
+  "combo_id": "beta=3.139118461178404,k=15",
+  "hyperparameters": {
+    "k": 15,
+    "beta": 3.139118461178404
+  },
+  "repeat_idx": 1,
+  "fold_idx": 1,
+  "seed": 2068420939,
+  "n_train_fold": 340,
+  "n_val_fold": 38,
+  "metrics": {
+    "accuracy": 0.05263157894736842,
+    "balanced_accuracy": 0.3333333333333333,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.37142857142857144,
+    "mcc": 0.033572570852887264
+  },
+  "execution_time_seconds": 0.0065162000246346,
+  "timestamp": "2026-08-25T18:35:12.784116+00:00"
+}

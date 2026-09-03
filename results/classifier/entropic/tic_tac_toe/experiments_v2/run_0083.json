@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "tic_tac_toe",
+  "combo_id": "beta=0.17954852306126248,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "beta": 0.17954852306126248
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 306543646,
+  "n_train_fold": 603,
+  "n_val_fold": 67,
+  "metrics": {
+    "accuracy": 0.8208955223880597,
+    "balanced_accuracy": 0.7598814229249011,
+    "precision": 0.8076923076923077,
+    "recall": 0.9545454545454546,
+    "f1": 0.875,
+    "roc_auc": 0.8137351778656127,
+    "mcc": 0.5920360965660577
+  },
+  "execution_time_seconds": 0.013608999957796186,
+  "timestamp": "2026-08-25T18:31:14.153383+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "laplacian",
+  "experiment": "experiments_v2",
+  "dataset": "monks_problems_1",
+  "combo_id": "epsilon=0.26086914276855383,k=16",
+  "hyperparameters": {
+    "k": 16,
+    "epsilon": 0.26086914276855383
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 227200622,
+  "n_train_fold": 349,
+  "n_val_fold": 39,
+  "metrics": {
+    "accuracy": 0.8717948717948718,
+    "balanced_accuracy": 0.8723684210526316,
+    "precision": 0.85,
+    "recall": 0.8947368421052632,
+    "f1": 0.8717948717948718,
+    "roc_auc": 0.9131578947368421,
+    "mcc": 0.7447368421052631
+  },
+  "execution_time_seconds": 0.007930500025395304,
+  "timestamp": "2026-08-25T18:24:16.625304+00:00"
+}

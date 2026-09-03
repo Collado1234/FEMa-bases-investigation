@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_karhunen",
+  "combo_id": "epsilon=31.71837329014025,k=15",
+  "hyperparameters": {
+    "k": 15,
+    "epsilon": 31.71837329014025
+  },
+  "repeat_idx": 2,
+  "fold_idx": 6,
+  "seed": 285862288,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.85,
+    "balanced_accuracy": 0.85,
+    "precision": 0.7474187577128754,
+    "recall": 0.7727272727272727,
+    "f1": 0.7572350872462107,
+    "roc_auc": null,
+    "mcc": 0.8417177331649323
+  },
+  "execution_time_seconds": 0.03734380000969395,
+  "timestamp": "2026-08-25T18:53:35.087816+00:00"
+}

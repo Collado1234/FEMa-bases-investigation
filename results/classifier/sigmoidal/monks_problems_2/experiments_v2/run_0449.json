@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "experiments_v2",
+  "dataset": "monks_problems_2",
+  "combo_id": "alpha=0.8074433276053008,c=1.2135573893389007,k=25",
+  "hyperparameters": {
+    "k": 25,
+    "alpha": 0.8074433276053008,
+    "c": 1.2135573893389007
+  },
+  "repeat_idx": 2,
+  "fold_idx": 8,
+  "seed": 707552853,
+  "n_train_fold": 378,
+  "n_val_fold": 42,
+  "metrics": {
+    "accuracy": 0.6428571428571429,
+    "balanced_accuracy": 0.5888888888888889,
+    "precision": 0.5,
+    "recall": 0.4,
+    "f1": 0.4444444444444444,
+    "roc_auc": 0.7135802469135802,
+    "mcc": 0.18856180831641267
+  },
+  "execution_time_seconds": 0.008383099979255348,
+  "timestamp": "2026-08-25T18:29:47.133451+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "student_t",
+  "experiment": "experiments_v2",
+  "dataset": "blood_transfusion_service_center",
+  "combo_id": "k=5,nu=0.005695262671673525",
+  "hyperparameters": {
+    "k": 5,
+    "nu": 0.005695262671673525
+  },
+  "repeat_idx": 2,
+  "fold_idx": 4,
+  "seed": 323806556,
+  "n_train_fold": 470,
+  "n_val_fold": 52,
+  "metrics": {
+    "accuracy": 0.7692307692307693,
+    "balanced_accuracy": 0.5,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.28541666666666665,
+    "mcc": 0.1278274981412284
+  },
+  "execution_time_seconds": 0.006186200014781207,
+  "timestamp": "2026-08-25T18:22:28.670096+00:00"
+}

@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_fourier",
+  "combo_id": "alpha=0.802076384452658,c=1.1755789068433506,k=30",
+  "hyperparameters": {
+    "k": 30,
+    "alpha": 0.802076384452658,
+    "c": 1.1755789068433506
+  },
+  "repeat_idx": 1,
+  "fold_idx": 5,
+  "seed": 1735313482,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.7785714285714286,
+    "balanced_accuracy": 0.7785714285714286,
+    "precision": 0.7292036180194075,
+    "recall": 0.7785714285714286,
+    "f1": 0.7478878066378066,
+    "roc_auc": null,
+    "mcc": 0.7603309680716351
+  },
+  "execution_time_seconds": 0.053099999960977584,
+  "timestamp": "2026-08-25T19:05:06.966350+00:00"
+}

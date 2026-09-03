@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "monks_problems_1",
+  "combo_id": "beta=25.733989337994114,k=12",
+  "hyperparameters": {
+    "k": 12,
+    "beta": 25.733989337994114
+  },
+  "repeat_idx": 0,
+  "fold_idx": 8,
+  "seed": 1599183557,
+  "n_train_fold": 350,
+  "n_val_fold": 38,
+  "metrics": {
+    "accuracy": 0.8947368421052632,
+    "balanced_accuracy": 0.894736842105263,
+    "precision": 0.8571428571428571,
+    "recall": 0.9473684210526315,
+    "f1": 0.9,
+    "roc_auc": 0.9390581717451524,
+    "mcc": 0.7938841860374447
+  },
+  "execution_time_seconds": 0.007749400043394417,
+  "timestamp": "2026-08-25T18:26:13.550965+00:00"
+}

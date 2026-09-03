@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "attention",
+  "experiment": "experiments_v2",
+  "dataset": "gina_agnostic",
+  "combo_id": "k=8",
+  "hyperparameters": {
+    "k": 8
+  },
+  "repeat_idx": 1,
+  "fold_idx": 3,
+  "seed": 836117146,
+  "n_train_fold": 2183,
+  "n_val_fold": 243,
+  "metrics": {
+    "accuracy": 0.48559670781893005,
+    "balanced_accuracy": 0.4957983193277311,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.9383640552995391,
+    "mcc": 0.20632780452502758
+  },
+  "execution_time_seconds": 4.368653500001528,
+  "timestamp": "2026-08-21T08:53:23.478488+00:00"
+}

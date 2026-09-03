@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "monks_problems_2",
+  "combo_id": "epsilon=31.71837329014025,k=15",
+  "hyperparameters": {
+    "k": 15,
+    "epsilon": 31.71837329014025
+  },
+  "repeat_idx": 2,
+  "fold_idx": 2,
+  "seed": 32130581,
+  "n_train_fold": 378,
+  "n_val_fold": 42,
+  "metrics": {
+    "accuracy": 0.7142857142857143,
+    "balanced_accuracy": 0.625,
+    "precision": 0.625,
+    "recall": 0.35714285714285715,
+    "f1": 0.45454545454545453,
+    "roc_auc": 0.889030612244898,
+    "mcc": 0.3001225239993905
+  },
+  "execution_time_seconds": 0.007874500006437302,
+  "timestamp": "2026-08-25T18:29:23.501565+00:00"
+}

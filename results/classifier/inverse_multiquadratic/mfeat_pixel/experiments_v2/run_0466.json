@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "inverse_multiquadratic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_pixel",
+  "combo_id": "c=1.1352682442364874,k=12",
+  "hyperparameters": {
+    "k": 12,
+    "c": 1.1352682442364874
+  },
+  "repeat_idx": 1,
+  "fold_idx": 5,
+  "seed": 144655922,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8928571428571429,
+    "balanced_accuracy": 0.8928571428571429,
+    "precision": 0.7718360071301246,
+    "recall": 0.8116883116883117,
+    "f1": 0.790575386793407,
+    "roc_auc": null,
+    "mcc": 0.888069977451672
+  },
+  "execution_time_seconds": 0.37372159998631105,
+  "timestamp": "2026-08-25T20:47:18.652178+00:00"
+}

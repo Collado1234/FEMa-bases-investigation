@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_factors",
+  "combo_id": "alpha=0.8074433276053008,c=1.2135573893389007,k=25",
+  "hyperparameters": {
+    "k": 25,
+    "alpha": 0.8074433276053008,
+    "c": 1.2135573893389007
+  },
+  "repeat_idx": 1,
+  "fold_idx": 5,
+  "seed": 26751767,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8714285714285714,
+    "balanced_accuracy": 0.8714285714285716,
+    "precision": 0.7373843476784653,
+    "recall": 0.7922077922077922,
+    "f1": 0.7606162654549752,
+    "roc_auc": null,
+    "mcc": 0.8636956840739894
+  },
+  "execution_time_seconds": 0.32465999998385087,
+  "timestamp": "2026-08-25T20:07:08.525710+00:00"
+}

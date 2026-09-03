@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "attention",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_fourier",
+  "combo_id": "k=15",
+  "hyperparameters": {
+    "k": 15
+  },
+  "repeat_idx": 0,
+  "fold_idx": 5,
+  "seed": 1291870220,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.7642857142857142,
+    "balanced_accuracy": 0.7642857142857142,
+    "precision": 0.7269409937888198,
+    "recall": 0.7642857142857142,
+    "f1": 0.729668903543143,
+    "roc_auc": null,
+    "mcc": 0.7467820162260126
+  },
+  "execution_time_seconds": 0.04131330002564937,
+  "timestamp": "2026-08-25T18:56:23.085806+00:00"
+}
