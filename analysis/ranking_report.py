@@ -234,7 +234,7 @@ def main():
     parser.add_argument("--alpha", type=float, default=ALPHA_DEFAULT)
     parser.add_argument("--csv-prefix", type=str, default=None,
                          help="Prefixo dos CSVs de saida (gera <prefixo>_ranking.csv e "
-                              "<prefixo>_pairwise.csv). Default: reports/ranking_report")
+                              "<prefixo>_pairwise.csv). Default: reports/<experiment_name>/statistical_comparison")
     parser.add_argument("--md-output", type=str, default=None)
     args = parser.parse_args()
 
@@ -281,7 +281,7 @@ def main():
     table_md = build_win_count_summary(all_results)
     print(table_md)
 
-    csv_prefix = args.csv_prefix or str(REPORTS_ROOT / "ranking_report")
+    csv_prefix = args.csv_prefix or str(REPORTS_ROOT / args.experiment_name / "statistical_comparison")
     ranking_path, pairwise_path = export_csv(all_results, csv_prefix)
     print(f"\n[salvo] {ranking_path}")
     print(f"[salvo] {pairwise_path}")
