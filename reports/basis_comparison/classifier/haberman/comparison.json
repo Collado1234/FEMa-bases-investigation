@@ -1,0 +1,1372 @@
+{
+  "context": "classifier",
+  "dataset": "haberman",
+  "experiment": "experiments_v2",
+  "generated_at": "2026-09-14T03:43:16.513169+00:00",
+  "metrics_compared": [
+    "accuracy",
+    "balanced_accuracy",
+    "precision",
+    "recall",
+    "f1",
+    "roc_auc",
+    "mcc"
+  ],
+  "bases": [
+    {
+      "context": "classifier",
+      "basis": "attention",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24
+      },
+      "n_combinations_evaluated": 13,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.43137254901960786,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cauchy",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "epsilon": 20.764908972522903
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.5392156862745099,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cosine",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 21,
+        "h": 1.375874185333854
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.4730392156862745,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "cubic_spline",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 21,
+        "h": 1.375874185333854
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.49754901960784315,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "entropic",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "beta": 20.764908972522903
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.6176470588235294,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "gen_exponential",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "epsilon": 7.623868423300401,
+        "p": 1.188354695775299
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.5980392156862745,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "harmonic",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24
+      },
+      "n_combinations_evaluated": 13,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.43137254901960786,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "inverse_multiquadratic",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "c": 0.9454957214747121
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.42892156862745096,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "laplacian",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "epsilon": 20.764908972522903
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.6446078431372548,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "logarithmic",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "c": 0.5214297905300547
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.43137254901960786,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "lorentzian",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24
+      },
+      "n_combinations_evaluated": 13,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.428921568627451,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "multiquadratic",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "c": 4.307129807565774
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.4411764705882353,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "quartic_spline",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 21,
+        "h": 1.375874185333854
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.5269607843137254,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "radial",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 21,
+        "z": 0.03352154555780487
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.6544117647058824,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rational_quadratic",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "alpha": 1.546052043589046,
+        "l": 0.016470428664554334
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.5612745098039217,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "rbf_gaussian",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 22,
+        "epsilon": 42.97100021154878
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.6956521739130435,
+        "balanced_accuracy": 0.47058823529411764,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "roc_auc": 0.4693627450980392,
+        "mcc": -0.06333004963811237,
+        "per_class": {
+          "0": {
+            "accuracy": null,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "1": {
+            "accuracy": 0.9411764705882353,
+            "precision": 0.7272727272727273,
+            "recall": 0.9411764705882353,
+            "f1": 0.8205128205128205,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "shepard",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "z": 4.363690639601221
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.5833333333333333,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "sigmoidal",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "alpha": 6.549308121699945,
+        "c": 0.6412660218314743
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.4975490196078432,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "softmax_radial",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "beta": 20.764908972522903
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.6446078431372548,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "student_t",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 24,
+        "nu": 0.27188902645221674
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.4338235294117647,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    },
+    {
+      "context": "classifier",
+      "basis": "wendland_c2",
+      "dataset": "haberman",
+      "status": "ok",
+      "best_hyperparameters": {
+        "k": 21,
+        "h": 1.375874185333854
+      },
+      "n_combinations_evaluated": 20,
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.4852941176470588,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      }
+    }
+  ],
+  "ranking_per_metric": {
+    "accuracy": [
+      {
+        "basis": "attention",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "cosine",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "entropic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "radial",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "shepard",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "student_t",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.6956521739130435
+      }
+    ],
+    "balanced_accuracy": [
+      {
+        "basis": "attention",
+        "value": 0.5
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.5
+      },
+      {
+        "basis": "cosine",
+        "value": 0.5
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.5
+      },
+      {
+        "basis": "entropic",
+        "value": 0.5
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.5
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.5
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.5
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.5
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.5
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.5
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.5
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.5
+      },
+      {
+        "basis": "radial",
+        "value": 0.5
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.5
+      },
+      {
+        "basis": "shepard",
+        "value": 0.5
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.5
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.5
+      },
+      {
+        "basis": "student_t",
+        "value": 0.5
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.5
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.47058823529411764
+      }
+    ],
+    "precision": [
+      {
+        "basis": "attention",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "cosine",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "entropic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "radial",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "shepard",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "student_t",
+        "value": 0.7391304347826086
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.7391304347826086
+      }
+    ],
+    "recall": [
+      {
+        "basis": "attention",
+        "value": 1.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 1.0
+      },
+      {
+        "basis": "cosine",
+        "value": 1.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "entropic",
+        "value": 1.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 1.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 1.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 1.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 1.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 1.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 1.0
+      },
+      {
+        "basis": "radial",
+        "value": 1.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 1.0
+      },
+      {
+        "basis": "shepard",
+        "value": 1.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 1.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 1.0
+      },
+      {
+        "basis": "student_t",
+        "value": 1.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 1.0
+      }
+    ],
+    "f1": [
+      {
+        "basis": "attention",
+        "value": 0.85
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.85
+      },
+      {
+        "basis": "cosine",
+        "value": 0.85
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.85
+      },
+      {
+        "basis": "entropic",
+        "value": 0.85
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.85
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.85
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.85
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.85
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.85
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.85
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.85
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.85
+      },
+      {
+        "basis": "radial",
+        "value": 0.85
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.85
+      },
+      {
+        "basis": "shepard",
+        "value": 0.85
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.85
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.85
+      },
+      {
+        "basis": "student_t",
+        "value": 0.85
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.85
+      }
+    ],
+    "roc_auc": [
+      {
+        "basis": "radial",
+        "value": 0.6544117647058824
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.6446078431372548
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.6446078431372548
+      },
+      {
+        "basis": "entropic",
+        "value": 0.6176470588235294
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.5980392156862745
+      },
+      {
+        "basis": "shepard",
+        "value": 0.5833333333333333
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.5612745098039217
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.5392156862745099
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.5269607843137254
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.4975490196078432
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.49754901960784315
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.4852941176470588
+      },
+      {
+        "basis": "cosine",
+        "value": 0.4730392156862745
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": 0.4693627450980392
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.4411764705882353
+      },
+      {
+        "basis": "student_t",
+        "value": 0.4338235294117647
+      },
+      {
+        "basis": "attention",
+        "value": 0.43137254901960786
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.43137254901960786
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.43137254901960786
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.428921568627451
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.42892156862745096
+      }
+    ],
+    "mcc": [
+      {
+        "basis": "attention",
+        "value": 0.0
+      },
+      {
+        "basis": "cauchy",
+        "value": 0.0
+      },
+      {
+        "basis": "cosine",
+        "value": 0.0
+      },
+      {
+        "basis": "cubic_spline",
+        "value": 0.0
+      },
+      {
+        "basis": "entropic",
+        "value": 0.0
+      },
+      {
+        "basis": "gen_exponential",
+        "value": 0.0
+      },
+      {
+        "basis": "harmonic",
+        "value": 0.0
+      },
+      {
+        "basis": "inverse_multiquadratic",
+        "value": 0.0
+      },
+      {
+        "basis": "laplacian",
+        "value": 0.0
+      },
+      {
+        "basis": "logarithmic",
+        "value": 0.0
+      },
+      {
+        "basis": "lorentzian",
+        "value": 0.0
+      },
+      {
+        "basis": "multiquadratic",
+        "value": 0.0
+      },
+      {
+        "basis": "quartic_spline",
+        "value": 0.0
+      },
+      {
+        "basis": "radial",
+        "value": 0.0
+      },
+      {
+        "basis": "rational_quadratic",
+        "value": 0.0
+      },
+      {
+        "basis": "shepard",
+        "value": 0.0
+      },
+      {
+        "basis": "sigmoidal",
+        "value": 0.0
+      },
+      {
+        "basis": "softmax_radial",
+        "value": 0.0
+      },
+      {
+        "basis": "student_t",
+        "value": 0.0
+      },
+      {
+        "basis": "wendland_c2",
+        "value": 0.0
+      },
+      {
+        "basis": "rbf_gaussian",
+        "value": -0.06333004963811237
+      }
+    ]
+  }
+}
