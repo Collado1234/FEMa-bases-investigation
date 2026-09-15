@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "zoo",
+  "combo_id": "epsilon=42.97100021154878,k=22",
+  "hyperparameters": {
+    "k": 22,
+    "epsilon": 42.97100021154878
+  },
+  "repeat_idx": 1,
+  "fold_idx": 2,
+  "seed": 333468847,
+  "n_train_fold": 62,
+  "n_val_fold": 7,
+  "metrics": {
+    "accuracy": 0.7142857142857143,
+    "balanced_accuracy": 0.6,
+    "precision": 0.4,
+    "recall": 0.6,
+    "f1": 0.4666666666666666,
+    "roc_auc": null,
+    "mcc": 0.6481812160876687
+  },
+  "execution_time_seconds": 0.0055164000000331725,
+  "timestamp": "2026-08-20T17:28:03.813997+00:00"
+}

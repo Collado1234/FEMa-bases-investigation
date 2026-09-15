@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_fourier",
+  "combo_id": "beta=0.14867599716649843,k=9",
+  "hyperparameters": {
+    "k": 9,
+    "beta": 0.14867599716649843
+  },
+  "repeat_idx": 2,
+  "fold_idx": 1,
+  "seed": 1173904911,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8,
+    "balanced_accuracy": 0.8,
+    "precision": 0.7540597931480285,
+    "recall": 0.8,
+    "f1": 0.7708734753896044,
+    "roc_auc": null,
+    "mcc": 0.7852019648923786
+  },
+  "execution_time_seconds": 0.0417310000048019,
+  "timestamp": "2026-08-25T18:58:37.478911+00:00"
+}

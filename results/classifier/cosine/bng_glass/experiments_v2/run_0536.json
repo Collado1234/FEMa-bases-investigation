@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "cosine",
+  "experiment": "experiments_v2",
+  "dataset": "bng_glass",
+  "combo_id": "h=2.600244516771654,k=24",
+  "hyperparameters": {
+    "k": 24,
+    "h": 2.600244516771654
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 1933076821,
+  "n_train_fold": 86801,
+  "n_val_fold": 9645,
+  "metrics": {
+    "accuracy": 0.6734059097978227,
+    "balanced_accuracy": 0.46001507964602356,
+    "precision": 0.5385351841232829,
+    "recall": 0.46001507964602356,
+    "f1": 0.478399511956982,
+    "roc_auc": 0.8262702959024948,
+    "mcc": 0.54698147060768
+  },
+  "execution_time_seconds": 81.73233430000255,
+  "timestamp": "2026-08-20T13:12:51.303206+00:00"
+}

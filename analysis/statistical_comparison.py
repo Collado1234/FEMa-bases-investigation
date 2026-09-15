@@ -167,10 +167,36 @@ def build_paired_matrix(
             f"todas as bases - usando a intersecao (algumas bases tem runs extras/faltantes)."
         )
 
-    matrix = np.array(
+    raw_matrix = np.array(
         [[per_basis_data[basis][key][metric] for basis in bases] for key in common_keys], dtype=float
     )
-    return common_keys, matrix, per_basis_meta
+
+    # Descarta folds onde QUALQUER basis tem metrica indefinida (None/NaN no
+    # JSON -- comum em datasets pequenos/desbalanceados, quando o modelo nao
+    # prediz a classe minoritaria em algum fold, deixando precision/recall/f1
+    # matematicamente indefinidos). Precisa ser o MESMO subconjunto de folds
+    # para todas as bases, senao o design pareado do Friedman fica invalido.
+    valid_rows_mask = ~np.isnan(raw_matrix).any(axis=1)
+    n_total = len(common_keys)
+    n_valid = int(valid_rows_mask.sum())
+
+    if n_valid < n_total:
+        dropped = n_total - n_valid
+        print(f"  [aviso] {dataset}/{metric}: {dropped}/{n_total} fold(s) descartado(s) por metrica "
+              f"indefinida (None) em pelo menos uma basis -- usando os {n_valid} folds restantes.")
+
+    if n_valid == 0:
+        raise DataAvailabilityError(
+            f"[{dataset}/{metric}] Todos os {n_total} folds tem metrica indefinida em pelo menos uma "
+            f"basis -- nao e' possivel montar nenhuma comparacao pareada valida para essa metrica "
+            f"nesse dataset. Considere usar uma metrica mais robusta a classes ausentes (ex: "
+            f"balanced_accuracy, mcc) para este dataset especifico."
+        )
+
+    matrix = raw_matrix[valid_rows_mask]
+    filtered_keys = [k for k, valid in zip(common_keys, valid_rows_mask) if valid]
+
+    return filtered_keys, matrix, per_basis_meta
 
 
 # --------------------------------------------------------------------------

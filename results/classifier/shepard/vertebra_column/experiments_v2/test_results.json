@@ -1,0 +1,52 @@
+{
+  "context": "classifier",
+  "basis": "shepard",
+  "experiment": "experiments_v2",
+  "dataset": "vertebra_column",
+  "best_hyperparameters": {
+    "k": 5,
+    "z": 0.9237980654944229
+  },
+  "n_train_total": 216,
+  "n_test": 47,
+  "metrics": {
+    "accuracy": 0.3829787234042553,
+    "balanced_accuracy": 0.5037037037037037,
+    "precision": 0.2767857142857143,
+    "recall": 0.37777777777777777,
+    "f1": 0.3194444444444444,
+    "roc_auc": null,
+    "mcc": 0.30198327957230103,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.7777777777777778,
+        "precision": 0.5833333333333334,
+        "recall": 0.7777777777777778,
+        "f1": 0.6666666666666666,
+        "support": 9
+      },
+      "2": {
+        "accuracy": 0.7333333333333333,
+        "precision": 0.5238095238095238,
+        "recall": 0.7333333333333333,
+        "f1": 0.6111111111111112,
+        "support": 15
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 23
+      }
+    }
+  },
+  "timestamp": "2026-08-20T09:13:54.469629+00:00"
+}

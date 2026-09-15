@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_factors",
+  "combo_id": "beta=1.5731191654258474,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "beta": 1.5731191654258474
+  },
+  "repeat_idx": 2,
+  "fold_idx": 4,
+  "seed": 1925825064,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.85,
+    "balanced_accuracy": 0.85,
+    "precision": 0.7376368729309907,
+    "recall": 0.7727272727272727,
+    "f1": 0.7507345124697739,
+    "roc_auc": null,
+    "mcc": 0.8411525952181395
+  },
+  "execution_time_seconds": 0.3311643999768421,
+  "timestamp": "2026-08-25T19:22:11.315741+00:00"
+}

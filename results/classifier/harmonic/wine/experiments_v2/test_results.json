@@ -1,0 +1,44 @@
+{
+  "context": "classifier",
+  "basis": "harmonic",
+  "experiment": "experiments_v2",
+  "dataset": "wine",
+  "best_hyperparameters": {
+    "k": 30
+  },
+  "n_train_total": 124,
+  "n_test": 27,
+  "metrics": {
+    "accuracy": 0.6666666666666666,
+    "balanced_accuracy": 0.6060606060606061,
+    "precision": 0.46022727272727276,
+    "recall": 0.6060606060606061,
+    "f1": 0.5222222222222223,
+    "roc_auc": null,
+    "mcc": 0.5143955172755974,
+    "per_class": {
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.8181818181818182,
+        "recall": 1.0,
+        "f1": 0.9,
+        "support": 9
+      },
+      "2": {
+        "accuracy": 0.8181818181818182,
+        "precision": 0.5625,
+        "recall": 0.8181818181818182,
+        "f1": 0.6666666666666666,
+        "support": 11
+      },
+      "3": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7
+      }
+    }
+  },
+  "timestamp": "2026-08-20T09:08:15.096219+00:00"
+}

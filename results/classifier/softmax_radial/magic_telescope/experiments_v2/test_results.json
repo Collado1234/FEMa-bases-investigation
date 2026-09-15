@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "magic_telescope",
+  "best_hyperparameters": {
+    "k": 5,
+    "beta": 1.5293952761249943
+  },
+  "n_train_total": 13314,
+  "n_test": 2853,
+  "metrics": {
+    "accuracy": 0.84086926042762,
+    "balanced_accuracy": 0.7978717900352995,
+    "precision": 0.8607095926412615,
+    "recall": 0.6530408773678963,
+    "f1": 0.7426303854875284,
+    "roc_auc": 0.8877297836221067,
+    "mcc": 0.6431651931035947,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9427027027027027,
+        "precision": 0.8336520076481836,
+        "recall": 0.9427027027027027,
+        "f1": 0.884830035514967,
+        "support": 1850
+      },
+      "1": {
+        "accuracy": 0.6530408773678963,
+        "precision": 0.8607095926412615,
+        "recall": 0.6530408773678963,
+        "f1": 0.7426303854875284,
+        "support": 1003
+      }
+    }
+  },
+  "timestamp": "2026-08-20T17:53:45.815912+00:00"
+}

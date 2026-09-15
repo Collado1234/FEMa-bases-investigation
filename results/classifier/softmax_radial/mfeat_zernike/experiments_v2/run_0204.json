@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "beta=1.0017808951943048,k=26",
+  "hyperparameters": {
+    "k": 26,
+    "beta": 1.0017808951943048
+  },
+  "repeat_idx": 2,
+  "fold_idx": 3,
+  "seed": 1709747770,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8357142857142857,
+    "balanced_accuracy": 0.8357142857142857,
+    "precision": 0.7813578088578088,
+    "recall": 0.8357142857142857,
+    "f1": 0.7993295019157087,
+    "roc_auc": null,
+    "mcc": 0.8260272456293334
+  },
+  "execution_time_seconds": 0.02967049996368587,
+  "timestamp": "2026-08-25T18:45:09.026718+00:00"
+}

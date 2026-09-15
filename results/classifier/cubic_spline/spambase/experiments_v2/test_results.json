@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "cubic_spline",
+  "experiment": "experiments_v2",
+  "dataset": "spambase",
+  "best_hyperparameters": {
+    "k": 21,
+    "h": 2.49536389472299
+  },
+  "n_train_total": 3220,
+  "n_test": 691,
+  "metrics": {
+    "accuracy": 0.8986975397973951,
+    "balanced_accuracy": 0.892605819177313,
+    "precision": 0.8768656716417911,
+    "recall": 0.8639705882352942,
+    "f1": 0.8703703703703703,
+    "roc_auc": 0.9500298329355609,
+    "mcc": 0.7873006515584539,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9212410501193318,
+        "precision": 0.9125295508274232,
+        "recall": 0.9212410501193318,
+        "f1": 0.9168646080760094,
+        "support": 419
+      },
+      "1": {
+        "accuracy": 0.8639705882352942,
+        "precision": 0.8768656716417911,
+        "recall": 0.8639705882352942,
+        "f1": 0.8703703703703703,
+        "support": 272
+      }
+    }
+  },
+  "timestamp": "2026-08-20T03:10:25.379140+00:00"
+}

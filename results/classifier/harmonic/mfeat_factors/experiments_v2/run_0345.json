@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "harmonic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_factors",
+  "combo_id": "k=30",
+  "hyperparameters": {
+    "k": 30
+  },
+  "repeat_idx": 1,
+  "fold_idx": 4,
+  "seed": 559159871,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.85,
+    "balanced_accuracy": 0.85,
+    "precision": 0.7504656959202414,
+    "recall": 0.7727272727272727,
+    "f1": 0.7577839146804665,
+    "roc_auc": null,
+    "mcc": 0.842100854592675
+  },
+  "execution_time_seconds": 0.3494487999705598,
+  "timestamp": "2026-08-25T19:29:12.894760+00:00"
+}

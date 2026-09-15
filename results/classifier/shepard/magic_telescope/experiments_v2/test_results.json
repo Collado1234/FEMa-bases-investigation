@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "shepard",
+  "experiment": "experiments_v2",
+  "dataset": "magic_telescope",
+  "best_hyperparameters": {
+    "k": 12,
+    "z": 4.519045045949889
+  },
+  "n_train_total": 13314,
+  "n_test": 2853,
+  "metrics": {
+    "accuracy": 0.8524360322467578,
+    "balanced_accuracy": 0.8129530327935113,
+    "precision": 0.8721227621483376,
+    "recall": 0.6799601196410767,
+    "f1": 0.7641456582633053,
+    "roc_auc": 0.9057589393980222,
+    "mcc": 0.6699649227530904,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9459459459459459,
+        "precision": 0.8450024142926122,
+        "recall": 0.9459459459459459,
+        "f1": 0.8926294312675338,
+        "support": 1850
+      },
+      "1": {
+        "accuracy": 0.6799601196410767,
+        "precision": 0.8721227621483376,
+        "recall": 0.6799601196410767,
+        "f1": 0.7641456582633053,
+        "support": 1003
+      }
+    }
+  },
+  "timestamp": "2026-08-20T17:06:42.725390+00:00"
+}

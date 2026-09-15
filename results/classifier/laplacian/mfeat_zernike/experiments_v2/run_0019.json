@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "laplacian",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "epsilon=1.5293952761249943,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "epsilon": 1.5293952761249943
+  },
+  "repeat_idx": 1,
+  "fold_idx": 8,
+  "seed": 2128442757,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8214285714285714,
+    "balanced_accuracy": 0.8214285714285714,
+    "precision": 0.7741111829347124,
+    "recall": 0.8214285714285714,
+    "f1": 0.7913543266769073,
+    "roc_auc": null,
+    "mcc": 0.8096598849105343
+  },
+  "execution_time_seconds": 0.0298157999641262,
+  "timestamp": "2026-08-25T18:40:57.743202+00:00"
+}

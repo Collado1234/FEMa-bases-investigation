@@ -1,0 +1,66 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "page_blocks",
+  "best_hyperparameters": {
+    "k": 27,
+    "beta": 5.068077717443547
+  },
+  "n_train_total": 3831,
+  "n_test": 821,
+  "metrics": {
+    "accuracy": 0.951278928136419,
+    "balanced_accuracy": 0.6237200709738023,
+    "precision": 0.515865421128579,
+    "recall": 0.519766725811502,
+    "f1": 0.5117849225020088,
+    "roc_auc": null,
+    "mcc": 0.716834379690492,
+    "per_class": {
+      "0": {
+        "accuracy": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "1": {
+        "accuracy": 0.9932157394843962,
+        "precision": 0.9631578947368421,
+        "recall": 0.9932157394843962,
+        "f1": 0.9779559118236473,
+        "support": 737
+      },
+      "2": {
+        "accuracy": 0.76,
+        "precision": 0.9047619047619048,
+        "recall": 0.76,
+        "f1": 0.8260869565217391,
+        "support": 50
+      },
+      "3": {
+        "accuracy": 0.75,
+        "precision": 0.5,
+        "recall": 0.75,
+        "f1": 0.6,
+        "support": 4
+      },
+      "4": {
+        "accuracy": 0.6153846153846154,
+        "precision": 0.7272727272727273,
+        "recall": 0.6153846153846154,
+        "f1": 0.6666666666666666,
+        "support": 13
+      },
+      "5": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 17
+      }
+    }
+  },
+  "timestamp": "2026-08-20T18:56:48.803526+00:00"
+}

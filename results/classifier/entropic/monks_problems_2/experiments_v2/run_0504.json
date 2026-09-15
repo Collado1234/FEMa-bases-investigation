@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "monks_problems_2",
+  "combo_id": "beta=0.33521545557804855,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "beta": 0.33521545557804855
+  },
+  "repeat_idx": 2,
+  "fold_idx": 3,
+  "seed": 61016025,
+  "n_train_fold": 378,
+  "n_val_fold": 42,
+  "metrics": {
+    "accuracy": 0.7619047619047619,
+    "balanced_accuracy": 0.6785714285714286,
+    "precision": 0.75,
+    "recall": 0.42857142857142855,
+    "f1": 0.5454545454545454,
+    "roc_auc": 0.836734693877551,
+    "mcc": 0.4287464628562721
+  },
+  "execution_time_seconds": 0.009717100008856505,
+  "timestamp": "2026-08-25T18:27:35.698889+00:00"
+}

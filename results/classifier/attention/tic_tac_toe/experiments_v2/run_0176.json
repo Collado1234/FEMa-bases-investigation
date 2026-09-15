@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "attention",
+  "experiment": "experiments_v2",
+  "dataset": "tic_tac_toe",
+  "combo_id": "k=27",
+  "hyperparameters": {
+    "k": 27
+  },
+  "repeat_idx": 2,
+  "fold_idx": 5,
+  "seed": 223102137,
+  "n_train_fold": 603,
+  "n_val_fold": 67,
+  "metrics": {
+    "accuracy": 0.7611940298507462,
+    "balanced_accuracy": 0.6729249011857708,
+    "precision": 0.75,
+    "recall": 0.9545454545454546,
+    "f1": 0.84,
+    "roc_auc": 0.9169960474308301,
+    "mcc": 0.4432894872758488
+  },
+  "execution_time_seconds": 0.01103329996112734,
+  "timestamp": "2026-08-25T18:30:27.944464+00:00"
+}

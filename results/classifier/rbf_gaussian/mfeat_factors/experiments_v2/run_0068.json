@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_factors",
+  "combo_id": "epsilon=0.17954852306126248,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "epsilon": 0.17954852306126248
+  },
+  "repeat_idx": 0,
+  "fold_idx": 7,
+  "seed": 429904605,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.85,
+    "balanced_accuracy": 0.85,
+    "precision": 0.7691558441558441,
+    "recall": 0.7727272727272727,
+    "f1": 0.7697414973277041,
+    "roc_auc": null,
+    "mcc": 0.8439378961922511
+  },
+  "execution_time_seconds": 0.3296346999704838,
+  "timestamp": "2026-08-25T19:58:15.588568+00:00"
+}

@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "harmonic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_karhunen",
+  "combo_id": "k=15",
+  "hyperparameters": {
+    "k": 15
+  },
+  "repeat_idx": 2,
+  "fold_idx": 6,
+  "seed": 319116484,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8571428571428571,
+    "balanced_accuracy": 0.8571428571428571,
+    "precision": 0.7525974025974026,
+    "recall": 0.7792207792207791,
+    "f1": 0.7635796387520525,
+    "roc_auc": null,
+    "mcc": 0.8495210736581625
+  },
+  "execution_time_seconds": 0.03641329996753484,
+  "timestamp": "2026-08-25T18:49:34.890257+00:00"
+}

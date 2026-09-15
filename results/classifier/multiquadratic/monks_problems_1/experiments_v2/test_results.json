@@ -1,0 +1,38 @@
+{
+  "context": "classifier",
+  "basis": "multiquadratic",
+  "experiment": "experiments_v2",
+  "dataset": "monks_problems_1",
+  "best_hyperparameters": {
+    "k": 27,
+    "c": 3.195155555698118
+  },
+  "n_train_total": 388,
+  "n_test": 84,
+  "metrics": {
+    "accuracy": 0.7738095238095238,
+    "balanced_accuracy": 0.7738095238095238,
+    "precision": 0.7948717948717948,
+    "recall": 0.7380952380952381,
+    "f1": 0.7654320987654321,
+    "roc_auc": 0.7976190476190476,
+    "mcc": 0.5490214034302319,
+    "per_class": {
+      "0": {
+        "accuracy": 0.8095238095238095,
+        "precision": 0.7555555555555555,
+        "recall": 0.8095238095238095,
+        "f1": 0.7816091954022989,
+        "support": 42
+      },
+      "1": {
+        "accuracy": 0.7380952380952381,
+        "precision": 0.7948717948717948,
+        "recall": 0.7380952380952381,
+        "f1": 0.7654320987654321,
+        "support": 42
+      }
+    }
+  },
+  "timestamp": "2026-08-25T18:24:52.447515+00:00"
+}

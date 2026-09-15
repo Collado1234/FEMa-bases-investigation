@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "inverse_multiquadratic",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_fourier",
+  "combo_id": "c=0.10478747414378216,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "c": 0.10478747414378216
+  },
+  "repeat_idx": 2,
+  "fold_idx": 4,
+  "seed": 470006106,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8,
+    "balanced_accuracy": 0.8,
+    "precision": 0.7514192532613586,
+    "recall": 0.8,
+    "f1": 0.7620366909591048,
+    "roc_auc": null,
+    "mcc": 0.786931586990852
+  },
+  "execution_time_seconds": 0.04104079998796806,
+  "timestamp": "2026-08-25T19:00:07.557340+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "haberman",
+  "combo_id": "beta=0.26086914276855383,k=16",
+  "hyperparameters": {
+    "k": 16,
+    "beta": 0.26086914276855383
+  },
+  "repeat_idx": 1,
+  "fold_idx": 4,
+  "seed": 1852315189,
+  "n_train_fold": 193,
+  "n_val_fold": 21,
+  "metrics": {
+    "accuracy": 0.7619047619047619,
+    "balanced_accuracy": 0.5,
+    "precision": 0.7619047619047619,
+    "recall": 1.0,
+    "f1": 0.8648648648648649,
+    "roc_auc": 0.225,
+    "mcc": 0.0
+  },
+  "execution_time_seconds": 0.006705900000042675,
+  "timestamp": "2026-08-20T17:25:24.664643+00:00"
+}

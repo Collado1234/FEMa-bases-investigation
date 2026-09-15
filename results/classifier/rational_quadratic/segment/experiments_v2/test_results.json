@@ -1,0 +1,74 @@
+{
+  "context": "classifier",
+  "basis": "rational_quadratic",
+  "experiment": "experiments_v2",
+  "dataset": "segment",
+  "best_hyperparameters": {
+    "k": 28,
+    "alpha": 1.951264598651315,
+    "l": 0.056199690315221415
+  },
+  "n_train_total": 1616,
+  "n_test": 347,
+  "metrics": {
+    "accuracy": 0.9394812680115274,
+    "balanced_accuracy": 0.939533527696793,
+    "precision": 0.9407266807266808,
+    "recall": 0.939533527696793,
+    "f1": 0.9394305512479234,
+    "roc_auc": 0.9955195783534367,
+    "mcc": 0.9296161333307799,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9795918367346939,
+        "precision": 0.96,
+        "recall": 0.9795918367346939,
+        "f1": 0.9696969696969697,
+        "support": 49
+      },
+      "1": {
+        "accuracy": 0.8571428571428571,
+        "precision": 0.9545454545454546,
+        "recall": 0.8571428571428571,
+        "f1": 0.9032258064516129,
+        "support": 49
+      },
+      "2": {
+        "accuracy": 0.92,
+        "precision": 0.8846153846153846,
+        "recall": 0.92,
+        "f1": 0.9019607843137255,
+        "support": 50
+      },
+      "3": {
+        "accuracy": 0.96,
+        "precision": 1.0,
+        "recall": 0.96,
+        "f1": 0.9795918367346939,
+        "support": 50
+      },
+      "4": {
+        "accuracy": 1.0,
+        "precision": 0.9259259259259259,
+        "recall": 1.0,
+        "f1": 0.9615384615384616,
+        "support": 50
+      },
+      "5": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 49
+      },
+      "6": {
+        "accuracy": 0.86,
+        "precision": 0.86,
+        "recall": 0.86,
+        "f1": 0.86,
+        "support": 50
+      }
+    }
+  },
+  "timestamp": "2026-08-20T09:17:38.785666+00:00"
+}

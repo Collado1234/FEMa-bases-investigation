@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "experiments_v2",
+  "dataset": "musk",
+  "combo_id": "alpha=2.088014993433618,c=0.9324921558953662,k=15",
+  "hyperparameters": {
+    "k": 15,
+    "alpha": 2.088014993433618,
+    "c": 0.9324921558953662
+  },
+  "repeat_idx": 2,
+  "fold_idx": 8,
+  "seed": 1004825513,
+  "n_train_fold": 4157,
+  "n_val_fold": 461,
+  "metrics": {
+    "accuracy": 0.9978308026030369,
+    "balanced_accuracy": 0.9987179487179487,
+    "precision": 0.9861111111111112,
+    "recall": 1.0,
+    "f1": 0.993006993006993,
+    "roc_auc": 0.9981942939689419,
+    "mcc": 0.9917573398178715
+  },
+  "execution_time_seconds": 4.254244499999913,
+  "timestamp": "2026-08-21T06:23:25.829230+00:00"
+}

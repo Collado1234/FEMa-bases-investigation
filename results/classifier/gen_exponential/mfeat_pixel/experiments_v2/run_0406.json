@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "gen_exponential",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_pixel",
+  "combo_id": "epsilon=0.9996768484940541,k=23,p=1.9391116225516158",
+  "hyperparameters": {
+    "k": 23,
+    "epsilon": 0.9996768484940541,
+    "p": 1.9391116225516158
+  },
+  "repeat_idx": 1,
+  "fold_idx": 5,
+  "seed": 498607563,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.9,
+    "balanced_accuracy": 0.9,
+    "precision": 0.75,
+    "recall": 0.8181818181818182,
+    "f1": 0.7806134365972093,
+    "roc_auc": null,
+    "mcc": 0.8951801154163518
+  },
+  "execution_time_seconds": 0.34393650002311915,
+  "timestamp": "2026-08-25T20:39:26.381312+00:00"
+}

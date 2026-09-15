@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "experiments_v2",
+  "dataset": "climate_model_simulation_crashes",
+  "combo_id": "alpha=10.401200480140586,c=1.1651212982409966,k=13",
+  "hyperparameters": {
+    "k": 13,
+    "alpha": 10.401200480140586,
+    "c": 1.1651212982409966
+  },
+  "repeat_idx": 1,
+  "fold_idx": 6,
+  "seed": 1533615951,
+  "n_train_fold": 340,
+  "n_val_fold": 38,
+  "metrics": {
+    "accuracy": 0.07894736842105263,
+    "balanced_accuracy": 0.375,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.35661764705882354,
+    "mcc": 0.0768295371441074
+  },
+  "execution_time_seconds": 0.007613099995069206,
+  "timestamp": "2026-08-25T18:37:06.165231+00:00"
+}

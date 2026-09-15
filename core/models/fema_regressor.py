@@ -1,6 +1,6 @@
 import numpy as np
 from .base_model import FEMaBaseModel
-from ..math.basis.base_basis import BaseBasis
+from ..math.basis.base_basis import BaseBasis, NeighborhoodContext
 from ..math.basis.parameters import BasisParameters
 from ..math.neighboor_search.base_search import BaseSearch
 
@@ -53,7 +53,12 @@ class FEMaRegressor(FEMaBaseModel):
 
         for i in range(X.shape[0]):
             indices, dists = self.search.query(X[i], k)
-            weights = self.basis.compute_weights(dists, params)
+
+            # context é opcional e, hoje, ignorado por todas as bases
+            # radiais existentes — ver NeighborhoodContext em
+            # core/math/basis/base_basis.py.
+            context = NeighborhoodContext(indices=indices, query_point=X[i], k=k)
+            weights = self.basis.compute_weights(dists, params, context=context)
             predicted = np.dot(weights, self.y_train[indices])
 
             if np.isnan(predicted):

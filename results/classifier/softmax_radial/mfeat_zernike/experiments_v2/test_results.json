@@ -1,0 +1,94 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "best_hyperparameters": {
+    "k": 21,
+    "beta": 1.5731191654258474
+  },
+  "n_train_total": 1400,
+  "n_test": 300,
+  "metrics": {
+    "accuracy": 0.83,
+    "balanced_accuracy": 0.8300000000000001,
+    "precision": 0.7839380413910938,
+    "recall": 0.8300000000000001,
+    "f1": 0.7993305307533168,
+    "roc_auc": null,
+    "mcc": 0.8198832153456922,
+    "per_class": {
+      "1": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 30
+      },
+      "2": {
+        "accuracy": 0.9,
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "support": 30
+      },
+      "3": {
+        "accuracy": 0.9666666666666667,
+        "precision": 0.8787878787878788,
+        "recall": 0.9666666666666667,
+        "f1": 0.9206349206349206,
+        "support": 30
+      },
+      "4": {
+        "accuracy": 0.9,
+        "precision": 0.9310344827586207,
+        "recall": 0.9,
+        "f1": 0.9152542372881356,
+        "support": 30
+      },
+      "5": {
+        "accuracy": 0.9666666666666667,
+        "precision": 0.8529411764705882,
+        "recall": 0.9666666666666667,
+        "f1": 0.90625,
+        "support": 30
+      },
+      "6": {
+        "accuracy": 0.8333333333333334,
+        "precision": 0.8928571428571429,
+        "recall": 0.8333333333333334,
+        "f1": 0.8620689655172413,
+        "support": 30
+      },
+      "7": {
+        "accuracy": 0.8666666666666667,
+        "precision": 0.4482758620689655,
+        "recall": 0.8666666666666667,
+        "f1": 0.5909090909090909,
+        "support": 30
+      },
+      "8": {
+        "accuracy": 0.9666666666666667,
+        "precision": 0.9354838709677419,
+        "recall": 0.9666666666666667,
+        "f1": 0.9508196721311475,
+        "support": 30
+      },
+      "9": {
+        "accuracy": 0.9,
+        "precision": 1.0,
+        "recall": 0.9,
+        "f1": 0.9473684210526315,
+        "support": 30
+      },
+      "10": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 30
+      }
+    }
+  },
+  "timestamp": "2026-08-25T18:45:25.921656+00:00"
+}

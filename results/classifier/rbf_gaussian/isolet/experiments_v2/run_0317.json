@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "isolet",
+  "combo_id": "epsilon=3.139118461178404,k=15",
+  "hyperparameters": {
+    "k": 15,
+    "epsilon": 3.139118461178404
+  },
+  "repeat_idx": 1,
+  "fold_idx": 6,
+  "seed": 851548019,
+  "n_train_fold": 4911,
+  "n_val_fold": 546,
+  "metrics": {
+    "accuracy": 0.8663003663003663,
+    "balanced_accuracy": 0.8663003663003663,
+    "precision": 0.8197081185412824,
+    "recall": 0.8342151675485008,
+    "f1": 0.82067818912137,
+    "roc_auc": null,
+    "mcc": 0.862396555976984
+  },
+  "execution_time_seconds": 13.88421749999543,
+  "timestamp": "2026-08-27T09:22:21.138017+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "quartic_spline",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_zernike",
+  "combo_id": "h=1.375874185333854,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "h": 1.375874185333854
+  },
+  "repeat_idx": 2,
+  "fold_idx": 8,
+  "seed": 1122134862,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.7642857142857142,
+    "balanced_accuracy": 0.7642857142857143,
+    "precision": 0.6941774891774891,
+    "recall": 0.6948051948051948,
+    "f1": 0.6897722966688483,
+    "roc_auc": null,
+    "mcc": 0.747147344718281
+  },
+  "execution_time_seconds": 0.031712999974843115,
+  "timestamp": "2026-08-25T18:42:52.787515+00:00"
+}

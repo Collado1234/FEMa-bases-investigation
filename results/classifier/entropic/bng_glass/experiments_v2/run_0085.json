@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "experiments_v2",
+  "dataset": "bng_glass",
+  "combo_id": "beta=0.17954852306126248,k=5",
+  "hyperparameters": {
+    "k": 5,
+    "beta": 0.17954852306126248
+  },
+  "repeat_idx": 2,
+  "fold_idx": 4,
+  "seed": 1472290299,
+  "n_train_fold": 86801,
+  "n_val_fold": 9645,
+  "metrics": {
+    "accuracy": 0.6692586832555728,
+    "balanced_accuracy": 0.4677212069623714,
+    "precision": 0.5145327466084454,
+    "recall": 0.4677212069623714,
+    "f1": 0.4831675290273077,
+    "roc_auc": 0.7804001550930303,
+    "mcc": 0.5439411335326876
+  },
+  "execution_time_seconds": 85.78939089999767,
+  "timestamp": "2026-08-21T06:35:21.725453+00:00"
+}

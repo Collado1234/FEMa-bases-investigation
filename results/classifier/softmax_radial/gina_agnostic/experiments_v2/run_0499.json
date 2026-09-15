@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "softmax_radial",
+  "experiment": "experiments_v2",
+  "dataset": "gina_agnostic",
+  "combo_id": "beta=0.33521545557804855,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "beta": 0.33521545557804855
+  },
+  "repeat_idx": 1,
+  "fold_idx": 8,
+  "seed": 529218205,
+  "n_train_fold": 2184,
+  "n_val_fold": 242,
+  "metrics": {
+    "accuracy": 0.4834710743801653,
+    "balanced_accuracy": 0.49159663865546216,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "roc_auc": 0.9221151875384301,
+    "mcc": 0.08646294086776625
+  },
+  "execution_time_seconds": 4.376995200000238,
+  "timestamp": "2026-08-21T22:32:18.440465+00:00"
+}

@@ -1,0 +1,26 @@
+{
+  "context": "classifier",
+  "basis": "attention",
+  "experiment": "experiments_v2",
+  "dataset": "monks_problems_1",
+  "combo_id": "k=15",
+  "hyperparameters": {
+    "k": 15
+  },
+  "repeat_idx": 0,
+  "fold_idx": 6,
+  "seed": 2045202129,
+  "n_train_fold": 349,
+  "n_val_fold": 39,
+  "metrics": {
+    "accuracy": 0.6153846153846154,
+    "balanced_accuracy": 0.6131578947368421,
+    "precision": 0.625,
+    "recall": 0.5263157894736842,
+    "f1": 0.5714285714285714,
+    "roc_auc": 0.781578947368421,
+    "mcc": 0.2299761205393
+  },
+  "execution_time_seconds": 0.007526300032623112,
+  "timestamp": "2026-08-25T18:22:51.916820+00:00"
+}

@@ -1,0 +1,28 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "experiments_v2",
+  "dataset": "mfeat_karhunen",
+  "combo_id": "alpha=0.802076384452658,c=1.1755789068433506,k=30",
+  "hyperparameters": {
+    "k": 30,
+    "alpha": 0.802076384452658,
+    "c": 1.1755789068433506
+  },
+  "repeat_idx": 1,
+  "fold_idx": 6,
+  "seed": 1845704879,
+  "n_train_fold": 1260,
+  "n_val_fold": 140,
+  "metrics": {
+    "accuracy": 0.8214285714285714,
+    "balanced_accuracy": 0.8214285714285715,
+    "precision": 0.7029761904761904,
+    "recall": 0.7467532467532468,
+    "f1": 0.714659148900635,
+    "roc_auc": null,
+    "mcc": 0.8099931888081873
+  },
+  "execution_time_seconds": 0.036615799996070564,
+  "timestamp": "2026-08-25T18:54:26.698674+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "tic_tac_toe",
+  "combo_id": "epsilon=1.5731191654258474,k=21",
+  "hyperparameters": {
+    "k": 21,
+    "epsilon": 1.5731191654258474
+  },
+  "repeat_idx": 2,
+  "fold_idx": 8,
+  "seed": 22484501,
+  "n_train_fold": 603,
+  "n_val_fold": 67,
+  "metrics": {
+    "accuracy": 0.7761194029850746,
+    "balanced_accuracy": 0.7151162790697674,
+    "precision": 0.7692307692307693,
+    "recall": 0.9302325581395349,
+    "f1": 0.8421052631578947,
+    "roc_auc": 0.8914728682170542,
+    "mcc": 0.49487534795935134
+  },
+  "execution_time_seconds": 0.011300600017420948,
+  "timestamp": "2026-08-25T18:33:26.601107+00:00"
+}

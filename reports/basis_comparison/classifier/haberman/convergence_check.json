@@ -1,0 +1,233 @@
+{
+  "dataset": "haberman",
+  "total_bases": 21,
+  "tied_groups": [
+    {
+      "bases": [
+        "attention",
+        "harmonic",
+        "logarithmic"
+      ],
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.43137254901960786,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "attention": {
+          "k": 24
+        },
+        "harmonic": {
+          "k": 24
+        },
+        "logarithmic": {
+          "k": 24,
+          "c": 0.5214297905300547
+        }
+      },
+      "verdict": "EMPATE_COINCIDENTE_NESTE_DATASET",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "attention",
+            "harmonic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.01575568279809933
+        },
+        {
+          "pair": [
+            "attention",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.022403839651086332
+        },
+        {
+          "pair": [
+            "harmonic",
+            "logarithmic"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.013224614953766478
+        }
+      ]
+    },
+    {
+      "bases": [
+        "cubic_spline",
+        "sigmoidal"
+      ],
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.49754901960784315,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "cubic_spline": {
+          "k": 21,
+          "h": 1.375874185333854
+        },
+        "sigmoidal": {
+          "k": 24,
+          "alpha": 6.549308121699945,
+          "c": 0.6412660218314743
+        }
+      },
+      "verdict": "EMPATE_COINCIDENTE_NESTE_DATASET",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "cubic_spline",
+            "sigmoidal"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.21950100361964298
+        }
+      ]
+    },
+    {
+      "bases": [
+        "inverse_multiquadratic",
+        "lorentzian"
+      ],
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.42892156862745096,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "inverse_multiquadratic": {
+          "k": 24,
+          "c": 0.9454957214747121
+        },
+        "lorentzian": {
+          "k": 24
+        }
+      },
+      "verdict": "EMPATE_COINCIDENTE_NESTE_DATASET",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "inverse_multiquadratic",
+            "lorentzian"
+          ],
+          "structurally_identical": false,
+          "max_weight_diff": 0.01953376789897887
+        }
+      ]
+    },
+    {
+      "bases": [
+        "laplacian",
+        "softmax_radial"
+      ],
+      "test_metrics": {
+        "accuracy": 0.7391304347826086,
+        "balanced_accuracy": 0.5,
+        "precision": 0.7391304347826086,
+        "recall": 1.0,
+        "f1": 0.85,
+        "roc_auc": 0.6446078431372548,
+        "mcc": 0.0,
+        "per_class": {
+          "1": {
+            "accuracy": 1.0,
+            "precision": 0.7391304347826086,
+            "recall": 1.0,
+            "f1": 0.85,
+            "support": 34
+          },
+          "2": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12
+          }
+        }
+      },
+      "best_hyperparameters": {
+        "laplacian": {
+          "k": 24,
+          "epsilon": 20.764908972522903
+        },
+        "softmax_radial": {
+          "k": 24,
+          "beta": 20.764908972522903
+        }
+      },
+      "verdict": "DUPLICATA_ESTRUTURAL",
+      "pairwise_formula_check": [
+        {
+          "pair": [
+            "laplacian",
+            "softmax_radial"
+          ],
+          "structurally_identical": true,
+          "max_weight_diff": 0.0
+        }
+      ]
+    }
+  ]
+}

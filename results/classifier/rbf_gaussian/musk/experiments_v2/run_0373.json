@@ -1,0 +1,27 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "experiments_v2",
+  "dataset": "musk",
+  "combo_id": "epsilon=5.068077717443547,k=27",
+  "hyperparameters": {
+    "k": 27,
+    "epsilon": 5.068077717443547
+  },
+  "repeat_idx": 1,
+  "fold_idx": 2,
+  "seed": 1284594356,
+  "n_train_fold": 4156,
+  "n_val_fold": 462,
+  "metrics": {
+    "accuracy": 0.9935064935064936,
+    "balanced_accuracy": 0.9846367205792299,
+    "precision": 0.9857142857142858,
+    "recall": 0.971830985915493,
+    "f1": 0.9787234042553191,
+    "roc_auc": 0.9996938150642988,
+    "mcc": 0.9749263587853019
+  },
+  "execution_time_seconds": 4.399034199996095,
+  "timestamp": "2026-08-21T04:42:02.968696+00:00"
+}
