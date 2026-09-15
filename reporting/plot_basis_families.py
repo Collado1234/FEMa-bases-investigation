@@ -60,7 +60,67 @@ def _safe(d: np.ndarray) -> np.ndarray:
     """Evita divisão por zero / log(0), igual ao DELTA do seu pacote."""
     return np.where(d == 0, DELTA, d)
 
+def normalize_partition_of_unity(phi: np.ndarray) -> np.ndarray:
+    """
+    Converte valores crus de uma função de base em pesos que satisfazem
+    a partição da unidade.
 
+        w_i = phi_i / sum_j(phi_j)
+
+    Portanto:
+
+        sum_i w_i = 1
+    """
+    phi = np.asarray(phi, dtype=float)
+
+    if phi.size == 0:
+        raise ValueError(
+            "Não é possível normalizar uma função de base sem valores."
+        )
+
+    if not np.all(np.isfinite(phi)):
+        raise ValueError(
+            "A função de base produziu valores não finitos "
+            "(NaN ou infinito)."
+        )
+
+    total = np.sum(phi)
+
+    if np.isclose(total, 0.0):
+        return np.full(
+            phi.shape,
+            1.0 / phi.size,
+            dtype=float,
+        )
+
+    weights = phi / total
+
+    return weights
+    """
+    Normaliza os valores crus da função de base para formar uma
+    partição da unidade:
+
+        w_i = phi_i / sum(phi_i)
+
+    Assim, sempre que a soma dos valores for diferente de zero:
+
+        sum_i w_i = 1
+
+    Caso degenerado (soma zero), utiliza pesos uniformes, que também
+    satisfazem a partição da unidade.
+    """
+    phi = np.asarray(phi, dtype=float)
+
+    total = np.sum(phi)
+
+    if not np.isfinite(total) or np.isclose(total, 0.0):
+        return np.full(
+            phi.shape,
+            1.0 / phi.size,
+            dtype=float,
+        )
+
+    return phi / total
 # ------------------------------------------------------------------
 # 2. phi(d) cru de cada base — copiado de evaluate() em basis/*.py
 #    (NUNCA normalizado aqui; normalização é feita por compute_weights)
@@ -201,19 +261,16 @@ BASIS_FORMULAS = {
 #                pacote): plota-se 1 painel só, sem variação.
 # ------------------------------------------------------------------
 BASIS_CONFIG = {
-    "shepard": {"param": "z", "values": [1, 3, 5]},
-    "radial": {"param": "z (r0)", "values": [1.5, 0.8, 0.4]},
-    "rbf_gaussian": {"param": "epsilon", "values": [0.4, 1.0, 2.5]},
+    "shepard": {"param": "z", "values": [1, 3, 5, 8]},
+    "radial": {"param": "z (r0)", "values": [1.5, 0.8, 0.4, 0.1, 0.05]},
+    "rbf_gaussian": {"param": "epsilon", "values": [0.4, 1.0, 2.5, 5, 6,6.3, 7]},
     "multiquadratic": {"param": "c", "values": [3.0, 1.0, 0.2]},
-    "inverse_multiquadratic": {"param": "c", "values": [2.0, 0.8, 0.2]},
-    "wendland_c2": {"param": "h", "values": [3.0, 1.5, 0.7]},
-    "cubic_spline": {"param": "h", "values": [3.0, 1.5, 0.7]},
-    "quartic_spline": {"param": "h", "values": [3.0, 1.5, 0.7]},
-    "gen_exponential": {
-        "param": "epsilon",
-        "values": [0.3, 1.0, 3.0],
-        "fixed": {"p": 2.0},
-    },
+    "inverse_multiquadratic": {"param": "c", "values": [2.0, 0.8, 0.2, 0.1, 0.01, 0.001]},
+    "wendland_c2": {"param": "h", "values": [3.0, 1.5, 0.7, 0.3, 0.1]},
+    "cubic_spline": {"param": "h", "values": [3.0, 1.5, 0.7, 0.5, 0.1]},
+    "quartic_spline": {"param": "h", "values": [3.0, 1.5, 0.7, 0.5, 0.1]},
+    "gen_exponential": {"param": "epsilon","values": [0.3, 1.0, 3.0],
+    "fixed": {"p": 2.0},},
     "softmax_radial": {"param": "beta", "values": [0.5, 1.5, 4.0]},
     "attention": None,
     "logarithmic": {"param": "c", "values": [2.0, 0.5, 0.05]},
@@ -257,9 +314,17 @@ def compute_curve(basis_name: str, param_value=None, fixed: dict | None = None):
 
     for i, x in enumerate(x_grid):
         d = np.abs(x - X_SAMPLES)
-        phi = np.asarray(formula(d, **kwargs), dtype=float)
-        total = phi.sum()
-        w = np.full_like(phi, 1.0 / phi.size) if total == 0 else phi / total
+
+        # Avaliação crua da função de base.
+        phi = np.asarray(
+            formula(d, **kwargs),
+            dtype=float,
+        )
+
+        # Normalização para garantir partição da unidade.
+        w = normalize_partition_of_unity(phi)
+
+        # Interpolação FEMa.
         y_grid[i] = np.dot(w, Y_SAMPLES)
 
     return x_grid, y_grid
@@ -305,13 +370,17 @@ def plot_basis(basis_name: str, save_dir: str = "figs", show: bool = False):
     fig.suptitle(f"Base: {basis_name}")
     fig.tight_layout(rect=(0, 0, 1, 0.94))
 
-    out_dir = Path(save_dir)
+
+    out_dir = Path(save_dir) / basis_name
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"{basis_name}.png"
+
+    out_path = out_dir / "basis_function.png"
+
     fig.savefig(out_path, dpi=150)
 
     if show:
         plt.show()
+
     plt.close(fig)
     return out_path
 

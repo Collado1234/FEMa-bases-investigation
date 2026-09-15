@@ -39,7 +39,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import ListedColormap
 
-from plot_basis_families import BASIS_CONFIG, BASIS_FORMULAS
+from .plot_basis_families import (
+    BASIS_CONFIG,
+    BASIS_FORMULAS,
+    normalize_partition_of_unity,
+)
 
 # ------------------------------------------------------------------
 # 1. Conjunto de treino sintético (3 classes, espalhadas no [0,1]^2)
@@ -63,6 +67,23 @@ def make_training_set(n_per_class: int = 5, seed: int = 7):
     y = np.repeat(np.arange(3), n_per_class)
     return X, y
 
+def get_basis_dir(
+    basis_name: str,
+    root_dir: str = "figs",
+) -> Path:
+    """
+    Retorna a pasta destinada às figuras de uma função de base.
+
+    Exemplo:
+        figs/shepard/
+        figs/attention/
+    """
+    out_dir = Path(root_dir) / basis_name
+    out_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+    return out_dir
 
 # ------------------------------------------------------------------
 # 2. Classificador FEMa genérico: para cada ponto de consulta, pega os
@@ -105,8 +126,7 @@ def fema_predict(
         idx = np.argsort(d)[:k_eff]
         dk = d[idx]
         phi = np.asarray(formula(dk, **kwargs), dtype=float)
-        total = phi.sum()
-        w = np.full_like(phi, 1.0 / phi.size) if total == 0 else phi / total
+        w = normalize_partition_of_unity(phi)
         scores[i] = w @ onehot[idx]
 
     pred = np.argmax(scores, axis=1)
@@ -124,7 +144,7 @@ def plot_fema_mechanism(
     X_train=None,
     y_train=None,
     grid_res: int = 250,
-    save_dir: str = "figs_fema",
+    save_dir: str = "figs",
 ):
     if X_train is None or y_train is None:
         X_train, y_train = make_training_set()
@@ -162,9 +182,10 @@ def plot_fema_mechanism(
     fig.suptitle(f"Mecanismo FEMa — base: {basis_name}{param_txt}")
     fig.tight_layout(rect=(0, 0, 1, 0.92))
 
-    out_dir = Path(save_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"fig4_mecanismo_{basis_name}.png"
+    out_dir = get_basis_dir(basis_name, save_dir,)
+
+    out_path = out_dir / "decision_regions.png"
+    
     fig.savefig(out_path, dpi=150)
     plt.close(fig)
     return out_path
@@ -181,7 +202,7 @@ def plot_probability_map(
     X_train=None,
     y_train=None,
     grid_res: int = 250,
-    save_dir: str = "figs_fema",
+    save_dir: str = "figs",
 ):
     if X_train is None or y_train is None:
         X_train, y_train = make_training_set()
@@ -221,9 +242,9 @@ def plot_probability_map(
     fig.suptitle(f"Mapa de probabilidade — base: {basis_name}{param_txt}, k = {k_txt}")
     fig.tight_layout(rect=(0, 0, 1, 0.90))
 
-    out_dir = Path(save_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"fig5_mapa_probabilidade_{basis_name}.png"
+    out_dir = get_basis_dir(basis_name, save_dir,)
+
+    out_path = out_dir / "probability_map.png"  
     fig.savefig(out_path, dpi=150)
     plt.close(fig)
     return out_path
@@ -258,7 +279,7 @@ def _default_param_for(basis_name: str):
 def plot_all_fema(
     k_values=(1, 3, 5),
     prob_k: int = 0,
-    save_dir: str = "figs_fema",
+    save_dir: str = "figs",
     X_train=None,
     y_train=None,
 ):
@@ -290,6 +311,6 @@ def plot_all_fema(
 
 if __name__ == "__main__":
     saved = plot_all_fema()
-    print(f"{len(saved)} bases processadas (2 figuras cada) em ./figs_fema/:")
+    print(f"{len(saved)} bases processadas (2 figuras cada) em ./figs/:")
     for name, p4, p5 in saved:
         print(f" - {name}: {p4.name}, {p5.name}")
