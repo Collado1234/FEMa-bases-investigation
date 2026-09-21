@@ -268,7 +268,7 @@ BASIS_CONFIG = {
     "inverse_multiquadratic": {"param": "c", "values": [2.0, 0.8, 0.2, 0.1, 0.01, 0.001]},
     "wendland_c2": {"param": "h", "values": [3.0, 1.5, 0.7, 0.3, 0.1]},
     "cubic_spline": {"param": "h", "values": [3.0, 1.5, 0.7, 0.5, 0.1]},
-    "quartic_spline": {"param": "h", "values": [3.0, 1.5, 0.7, 0.5, 0.1]},
+    "quartic_spline": {"param": "h", "values": [3.0, 1.5, 0.7, 0.5]},
     "gen_exponential": {"param": "epsilon","values": [0.3, 1.0, 3.0],
     "fixed": {"p": 2.0},},
     "softmax_radial": {"param": "beta", "values": [0.5, 1.5, 4.0]},
