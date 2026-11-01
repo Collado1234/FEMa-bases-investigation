@@ -67,6 +67,11 @@ class ModelPlugin(ABC):
             return None
         return estimator.predict_proba(X)
 
+    def diagnostics(self, estimator) -> Dict[str, Any]:
+        """Diagnosticos opcionais do estimator (gravados junto de cada run,
+        fora de `metrics`). Default: nenhum."""
+        return {}
+
     def save(self, estimator, path: str) -> None:
         import joblib
 

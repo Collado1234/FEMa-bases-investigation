@@ -30,6 +30,24 @@ from typing import Any, Dict, List, Optional
 
 from metrics.registry import is_higher_better
 from persistence.run_writer import load_all_runs, write_summary
+from utils.logging_config import get_logger
+
+logger = get_logger("persistence.summary_builder")
+
+
+def _dedupe_runs(runs: List[dict]) -> List[dict]:
+    """Mantem a 1a ocorrencia de cada (combo_id, repeat_idx, fold_idx).
+    Runs duplicadas (mesma seed => resultado identico) so' inflam n."""
+    seen, out = set(), []
+    for r in runs:
+        key = (r["combo_id"], r["repeat_idx"], r["fold_idx"])
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(r)
+    if len(out) != len(runs):
+        logger.warning(f"{len(runs) - len(out)} runs duplicadas ignoradas na agregacao.")
+    return out
 
 
 def build_summary(
@@ -44,6 +62,8 @@ def build_summary(
             f"Nenhum run encontrado para results/{'/'.join(scope)}. "
             "Rode o grid/random search antes de gerar o summary."
         )
+
+    runs = _dedupe_runs(runs)
 
     if higher_is_better is None:
         higher_is_better = is_higher_better(primary_metric)
@@ -61,13 +81,21 @@ def build_summary(
             if values:
                 agg_metrics[m] = {
                     "mean": statistics.fmean(values),
-                    "std": statistics.pstdev(values) if len(values) > 1 else 0.0,
+                    # desvio amostral (ddof=1). Obs: folds/repeticoes NAO sao
+                    # independentes; nao e' um IC.
+                    "std": statistics.stdev(values) if len(values) > 1 else 0.0,
                     "n": len(values),
                 }
             else:
                 agg_metrics[m] = {"mean": None, "std": None, "n": 0}
 
         times = [r["execution_time_seconds"] for r in group_runs]
+
+        diag_names = list((group_runs[0].get("diagnostics") or {}).keys())
+        agg_diag = {
+            d: {"mean": statistics.fmean(r["diagnostics"][d] for r in group_runs if r.get("diagnostics"))}
+            for d in diag_names
+        }
 
         ranking.append(
             {
@@ -76,6 +104,7 @@ def build_summary(
                 "n_runs": len(group_runs),
                 "metrics": agg_metrics,
                 "mean_execution_time_seconds": statistics.fmean(times),
+                "diagnostics": agg_diag,
             }
         )
 
@@ -90,6 +119,7 @@ def build_summary(
     summary = {
         **(extra_fields or {}),
         "primary_metric": primary_metric,
+        "std_ddof": 1,
         "higher_is_better": higher_is_better,
         "n_combinations_evaluated": len(ranking),
         "total_runs": len(runs),

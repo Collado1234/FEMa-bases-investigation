@@ -8,7 +8,11 @@ otimizacao em HIGHER_IS_BETTER). Nenhum outro modulo precisa ser alterado.
 """
 
 from metrics import classification as clf
+from utils.logging_config import get_logger
 from metrics import regression as reg
+
+_logger = get_logger("metrics.registry")
+_WARNED = set()
 
 _METRICS = {
     "accuracy": clf.accuracy,
@@ -80,7 +84,12 @@ def compute_all(metric_names, y_true, y_pred, y_score, n_classes) -> dict:
         fn = get_metric_fn(name)
         try:
             results[name] = fn(y_true, y_pred, y_score, n_classes)
-        except Exception:
+        except Exception as exc:
+            # CORRECAO: antes era silencioso. Avisa uma vez por (metrica, erro).
+            key = (name, type(exc).__name__)
+            if key not in _WARNED:
+                _WARNED.add(key)
+                _logger.warning(f"Metrica '{name}' falhou ({type(exc).__name__}: {exc}); gravando None.")
             results[name] = None
     return results
 

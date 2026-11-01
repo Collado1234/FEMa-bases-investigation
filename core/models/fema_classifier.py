@@ -23,6 +23,7 @@ class FEMaClassifier(FEMaBaseModel):
     def __init__(self, basis: BaseBasis, search: BaseSearch):
         super().__init__(basis, search)
         self.num_classes = None
+        self.classes_ = None  # rotulos originais, ordenados (coluna c de probs <-> classes_[c])
         self.probability_classes = None  # shape (num_classes, n_train_samples)
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
@@ -35,12 +36,14 @@ class FEMaClassifier(FEMaBaseModel):
         """
         self.search.build(X)
 
-        self.num_classes = len(np.unique(y))
+        # CORRECAO: nao assume rotulos 0..K-1; usa os rotulos realmente presentes.
+        self.classes_ = np.unique(y)
+        self.num_classes = len(self.classes_)
 
         # uma linha por classe: 1.0 quando y == c, 0.0 caso contrário
         # shape: (num_classes, n_train_samples)
         self.probability_classes = np.array(
-            [(y == c).astype(float) for c in range(self.num_classes)]
+            [(y == c).astype(float) for c in self.classes_]
         )
 
     def predict(self, X: np.ndarray, k: int, params: BasisParameters) -> Tuple[np.ndarray, np.ndarray]:
@@ -77,6 +80,6 @@ class FEMaClassifier(FEMaBaseModel):
             for c in range(self.num_classes):
                 probs[i, c] = np.dot(weights, self.probability_classes[c][indices])
 
-        labels = np.argmax(probs, axis=1)
+        labels = self.classes_[np.argmax(probs, axis=1)]
 
         return labels, probs

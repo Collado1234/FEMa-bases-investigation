@@ -13,3 +13,8 @@ class RbfGaussianBasis(BaseBasis):
         epsilon = self._require(params)["epsilon"]
         dists = np.where(dists == 0, DELTA, dists)
         return np.exp(-(epsilon * dists) ** 2)
+
+    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+        epsilon = self._require(params)["epsilon"]
+        dists = np.where(dists == 0, DELTA, dists)
+        return -((epsilon * dists) ** 2)

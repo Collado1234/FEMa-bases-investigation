@@ -21,7 +21,7 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 from datasets.registry import DatasetSpec, get_dataset_spec
 
@@ -309,6 +309,12 @@ def load_dataset(
     # ============================================================
     # SPLIT
     # ============================================================
+
+    # CORRECAO (rotulos): FEMa e metricas assumem classes 0..K-1. Targets
+    # numericos como {1,2,3} (fetal_health) ou {1..26} (isolet) deixavam a
+    # ultima classe impossivel de prever. Codifica SEMPRE, de forma estavel
+    # (ordem ordenada dos rotulos originais), antes do split.
+    y = LabelEncoder().fit_transform(y)
 
     X_temp, X_test, y_temp, y_test = train_test_split(
         X,

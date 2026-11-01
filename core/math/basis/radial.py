@@ -14,3 +14,7 @@ class RadialBasis(BaseBasis):
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         r0 = self._require(params)["z"]
         return np.exp(-0.5 * (dists / r0) ** 2)
+
+    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+        r0 = self._require(params)["z"]
+        return -0.5 * (dists / r0) ** 2

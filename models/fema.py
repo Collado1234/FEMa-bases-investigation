@@ -162,6 +162,13 @@ class _FEMaEstimator:
             return labels
         return result  # FEMaRegressor.predict ja' retorna so' o vetor de previsoes
 
+    def diagnostics(self) -> Dict[str, Any]:
+        """Fracao de consultas em que a base caiu no fallback de pesos
+        uniformes (soma de phi == 0). Alta => a base virou kNN uniforme."""
+        if self._model is None:
+            return {}
+        return {"frac_uniform_fallback": self._model.basis.fallback_fraction()}
+
     def predict_proba(self, X: np.ndarray):
         if self.context != "classifier":
             return None
@@ -200,6 +207,9 @@ class FEMaPlugin(ModelPlugin):
         return _FEMaEstimator(
             context=self.context, basis_function=self.basis, k=k, random_state=random_state, **basis_kwargs
         )
+
+    def diagnostics(self, estimator) -> Dict[str, Any]:
+        return estimator.diagnostics()
 
     def parameter_grid(self) -> Dict[str, list]:
         return {"k": _K_GRID, **PARAM_GRIDS[self.basis]}

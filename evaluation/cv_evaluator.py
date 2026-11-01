@@ -25,7 +25,8 @@ def evaluate_fold(
     y_val_fold,
     metric_names: List[str],
     random_state: int,
-) -> Dict[str, Any]:
+    return_diagnostics: bool = False,
+):
     estimator = train_estimator(plugin, params, X_train_fold, y_train_fold, random_state)
 
     y_pred = plugin.predict(estimator, X_val_fold)
@@ -33,10 +34,13 @@ def evaluate_fold(
 
     n_classes = int(len(np.unique(y_train_fold)))
 
-    return compute_all(
+    metrics = compute_all(
         metric_names,
         y_true=y_val_fold,
         y_pred=y_pred,
         y_score=y_score,
         n_classes=n_classes,
     )
+    if return_diagnostics:
+        return metrics, plugin.diagnostics(estimator)
+    return metrics

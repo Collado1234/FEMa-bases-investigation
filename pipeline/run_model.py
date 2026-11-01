@@ -43,6 +43,9 @@ Uso:
 from __future__ import annotations
 
 import datetime as dt
+import functools
+import platform
+import subprocess
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
@@ -54,14 +57,15 @@ from evaluation.test_evaluator import evaluate_on_test
 from models.base import ModelPlugin
 from models.fema import FEMaPlugin, available_bases
 from models.registry import get_model_plugin
-from persistence.checkpoint import get_completed_keys, is_done
-from persistence.run_writer import next_run_path, write_run_atomic, write_test_results
+from persistence.checkpoint import is_done
+from persistence.run_writer import load_all_runs, next_run_path, write_run_atomic, write_test_results
 from persistence.summary_builder import build_summary
 from training.final_fit import fit_final_model
 from tuning.cv_strategy import build_cv_splits
 from tuning.grid_search import combo_id
-from tuning.param_space import generate_combinations
+from tuning.param_space import dedupe_combinations, generate_combinations
 from utils.logging_config import get_logger
+from utils.hashing import stable_hash
 from utils.seeding import derive_seed, set_global_seed
 from utils.timing import timer
 from metrics.registry import metrics_for_context
@@ -76,6 +80,52 @@ DEFAULT_REGRESSION_METRICS = metrics_for_context("regressor")  # todas as 5 regi
 def _load_yaml(path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f) or {}
+
+
+@functools.lru_cache(maxsize=1)
+def _run_meta() -> Dict[str, Any]:
+    """Metadados de rastreabilidade gravados em TODA run: commit/estado do git
+    e versoes das bibliotecas."""
+    root = Path(__file__).resolve().parent.parent
+
+    def _git(*args):
+        try:
+            return subprocess.check_output(
+                ["git", *args], cwd=root, stderr=subprocess.DEVNULL, text=True
+            ).strip()
+        except Exception:
+            return None
+
+    import numpy
+    import pandas
+    import sklearn
+
+    status = _git("status", "--porcelain", "--untracked-files=no")
+    return {
+        "git_commit": _git("rev-parse", "--short", "HEAD"),
+        "git_dirty": (bool(status) if status is not None else None),
+        "env": {
+            "python": platform.python_version(),
+            "numpy": numpy.__version__,
+            "scikit_learn": sklearn.__version__,
+            "pandas": pandas.__version__,
+            "platform": platform.platform(),
+        },
+    }
+
+
+def _check_config_consistency(existing_runs, config_hash: str, scope) -> None:
+    """Impede misturar, no mesmo diretorio, runs geradas com configs diferentes
+    (o checkpoint so' olhava combo/repeat/fold e pulava runs obsoletas)."""
+    stale = {r["config_hash"] for r in existing_runs if r.get("config_hash") not in (None, config_hash)}
+    if stale:
+        raise RuntimeError(
+            f"results/{'/'.join(scope)} contem runs de OUTRA configuracao (config_hash {sorted(stale)} "
+            f"!= {config_hash}). Use outro experiment_name ou apague o diretorio."
+        )
+    legacy = sum(1 for r in existing_runs if "config_hash" not in r)
+    if legacy:
+        logger.warning(f"{legacy} runs antigas sem config_hash em results/{'/'.join(scope)} (nao verificaveis).")
 
 
 def _execute(
@@ -111,20 +161,50 @@ def _execute(
         f"n_splits={n_splits} n_repeats={n_repeats} ==="
     )
 
+    config = {
+        "model": plugin.name,
+        "dataset": dataset,
+        "cv_strategy": cv_strategy,
+        "n_splits": n_splits,
+        "n_repeats": n_repeats,
+        "tuning_strategy": tuning_strategy,
+        "tuning_n_iter": tuning_n_iter,
+        "master_seed": master_seed,
+        "fixed_hyperparameters": fixed_hyperparameters,
+        "val_ratio": val_ratio,
+        "test_ratio": test_ratio,
+        "metric_names": list(metric_names),
+    }
+    config_hash = stable_hash(config)
+    run_meta = _run_meta()
+
     data = load_dataset(dataset, seed=master_seed, val_ratio=val_ratio, test_ratio=test_ratio)
     X_train, y_train = data.X_train, data.y_train
 
-    param_combinations = generate_combinations(
+    raw_combinations = generate_combinations(
         plugin,
         strategy=tuning_strategy,
         seed=master_seed,
         n_iter=tuning_n_iter,
         fixed_hyperparameters=fixed_hyperparameters,
     )
-    logger.info(f"{len(param_combinations)} combinacoes de hiperparametros a avaliar.")
+    # CORRECAO: random search pode sortear a mesma combinacao varias vezes.
+    param_combinations = dedupe_combinations(raw_combinations)
+    logger.info(
+        f"{len(raw_combinations)} combinacoes sorteadas, {len(param_combinations)} distintas a avaliar."
+    )
 
-    completed_keys = get_completed_keys(*scope)
+    existing_runs = load_all_runs(*scope)
+    _check_config_consistency(existing_runs, config_hash, scope)
+    completed_keys = {(r["combo_id"], r["repeat_idx"], r["fold_idx"]) for r in existing_runs}
     logger.info(f"{len(completed_keys)} runs ja existentes (checkpoint).")
+
+    # splits sao deterministicos: materializa uma unica vez.
+    cv_splits = list(
+        build_cv_splits(
+            X_train, y_train, strategy=cv_strategy, n_splits=n_splits, n_repeats=n_repeats, master_seed=master_seed
+        )
+    )
 
     n_executed = 0
     n_skipped = 0
@@ -132,9 +212,7 @@ def _execute(
     for params in param_combinations:
         cid = combo_id(params)
 
-        for repeat_idx, fold_idx, train_idx, val_idx in build_cv_splits(
-            X_train, y_train, strategy=cv_strategy, n_splits=n_splits, n_repeats=n_repeats, master_seed=master_seed
-        ):
+        for repeat_idx, fold_idx, train_idx, val_idx in cv_splits:
             if is_done(completed_keys, cid, repeat_idx, fold_idx):
                 n_skipped += 1
                 continue
@@ -145,13 +223,16 @@ def _execute(
             fold_seed = derive_seed(master_seed, *scope, cid, f"repeat={repeat_idx}", f"fold={fold_idx}")
 
             with timer() as t:
-                metric_values = evaluate_fold(
-                    plugin, params, X_tr, y_tr, X_val, y_val, metric_names, random_state=fold_seed
+                metric_values, diagnostics = evaluate_fold(
+                    plugin, params, X_tr, y_tr, X_val, y_val, metric_names,
+                    random_state=fold_seed, return_diagnostics=True,
                 )
 
             payload = {
                 **summary_extra_fields,
                 "dataset": dataset,
+                "config_hash": config_hash,
+                **run_meta,
                 "combo_id": cid,
                 "hyperparameters": params,
                 "repeat_idx": repeat_idx,
@@ -160,12 +241,14 @@ def _execute(
                 "n_train_fold": len(train_idx),
                 "n_val_fold": len(val_idx),
                 "metrics": metric_values,
+                "diagnostics": diagnostics,
                 "execution_time_seconds": t.elapsed_seconds,
                 "timestamp": dt.datetime.now(dt.timezone.utc).isoformat(),
             }
 
             run_path = next_run_path(*scope)
             write_run_atomic(run_path, payload)
+            completed_keys.add((cid, repeat_idx, fold_idx))
             n_executed += 1
 
     logger.info(f"Tuning concluido: {n_executed} runs novos, {n_skipped} pulados (ja existiam).")
@@ -174,7 +257,13 @@ def _execute(
         *scope,
         primary_metric=ranking_metric,
         higher_is_better=higher_is_better,
-        extra_fields={**summary_extra_fields, "dataset": dataset},
+        extra_fields={
+            **summary_extra_fields,
+            "dataset": dataset,
+            "config": config,
+            "config_hash": config_hash,
+            **run_meta,
+        },
     )
     logger.info(f"Melhor combinacao ({ranking_metric}): {summary['best_configuration']['combo_id']}")
 
@@ -197,7 +286,10 @@ def _execute(
         test_payload = {
             **summary_extra_fields,
             "dataset": dataset,
+            "config_hash": config_hash,
+            **run_meta,
             "best_hyperparameters": best_params,
+            "diagnostics": plugin.diagnostics(final_estimator),
             "n_train_total": len(X_train),
             "n_test": len(data.X_test),
             "metrics": test_metrics,

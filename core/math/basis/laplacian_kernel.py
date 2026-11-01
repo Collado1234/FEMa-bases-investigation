@@ -16,3 +16,7 @@ class LaplacianKernelBasis(BaseBasis):
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         epsilon = self._require(params)["epsilon"]
         return np.exp(-epsilon * dists)
+
+    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+        epsilon = self._require(params)["epsilon"]
+        return -epsilon * dists

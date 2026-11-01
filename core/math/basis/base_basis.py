@@ -138,6 +138,25 @@ class BaseBasis(ABC):
         #: ponto de extensão para bases futuras (ver NeighborhoodContext).
         #: Bases atuais não precisam ler isto.
         self._context: Optional[NeighborhoodContext] = None
+        #: Diagnostico: quantas vezes compute_weights foi chamado e em quantas
+        #: a soma de phi foi 0 (fallback SILENCIOSO para pesos uniformes).
+        self.n_weight_calls = 0
+        self.n_uniform_fallback = 0
+
+    def reset_diagnostics(self) -> None:
+        self.n_weight_calls = 0
+        self.n_uniform_fallback = 0
+
+    def fallback_fraction(self) -> float:
+        return self.n_uniform_fallback / self.n_weight_calls if self.n_weight_calls else 0.0
+
+    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> Optional[np.ndarray]:
+        """OPCIONAL. Bases da familia exponencial (phi = exp(g(d))) podem
+        devolver g(d) aqui. compute_weights entao normaliza com o truque
+        log-sum-exp (w = exp(g - max g) / soma), matematicamente identico a
+        phi/sum(phi), mas sem underflow (que zerava todos os pesos e caia
+        em kNN uniforme sem avisar). Default: None (usa evaluate())."""
+        return None
 
     @abstractmethod
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
@@ -169,10 +188,19 @@ class BaseBasis(ABC):
         exatamente como antes.
         """
         self._context = context
+        self.n_weight_calls += 1
+
+        log_phi = self._log_phi(dists, params)
+        if log_phi is not None:
+            log_phi = np.asarray(log_phi, dtype=float)
+            shifted = np.exp(log_phi - np.max(log_phi))
+            return shifted / shifted.sum()
+
         phi = np.asarray(self.evaluate(dists, params), dtype=float)
         total = phi.sum()
 
         if total == 0:
+            self.n_uniform_fallback += 1
             return np.full_like(phi, 1.0 / phi.size)
 
         return phi / total

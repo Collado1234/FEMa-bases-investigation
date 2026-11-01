@@ -40,6 +40,13 @@ class BruteForceSearch(BaseSearch):
             # print("sample.shape:", sample.shape)
             # print("distances.shape:", distances.shape)
             # print("k:", k)
-            indices = np.argpartition(distances, k)[:k] 
+            # CORRECAO (desempate): argpartition resolve empates no k-esimo
+            # vizinho de forma arbitraria (depende da versao do numpy).
+            # Aqui: todos com dist < d_k entram; os empatados em d_k entram
+            # por ordem de indice. O(n), deterministico e portavel.
+            kth = np.partition(distances, k - 1)[k - 1]
+            lt = np.flatnonzero(distances < kth)
+            eq = np.flatnonzero(distances == kth)[: k - len(lt)]
+            indices = np.sort(np.concatenate([lt, eq]))
         
         return indices, distances[indices]

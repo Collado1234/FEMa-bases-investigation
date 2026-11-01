@@ -16,6 +16,21 @@ from tuning.random_search import sample_param_space
 
 VALID_STRATEGIES = {"grid_search", "random_search"}
 
+
+def dedupe_combinations(combos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Remove combinacoes repetidas (mesmo combo_id), preservando a ordem.
+    No random search, bases sem parametro proprio sorteiam so' `k` e geram
+    repeticoes; sem isto a mesma run era gravada 2x (n_runs inflado)."""
+    from tuning.grid_search import combo_id
+
+    seen, out = set(), []
+    for c in combos:
+        cid = combo_id(c)
+        if cid not in seen:
+            seen.add(cid)
+            out.append(c)
+    return out
+
 def generate_combinations(
         plugin: ModelPlugin,
         strategy: str,
