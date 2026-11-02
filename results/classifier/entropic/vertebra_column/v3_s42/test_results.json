@@ -1,0 +1,58 @@
+{
+  "context": "classifier",
+  "basis": "entropic",
+  "experiment": "v3_s42",
+  "dataset": "vertebra_column",
+  "config_hash": "6470f8232dd6a286",
+  "git_commit": "96fd3a98c2",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 15,
+    "beta": 3.139118461178404
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 216,
+  "n_test": 47,
+  "metrics": {
+    "accuracy": 0.7659574468085106,
+    "balanced_accuracy": 0.7497584541062802,
+    "precision": 0.7657894736842105,
+    "recall": 0.7497584541062802,
+    "f1": 0.7495798319327731,
+    "roc_auc": 0.9091480210187304,
+    "mcc": 0.6403232808228877,
+    "per_class": {
+      "0": {
+        "accuracy": 0.6666666666666666,
+        "precision": 0.75,
+        "recall": 0.6666666666666666,
+        "f1": 0.7058823529411765,
+        "support": 9
+      },
+      "1": {
+        "accuracy": 0.8,
+        "precision": 0.6,
+        "recall": 0.8,
+        "f1": 0.6857142857142857,
+        "support": 15
+      },
+      "2": {
+        "accuracy": 0.782608695652174,
+        "precision": 0.9473684210526315,
+        "recall": 0.782608695652174,
+        "f1": 0.8571428571428571,
+        "support": 23
+      }
+    }
+  },
+  "timestamp": "2026-11-02T17:29:15.013533+00:00"
+}

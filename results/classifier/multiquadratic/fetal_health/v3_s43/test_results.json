@@ -1,0 +1,58 @@
+{
+  "context": "classifier",
+  "basis": "multiquadratic",
+  "experiment": "v3_s43",
+  "dataset": "fetal_health",
+  "config_hash": "75103a4f07215b37",
+  "git_commit": "96fd3a98c2",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 3,
+    "c": 4.76359468067171
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 1488,
+  "n_test": 319,
+  "metrics": {
+    "accuracy": 0.9059561128526645,
+    "balanced_accuracy": 0.8331975670685349,
+    "precision": 0.8150675489385167,
+    "recall": 0.8331975670685349,
+    "f1": 0.8213224686608654,
+    "roc_auc": 0.9381133102637668,
+    "mcc": 0.7464951579501344,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9516129032258065,
+        "precision": 0.9516129032258065,
+        "recall": 0.9516129032258065,
+        "f1": 0.9516129032258065,
+        "support": 248
+      },
+      "1": {
+        "accuracy": 0.6590909090909091,
+        "precision": 0.7435897435897436,
+        "recall": 0.6590909090909091,
+        "f1": 0.6987951807228916,
+        "support": 44
+      },
+      "2": {
+        "accuracy": 0.8888888888888888,
+        "precision": 0.75,
+        "recall": 0.8888888888888888,
+        "f1": 0.8135593220338984,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-11-02T18:24:29.288514+00:00"
+}

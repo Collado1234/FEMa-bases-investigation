@@ -1,0 +1,49 @@
+{
+  "model": "logreg",
+  "experiment": "v3_s42",
+  "dataset": "breast_cancer",
+  "config_hash": "25b5ec048722dd3f",
+  "git_commit": "96fd3a98c2",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "C": 0.5928214852028796,
+    "penalty": "l2",
+    "max_iter": 500
+  },
+  "diagnostics": {},
+  "n_train_total": 397,
+  "n_test": 86,
+  "metrics": {
+    "accuracy": 0.9651162790697675,
+    "balanced_accuracy": 0.9658564814814814,
+    "precision": 0.9811320754716981,
+    "recall": 0.9629629629629629,
+    "f1": 0.9719626168224299,
+    "roc_auc": 0.9947916666666666,
+    "mcc": 0.9261025973373315,
+    "per_class": {
+      "0": {
+        "accuracy": 0.96875,
+        "precision": 0.9393939393939394,
+        "recall": 0.96875,
+        "f1": 0.9538461538461539,
+        "support": 32
+      },
+      "1": {
+        "accuracy": 0.9629629629629629,
+        "precision": 0.9811320754716981,
+        "recall": 0.9629629629629629,
+        "f1": 0.9719626168224299,
+        "support": 54
+      }
+    }
+  },
+  "timestamp": "2026-11-02T17:33:02.372919+00:00"
+}
