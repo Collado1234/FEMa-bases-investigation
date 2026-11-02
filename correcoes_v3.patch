@@ -1,0 +1,871 @@
+diff --git a/core/math/basis/base_basis.py b/core/math/basis/base_basis.py
+index 27a1204..11fdcd3 100644
+--- a/core/math/basis/base_basis.py
++++ b/core/math/basis/base_basis.py
+@@ -138,6 +138,25 @@ class BaseBasis(ABC):
+         #: ponto de extensão para bases futuras (ver NeighborhoodContext).
+         #: Bases atuais não precisam ler isto.
+         self._context: Optional[NeighborhoodContext] = None
++        #: Diagnostico: quantas vezes compute_weights foi chamado e em quantas
++        #: a soma de phi foi 0 (fallback SILENCIOSO para pesos uniformes).
++        self.n_weight_calls = 0
++        self.n_uniform_fallback = 0
++
++    def reset_diagnostics(self) -> None:
++        self.n_weight_calls = 0
++        self.n_uniform_fallback = 0
++
++    def fallback_fraction(self) -> float:
++        return self.n_uniform_fallback / self.n_weight_calls if self.n_weight_calls else 0.0
++
++    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> Optional[np.ndarray]:
++        """OPCIONAL. Bases da familia exponencial (phi = exp(g(d))) podem
++        devolver g(d) aqui. compute_weights entao normaliza com o truque
++        log-sum-exp (w = exp(g - max g) / soma), matematicamente identico a
++        phi/sum(phi), mas sem underflow (que zerava todos os pesos e caia
++        em kNN uniforme sem avisar). Default: None (usa evaluate())."""
++        return None
+ 
+     @abstractmethod
+     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+@@ -169,10 +188,19 @@ class BaseBasis(ABC):
+         exatamente como antes.
+         """
+         self._context = context
++        self.n_weight_calls += 1
++
++        log_phi = self._log_phi(dists, params)
++        if log_phi is not None:
++            log_phi = np.asarray(log_phi, dtype=float)
++            shifted = np.exp(log_phi - np.max(log_phi))
++            return shifted / shifted.sum()
++
+         phi = np.asarray(self.evaluate(dists, params), dtype=float)
+         total = phi.sum()
+ 
+         if total == 0:
++            self.n_uniform_fallback += 1
+             return np.full_like(phi, 1.0 / phi.size)
+ 
+         return phi / total
+diff --git a/core/math/basis/laplacian_kernel.py b/core/math/basis/laplacian_kernel.py
+index b58c5df..d28f615 100644
+--- a/core/math/basis/laplacian_kernel.py
++++ b/core/math/basis/laplacian_kernel.py
+@@ -16,3 +16,7 @@ class LaplacianKernelBasis(BaseBasis):
+     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+         epsilon = self._require(params)["epsilon"]
+         return np.exp(-epsilon * dists)
++
++    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
++        epsilon = self._require(params)["epsilon"]
++        return -epsilon * dists
+diff --git a/core/math/basis/radial.py b/core/math/basis/radial.py
+index 2ea3bf4..0ba86dc 100644
+--- a/core/math/basis/radial.py
++++ b/core/math/basis/radial.py
+@@ -14,3 +14,7 @@ class RadialBasis(BaseBasis):
+     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+         r0 = self._require(params)["z"]
+         return np.exp(-0.5 * (dists / r0) ** 2)
++
++    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
++        r0 = self._require(params)["z"]
++        return -0.5 * (dists / r0) ** 2
+diff --git a/core/math/basis/rbf_gaussian.py b/core/math/basis/rbf_gaussian.py
+index 523c9be..6d0bd94 100644
+--- a/core/math/basis/rbf_gaussian.py
++++ b/core/math/basis/rbf_gaussian.py
+@@ -13,3 +13,8 @@ class RbfGaussianBasis(BaseBasis):
+         epsilon = self._require(params)["epsilon"]
+         dists = np.where(dists == 0, DELTA, dists)
+         return np.exp(-(epsilon * dists) ** 2)
++
++    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
++        epsilon = self._require(params)["epsilon"]
++        dists = np.where(dists == 0, DELTA, dists)
++        return -((epsilon * dists) ** 2)
+diff --git a/core/math/neighboor_search/brute_force.py b/core/math/neighboor_search/brute_force.py
+index ba10efc..1364da1 100644
+--- a/core/math/neighboor_search/brute_force.py
++++ b/core/math/neighboor_search/brute_force.py
+@@ -40,6 +40,13 @@ class BruteForceSearch(BaseSearch):
+             # print("sample.shape:", sample.shape)
+             # print("distances.shape:", distances.shape)
+             # print("k:", k)
+-            indices = np.argpartition(distances, k)[:k] 
++            # CORRECAO (desempate): argpartition resolve empates no k-esimo
++            # vizinho de forma arbitraria (depende da versao do numpy).
++            # Aqui: todos com dist < d_k entram; os empatados em d_k entram
++            # por ordem de indice. O(n), deterministico e portavel.
++            kth = np.partition(distances, k - 1)[k - 1]
++            lt = np.flatnonzero(distances < kth)
++            eq = np.flatnonzero(distances == kth)[: k - len(lt)]
++            indices = np.sort(np.concatenate([lt, eq]))
+         
+         return indices, distances[indices]
+diff --git a/core/models/fema_classifier.py b/core/models/fema_classifier.py
+index 3acc834..ccddddc 100644
+--- a/core/models/fema_classifier.py
++++ b/core/models/fema_classifier.py
+@@ -23,6 +23,7 @@ class FEMaClassifier(FEMaBaseModel):
+     def __init__(self, basis: BaseBasis, search: BaseSearch):
+         super().__init__(basis, search)
+         self.num_classes = None
++        self.classes_ = None  # rotulos originais, ordenados (coluna c de probs <-> classes_[c])
+         self.probability_classes = None  # shape (num_classes, n_train_samples)
+ 
+     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
+@@ -35,12 +36,14 @@ class FEMaClassifier(FEMaBaseModel):
+         """
+         self.search.build(X)
+ 
+-        self.num_classes = len(np.unique(y))
++        # CORRECAO: nao assume rotulos 0..K-1; usa os rotulos realmente presentes.
++        self.classes_ = np.unique(y)
++        self.num_classes = len(self.classes_)
+ 
+         # uma linha por classe: 1.0 quando y == c, 0.0 caso contrário
+         # shape: (num_classes, n_train_samples)
+         self.probability_classes = np.array(
+-            [(y == c).astype(float) for c in range(self.num_classes)]
++            [(y == c).astype(float) for c in self.classes_]
+         )
+ 
+     def predict(self, X: np.ndarray, k: int, params: BasisParameters) -> Tuple[np.ndarray, np.ndarray]:
+@@ -77,6 +80,6 @@ class FEMaClassifier(FEMaBaseModel):
+             for c in range(self.num_classes):
+                 probs[i, c] = np.dot(weights, self.probability_classes[c][indices])
+ 
+-        labels = np.argmax(probs, axis=1)
++        labels = self.classes_[np.argmax(probs, axis=1)]
+ 
+         return labels, probs
+diff --git a/datasets/loader.py b/datasets/loader.py
+index 0a22c5f..23ad2c0 100644
+--- a/datasets/loader.py
++++ b/datasets/loader.py
+@@ -21,7 +21,7 @@ from typing import Optional
+ import numpy as np
+ import pandas as pd
+ from sklearn.model_selection import train_test_split
+-from sklearn.preprocessing import OneHotEncoder
++from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+ 
+ from datasets.registry import DatasetSpec, get_dataset_spec
+ 
+@@ -310,6 +310,12 @@ def load_dataset(
+     # SPLIT
+     # ============================================================
+ 
++    # CORRECAO (rotulos): FEMa e metricas assumem classes 0..K-1. Targets
++    # numericos como {1,2,3} (fetal_health) ou {1..26} (isolet) deixavam a
++    # ultima classe impossivel de prever. Codifica SEMPRE, de forma estavel
++    # (ordem ordenada dos rotulos originais), antes do split.
++    y = LabelEncoder().fit_transform(y)
++
+     X_temp, X_test, y_temp, y_test = train_test_split(
+         X,
+         y,
+diff --git a/evaluation/cv_evaluator.py b/evaluation/cv_evaluator.py
+index 2898290..7ca4a5e 100644
+--- a/evaluation/cv_evaluator.py
++++ b/evaluation/cv_evaluator.py
+@@ -25,7 +25,8 @@ def evaluate_fold(
+     y_val_fold,
+     metric_names: List[str],
+     random_state: int,
+-) -> Dict[str, Any]:
++    return_diagnostics: bool = False,
++):
+     estimator = train_estimator(plugin, params, X_train_fold, y_train_fold, random_state)
+ 
+     y_pred = plugin.predict(estimator, X_val_fold)
+@@ -33,10 +34,13 @@ def evaluate_fold(
+ 
+     n_classes = int(len(np.unique(y_train_fold)))
+ 
+-    return compute_all(
++    metrics = compute_all(
+         metric_names,
+         y_true=y_val_fold,
+         y_pred=y_pred,
+         y_score=y_score,
+         n_classes=n_classes,
+     )
++    if return_diagnostics:
++        return metrics, plugin.diagnostics(estimator)
++    return metrics
+diff --git a/metrics/registry.py b/metrics/registry.py
+index 2d75b0c..7ddc1e6 100644
+--- a/metrics/registry.py
++++ b/metrics/registry.py
+@@ -8,8 +8,12 @@ otimizacao em HIGHER_IS_BETTER). Nenhum outro modulo precisa ser alterado.
+ """
+ 
+ from metrics import classification as clf
++from utils.logging_config import get_logger
+ from metrics import regression as reg
+ 
++_logger = get_logger("metrics.registry")
++_WARNED = set()
++
+ _METRICS = {
+     "accuracy": clf.accuracy,
+     "balanced_accuracy": clf.balanced_accuracy,
+@@ -80,7 +84,12 @@ def compute_all(metric_names, y_true, y_pred, y_score, n_classes) -> dict:
+         fn = get_metric_fn(name)
+         try:
+             results[name] = fn(y_true, y_pred, y_score, n_classes)
+-        except Exception:
++        except Exception as exc:
++            # CORRECAO: antes era silencioso. Avisa uma vez por (metrica, erro).
++            key = (name, type(exc).__name__)
++            if key not in _WARNED:
++                _WARNED.add(key)
++                _logger.warning(f"Metrica '{name}' falhou ({type(exc).__name__}: {exc}); gravando None.")
+             results[name] = None
+     return results
+ 
+diff --git a/models/base.py b/models/base.py
+index 9e8f090..6858107 100644
+--- a/models/base.py
++++ b/models/base.py
+@@ -67,6 +67,11 @@ class ModelPlugin(ABC):
+             return None
+         return estimator.predict_proba(X)
+ 
++    def diagnostics(self, estimator) -> Dict[str, Any]:
++        """Diagnosticos opcionais do estimator (gravados junto de cada run,
++        fora de `metrics`). Default: nenhum."""
++        return {}
++
+     def save(self, estimator, path: str) -> None:
+         import joblib
+ 
+diff --git a/models/fema.py b/models/fema.py
+index 556538e..7d45d25 100644
+--- a/models/fema.py
++++ b/models/fema.py
+@@ -162,6 +162,13 @@ class _FEMaEstimator:
+             return labels
+         return result  # FEMaRegressor.predict ja' retorna so' o vetor de previsoes
+ 
++    def diagnostics(self) -> Dict[str, Any]:
++        """Fracao de consultas em que a base caiu no fallback de pesos
++        uniformes (soma de phi == 0). Alta => a base virou kNN uniforme."""
++        if self._model is None:
++            return {}
++        return {"frac_uniform_fallback": self._model.basis.fallback_fraction()}
++
+     def predict_proba(self, X: np.ndarray):
+         if self.context != "classifier":
+             return None
+@@ -201,6 +208,9 @@ class FEMaPlugin(ModelPlugin):
+             context=self.context, basis_function=self.basis, k=k, random_state=random_state, **basis_kwargs
+         )
+ 
++    def diagnostics(self, estimator) -> Dict[str, Any]:
++        return estimator.diagnostics()
++
+     def parameter_grid(self) -> Dict[str, list]:
+         return {"k": _K_GRID, **PARAM_GRIDS[self.basis]}
+ 
+diff --git a/persistence/summary_builder.py b/persistence/summary_builder.py
+index efb7ace..776bcca 100644
+--- a/persistence/summary_builder.py
++++ b/persistence/summary_builder.py
+@@ -30,6 +30,24 @@ from typing import Any, Dict, List, Optional
+ 
+ from metrics.registry import is_higher_better
+ from persistence.run_writer import load_all_runs, write_summary
++from utils.logging_config import get_logger
++
++logger = get_logger("persistence.summary_builder")
++
++
++def _dedupe_runs(runs: List[dict]) -> List[dict]:
++    """Mantem a 1a ocorrencia de cada (combo_id, repeat_idx, fold_idx).
++    Runs duplicadas (mesma seed => resultado identico) so' inflam n."""
++    seen, out = set(), []
++    for r in runs:
++        key = (r["combo_id"], r["repeat_idx"], r["fold_idx"])
++        if key in seen:
++            continue
++        seen.add(key)
++        out.append(r)
++    if len(out) != len(runs):
++        logger.warning(f"{len(runs) - len(out)} runs duplicadas ignoradas na agregacao.")
++    return out
+ 
+ 
+ def build_summary(
+@@ -45,6 +63,8 @@ def build_summary(
+             "Rode o grid/random search antes de gerar o summary."
+         )
+ 
++    runs = _dedupe_runs(runs)
++
+     if higher_is_better is None:
+         higher_is_better = is_higher_better(primary_metric)
+ 
+@@ -61,7 +81,9 @@ def build_summary(
+             if values:
+                 agg_metrics[m] = {
+                     "mean": statistics.fmean(values),
+-                    "std": statistics.pstdev(values) if len(values) > 1 else 0.0,
++                    # desvio amostral (ddof=1). Obs: folds/repeticoes NAO sao
++                    # independentes; nao e' um IC.
++                    "std": statistics.stdev(values) if len(values) > 1 else 0.0,
+                     "n": len(values),
+                 }
+             else:
+@@ -69,6 +91,12 @@ def build_summary(
+ 
+         times = [r["execution_time_seconds"] for r in group_runs]
+ 
++        diag_names = list((group_runs[0].get("diagnostics") or {}).keys())
++        agg_diag = {
++            d: {"mean": statistics.fmean(r["diagnostics"][d] for r in group_runs if r.get("diagnostics"))}
++            for d in diag_names
++        }
++
+         ranking.append(
+             {
+                 "combo_id": combo_id,
+@@ -76,6 +104,7 @@ def build_summary(
+                 "n_runs": len(group_runs),
+                 "metrics": agg_metrics,
+                 "mean_execution_time_seconds": statistics.fmean(times),
++                "diagnostics": agg_diag,
+             }
+         )
+ 
+@@ -90,6 +119,7 @@ def build_summary(
+     summary = {
+         **(extra_fields or {}),
+         "primary_metric": primary_metric,
++        "std_ddof": 1,
+         "higher_is_better": higher_is_better,
+         "n_combinations_evaluated": len(ranking),
+         "total_runs": len(runs),
+diff --git a/pipeline/run_model.py b/pipeline/run_model.py
+index c6cc9b1..51b9afc 100644
+--- a/pipeline/run_model.py
++++ b/pipeline/run_model.py
+@@ -43,6 +43,9 @@ Uso:
+ from __future__ import annotations
+ 
+ import datetime as dt
++import functools
++import platform
++import subprocess
+ from pathlib import Path
+ from typing import Any, Dict, Optional, Tuple
+ 
+@@ -54,14 +57,15 @@ from evaluation.test_evaluator import evaluate_on_test
+ from models.base import ModelPlugin
+ from models.fema import FEMaPlugin, available_bases
+ from models.registry import get_model_plugin
+-from persistence.checkpoint import get_completed_keys, is_done
+-from persistence.run_writer import next_run_path, write_run_atomic, write_test_results
++from persistence.checkpoint import is_done
++from persistence.run_writer import load_all_runs, next_run_path, write_run_atomic, write_test_results
+ from persistence.summary_builder import build_summary
+ from training.final_fit import fit_final_model
+ from tuning.cv_strategy import build_cv_splits
+ from tuning.grid_search import combo_id
+-from tuning.param_space import generate_combinations
++from tuning.param_space import dedupe_combinations, generate_combinations
+ from utils.logging_config import get_logger
++from utils.hashing import stable_hash
+ from utils.seeding import derive_seed, set_global_seed
+ from utils.timing import timer
+ from metrics.registry import metrics_for_context
+@@ -78,6 +82,52 @@ def _load_yaml(path) -> dict:
+         return yaml.safe_load(f) or {}
+ 
+ 
++@functools.lru_cache(maxsize=1)
++def _run_meta() -> Dict[str, Any]:
++    """Metadados de rastreabilidade gravados em TODA run: commit/estado do git
++    e versoes das bibliotecas."""
++    root = Path(__file__).resolve().parent.parent
++
++    def _git(*args):
++        try:
++            return subprocess.check_output(
++                ["git", *args], cwd=root, stderr=subprocess.DEVNULL, text=True
++            ).strip()
++        except Exception:
++            return None
++
++    import numpy
++    import pandas
++    import sklearn
++
++    status = _git("status", "--porcelain", "--untracked-files=no")
++    return {
++        "git_commit": _git("rev-parse", "--short", "HEAD"),
++        "git_dirty": (bool(status) if status is not None else None),
++        "env": {
++            "python": platform.python_version(),
++            "numpy": numpy.__version__,
++            "scikit_learn": sklearn.__version__,
++            "pandas": pandas.__version__,
++            "platform": platform.platform(),
++        },
++    }
++
++
++def _check_config_consistency(existing_runs, config_hash: str, scope) -> None:
++    """Impede misturar, no mesmo diretorio, runs geradas com configs diferentes
++    (o checkpoint so' olhava combo/repeat/fold e pulava runs obsoletas)."""
++    stale = {r["config_hash"] for r in existing_runs if r.get("config_hash") not in (None, config_hash)}
++    if stale:
++        raise RuntimeError(
++            f"results/{'/'.join(scope)} contem runs de OUTRA configuracao (config_hash {sorted(stale)} "
++            f"!= {config_hash}). Use outro experiment_name ou apague o diretorio."
++        )
++    legacy = sum(1 for r in existing_runs if "config_hash" not in r)
++    if legacy:
++        logger.warning(f"{legacy} runs antigas sem config_hash em results/{'/'.join(scope)} (nao verificaveis).")
++
++
+ def _execute(
+     scope: Tuple[str, ...],
+     plugin: ModelPlugin,
+@@ -111,30 +161,58 @@ def _execute(
+         f"n_splits={n_splits} n_repeats={n_repeats} ==="
+     )
+ 
++    config = {
++        "model": plugin.name,
++        "dataset": dataset,
++        "cv_strategy": cv_strategy,
++        "n_splits": n_splits,
++        "n_repeats": n_repeats,
++        "tuning_strategy": tuning_strategy,
++        "tuning_n_iter": tuning_n_iter,
++        "master_seed": master_seed,
++        "fixed_hyperparameters": fixed_hyperparameters,
++        "val_ratio": val_ratio,
++        "test_ratio": test_ratio,
++        "metric_names": list(metric_names),
++    }
++    config_hash = stable_hash(config)
++    run_meta = _run_meta()
++
+     data = load_dataset(dataset, seed=master_seed, val_ratio=val_ratio, test_ratio=test_ratio)
+     X_train, y_train = data.X_train, data.y_train
+ 
+-    param_combinations = generate_combinations(
++    raw_combinations = generate_combinations(
+         plugin,
+         strategy=tuning_strategy,
+         seed=master_seed,
+         n_iter=tuning_n_iter,
+         fixed_hyperparameters=fixed_hyperparameters,
+     )
+-    logger.info(f"{len(param_combinations)} combinacoes de hiperparametros a avaliar.")
++    # CORRECAO: random search pode sortear a mesma combinacao varias vezes.
++    param_combinations = dedupe_combinations(raw_combinations)
++    logger.info(
++        f"{len(raw_combinations)} combinacoes sorteadas, {len(param_combinations)} distintas a avaliar."
++    )
+ 
+-    completed_keys = get_completed_keys(*scope)
++    existing_runs = load_all_runs(*scope)
++    _check_config_consistency(existing_runs, config_hash, scope)
++    completed_keys = {(r["combo_id"], r["repeat_idx"], r["fold_idx"]) for r in existing_runs}
+     logger.info(f"{len(completed_keys)} runs ja existentes (checkpoint).")
+ 
++    # splits sao deterministicos: materializa uma unica vez.
++    cv_splits = list(
++        build_cv_splits(
++            X_train, y_train, strategy=cv_strategy, n_splits=n_splits, n_repeats=n_repeats, master_seed=master_seed
++        )
++    )
++
+     n_executed = 0
+     n_skipped = 0
+ 
+     for params in param_combinations:
+         cid = combo_id(params)
+ 
+-        for repeat_idx, fold_idx, train_idx, val_idx in build_cv_splits(
+-            X_train, y_train, strategy=cv_strategy, n_splits=n_splits, n_repeats=n_repeats, master_seed=master_seed
+-        ):
++        for repeat_idx, fold_idx, train_idx, val_idx in cv_splits:
+             if is_done(completed_keys, cid, repeat_idx, fold_idx):
+                 n_skipped += 1
+                 continue
+@@ -145,13 +223,16 @@ def _execute(
+             fold_seed = derive_seed(master_seed, *scope, cid, f"repeat={repeat_idx}", f"fold={fold_idx}")
+ 
+             with timer() as t:
+-                metric_values = evaluate_fold(
+-                    plugin, params, X_tr, y_tr, X_val, y_val, metric_names, random_state=fold_seed
++                metric_values, diagnostics = evaluate_fold(
++                    plugin, params, X_tr, y_tr, X_val, y_val, metric_names,
++                    random_state=fold_seed, return_diagnostics=True,
+                 )
+ 
+             payload = {
+                 **summary_extra_fields,
+                 "dataset": dataset,
++                "config_hash": config_hash,
++                **run_meta,
+                 "combo_id": cid,
+                 "hyperparameters": params,
+                 "repeat_idx": repeat_idx,
+@@ -160,12 +241,14 @@ def _execute(
+                 "n_train_fold": len(train_idx),
+                 "n_val_fold": len(val_idx),
+                 "metrics": metric_values,
++                "diagnostics": diagnostics,
+                 "execution_time_seconds": t.elapsed_seconds,
+                 "timestamp": dt.datetime.now(dt.timezone.utc).isoformat(),
+             }
+ 
+             run_path = next_run_path(*scope)
+             write_run_atomic(run_path, payload)
++            completed_keys.add((cid, repeat_idx, fold_idx))
+             n_executed += 1
+ 
+     logger.info(f"Tuning concluido: {n_executed} runs novos, {n_skipped} pulados (ja existiam).")
+@@ -174,7 +257,13 @@ def _execute(
+         *scope,
+         primary_metric=ranking_metric,
+         higher_is_better=higher_is_better,
+-        extra_fields={**summary_extra_fields, "dataset": dataset},
++        extra_fields={
++            **summary_extra_fields,
++            "dataset": dataset,
++            "config": config,
++            "config_hash": config_hash,
++            **run_meta,
++        },
+     )
+     logger.info(f"Melhor combinacao ({ranking_metric}): {summary['best_configuration']['combo_id']}")
+ 
+@@ -197,7 +286,10 @@ def _execute(
+         test_payload = {
+             **summary_extra_fields,
+             "dataset": dataset,
++            "config_hash": config_hash,
++            **run_meta,
+             "best_hyperparameters": best_params,
++            "diagnostics": plugin.diagnostics(final_estimator),
+             "n_train_total": len(X_train),
+             "n_test": len(data.X_test),
+             "metrics": test_metrics,
+diff --git a/scripts/bundle_results.py b/scripts/bundle_results.py
+new file mode 100644
+index 0000000..ed062bc
+--- /dev/null
++++ b/scripts/bundle_results.py
+@@ -0,0 +1,84 @@
++"""Agrega results/**/ em UM unico JSON (bundle.json), sem perder rastreabilidade.
++
++    python scripts/bundle_results.py --experiment-prefix v3 --out bundle_v3.json [--strict]
++
++Para cada escopo (diretorio com run_*.json) grava: summary, test_results e TODAS as runs em
++formato compacto (sem timestamp; hiperparametros guardados uma vez por combo_id).
++Valida: runs duplicadas, runs faltando (esperado = combos x n_splits x n_repeats) e config_hash
++misto. Problemas vao para meta.problems; com --strict o script sai com codigo 1.
++Ordem deterministica => o proprio bundle e' reprodutivel (compare com diff/hash).
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import sys
++from pathlib import Path
++
++RESULTS = Path(__file__).resolve().parent.parent / "results"
++DROP_RUN_KEYS = {"timestamp", "hyperparameters", "context", "basis", "model", "experiment", "dataset", "env"}
++
++
++def main() -> None:
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--results", default=str(RESULTS))
++    ap.add_argument("--experiment-prefix", default="", help="so' escopos cujo ultimo segmento comeca com isto")
++    ap.add_argument("--out", default="bundle.json")
++    ap.add_argument("--strict", action="store_true")
++    args = ap.parse_args()
++
++    root = Path(args.results)
++    problems, experiments, envs = [], [], {}
++    for d in sorted({p.parent for p in root.rglob("run_*.json")}):
++        scope = list(d.relative_to(root).parts)
++        if not scope[-1].startswith(args.experiment_prefix):
++            continue
++        runs = [json.load(open(f, encoding="utf-8")) for f in sorted(d.glob("run_*.json"))]
++        keys = [(r["combo_id"], r["repeat_idx"], r["fold_idx"]) for r in runs]
++        if len(keys) != len(set(keys)):
++            problems.append({"scope": scope, "problem": f"{len(keys) - len(set(keys))} runs duplicadas"})
++        hashes = {r.get("config_hash") for r in runs}
++        if len(hashes) > 1:
++            problems.append({"scope": scope, "problem": f"config_hash misto: {sorted(map(str, hashes))}"})
++        for r in runs:
++            if r.get("env"):
++                envs[json.dumps(r["env"], sort_keys=True)] = r["env"]
++
++        summary = json.load(open(d / "summary.json", encoding="utf-8")) if (d / "summary.json").exists() else None
++        test = json.load(open(d / "test_results.json", encoding="utf-8")) if (d / "test_results.json").exists() else None
++        if summary is None:
++            problems.append({"scope": scope, "problem": "sem summary.json"})
++        else:
++            cfg = summary.get("config") or {}
++            if cfg:
++                expected = summary["n_combinations_evaluated"] * cfg["n_splits"] * (
++                    cfg["n_repeats"] if cfg["cv_strategy"] == "repeated_stratified_kfold" else 1)
++                if len(set(keys)) != expected:
++                    problems.append({"scope": scope, "problem": f"runs distintas {len(set(keys))} != esperado {expected}"})
++
++        combos = {r["combo_id"]: r["hyperparameters"] for r in runs}
++        compact = sorted(
++            ({k: v for k, v in r.items() if k not in DROP_RUN_KEYS} for r in runs),
++            key=lambda r: (r["combo_id"], r["repeat_idx"], r["fold_idx"]),
++        )
++        if test:
++            test = {k: v for k, v in test.items() if k not in ("timestamp", "env")}
++        experiments.append({"scope": scope, "summary": summary, "test_results": test,
++                            "combos": dict(sorted(combos.items())), "runs": compact})
++
++    bundle = {"meta": {"n_experiments": len(experiments), "n_runs": sum(len(e["runs"]) for e in experiments),
++                       "environments": list(envs.values()), "problems": problems},
++              "experiments": experiments}
++    text = json.dumps(bundle, ensure_ascii=False, sort_keys=True, default=str)
++    Path(args.out).write_text(text, encoding="utf-8")
++    print(f"{args.out}: {bundle['meta']['n_experiments']} experimentos, {bundle['meta']['n_runs']} runs, "
++          f"{len(text)/1e6:.1f} MB, sha256={hashlib.sha256(text.encode()).hexdigest()[:16]}, problemas={len(problems)}")
++    for p in problems:
++        print("  PROBLEMA:", p)
++    if args.strict and problems:
++        sys.exit(1)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/scripts/run_v3.py b/scripts/run_v3.py
+new file mode 100644
+index 0000000..2f964a2
+--- /dev/null
++++ b/scripts/run_v3.py
+@@ -0,0 +1,71 @@
++"""Lancador do experimento v3 (rodar sem supervisao).
++
++Exemplo:
++    OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
++    nohup python -u scripts/run_v3.py --tier small medium --seeds 42 43 44 45 46 > logs/v3.out 2>&1 &
++
++- Seed no laco EXTERNO: se o processo cair, voce ja tem conjuntos completos de seeds.
++- Idempotente/retomavel (checkpoint por combo/fold; config_hash impede misturar configs).
++- Uma falha em um dataset NAO derruba o resto: e' registrada e o laco segue.
++- Paralelismo: um processo por dataset (--datasets X). NUNCA dois processos no mesmo escopo.
++"""
++from __future__ import annotations
++
++import argparse
++import sys
++import traceback
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
++
++from pipeline.run_model import run_all_bases, run_baseline_experiment  # noqa: E402
++from utils.logging_config import get_logger  # noqa: E402
++
++logger = get_logger("scripts.run_v3")
++
++TIERS = {
++    "small": ["iris", "wine", "seeds", "vertebra_column", "zoo", "haberman", "blood_transfusion_service_center",
++              "monks_problems_1", "monks_problems_2", "climate_model_simulation_crashes", "tic_tac_toe",
++              "diabetes", "breast_cancer", "fetal_health"],
++    "medium": ["segment", "page_blocks", "spambase", "digits", "mfeat_zernike", "mfeat_karhunen",
++               "mfeat_fourier", "mfeat_factors", "mfeat_pixel"],
++    "large": ["magic_telescope", "letter", "isolet", "musk", "gina_agnostic", "bng_glass"],
++}
++
++
++def main() -> None:
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--tier", nargs="+", choices=list(TIERS), default=["small"])
++    ap.add_argument("--datasets", nargs="+", help="sobrescreve --tier (ex.: para 1 processo por dataset)")
++    ap.add_argument("--seeds", nargs="+", type=int, default=[42, 43, 44, 45, 46])
++    ap.add_argument("--name", default="v3", help="prefixo do experiment_name (vira <name>_s<seed>)")
++    ap.add_argument("--ranking-metric", default="f1")
++    ap.add_argument("--n-splits", type=int, default=10)
++    ap.add_argument("--n-repeats", type=int, default=3)
++    ap.add_argument("--n-iter", type=int, default=20)
++    ap.add_argument("--no-baselines", action="store_true")
++    args = ap.parse_args()
++
++    datasets = args.datasets or [d for t in args.tier for d in TIERS[t]]
++    common = dict(
++        cv_strategy="repeated_stratified_kfold", n_splits=args.n_splits, n_repeats=args.n_repeats,
++        tuning_strategy="random_search", tuning_n_iter=args.n_iter, ranking_metric=args.ranking_metric,
++    )
++    failures = []
++    for seed in args.seeds:
++        exp = f"{args.name}_s{seed}"
++        for ds in datasets:
++            try:
++                logger.info(f"##### {exp} | {ds} #####")
++                run_all_bases("classifier", ds, experiment_name=exp, master_seed=seed, **common)
++                if not args.no_baselines:
++                    for model in ("knn", "logreg"):
++                        run_baseline_experiment(model, ds, experiment_name=exp, master_seed=seed, **common)
++            except Exception:
++                failures.append((exp, ds))
++                logger.error(f"FALHA em {exp}/{ds}:\n{traceback.format_exc()}")
++    logger.info(f"FIM. Falhas: {failures or 'nenhuma'}")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tests/test_reproducibility_fixes.py b/tests/test_reproducibility_fixes.py
+new file mode 100644
+index 0000000..6da794f
+--- /dev/null
++++ b/tests/test_reproducibility_fixes.py
+@@ -0,0 +1,110 @@
++"""Testes de regressao das correcoes de reprodutibilidade (pre-v3).
++
++Rodar: python -m pytest tests/test_reproducibility_fixes.py -v
++"""
++from __future__ import annotations
++
++import numpy as np
++import pytest
++from sklearn.datasets import make_blobs
++from sklearn.model_selection import train_test_split
++
++from core import Basis, BasisParameters, BruteForceSearch, EuclideanDistance, FEMaClassifier
++from persistence.summary_builder import _dedupe_runs
++from pipeline.run_model import _check_config_consistency
++from tuning.param_space import dedupe_combinations
++
++
++def _search():
++    return BruteForceSearch(metric=EuclideanDistance())
++
++
++def _fit_predict(y_offset, basis="shepard", params=None, k=10):
++    X, y = make_blobs(n_samples=400, centers=3, cluster_std=1.5, random_state=0)
++    Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)
++    s = _search()
++    m = FEMaClassifier(basis=Basis.get(basis, search=s), search=s)
++    m.fit(Xtr, ytr + y_offset)
++    labels, probs = m.predict(Xte, k=k, params=params or BasisParameters(z=2.0))
++    return labels, probs, yte + y_offset
++
++
++@pytest.mark.parametrize("offset", [1, 5])
++def test_label_offset_invariance(offset):
++    """Rotulos {1,2,3} devem dar as MESMAS predicoes de {0,1,2} (+offset)."""
++    l0, p0, _ = _fit_predict(0)
++    l1, p1, _ = _fit_predict(offset)
++    assert np.array_equal(l0 + offset, l1)
++    assert np.allclose(p0, p1)
++
++
++def test_last_class_is_predictable():
++    labels, _, y_true = _fit_predict(1)
++    assert y_true.max() in set(labels), "a ultima classe nunca e' predita (bug dos rotulos)"
++
++
++@pytest.mark.parametrize(
++    "name,params,naive",
++    [
++        ("radial", dict(z=1.5), lambda d, p: np.exp(-0.5 * (d / p["z"]) ** 2)),
++        ("rbf_gaussian", dict(epsilon=0.7), lambda d, p: np.exp(-((p["epsilon"] * d) ** 2))),
++        ("laplacian", dict(epsilon=0.9), lambda d, p: np.exp(-p["epsilon"] * d)),
++    ],
++)
++def test_log_path_matches_naive_formula(name, params, naive):
++    """Onde nao ha underflow, o caminho log-sum-exp == phi/sum(phi)."""
++    d = np.array([0.3, 0.8, 1.1, 1.9, 2.4])
++    b = Basis.get(name, search=_search())
++    phi = naive(d, params)
++    assert np.allclose(b.compute_weights(d, BasisParameters(**params)), phi / phi.sum())
++
++
++@pytest.mark.parametrize("name,key", [("radial", "z"), ("rbf_gaussian", "epsilon"), ("laplacian", "epsilon")])
++def test_no_silent_uniform_fallback_on_underflow(name, key):
++    """z muito pequeno (ou epsilon muito grande) NAO pode virar kNN uniforme."""
++    d = np.array([1.0, 1.1, 1.4, 1.7, 2.0])
++    b = Basis.get(name, search=_search())
++    value = 0.0149 if key == "z" else 500.0
++    w = b.compute_weights(d, BasisParameters(**{key: value}))
++    assert np.isfinite(w).all() and np.isclose(w.sum(), 1.0)
++    assert w[0] > 0.99, "peso deveria concentrar-se no vizinho mais proximo"
++    assert b.fallback_fraction() == 0.0
++
++
++def test_fallback_counter_for_non_log_bases():
++    """Bases fora da familia log (ex.: wendland, suporte compacto) contam o fallback."""
++    b = Basis.get("wendland_c2", search=_search())
++    d = np.array([10.0, 11.0, 12.0])  # todos fora do raio => soma 0 => uniforme
++    b.compute_weights(d, BasisParameters(h=1.0))
++    assert b.n_weight_calls == 1 and b.n_uniform_fallback == 1
++
++
++def test_tie_breaking_is_stable_and_lowest_index_first():
++    s = _search()
++    X = np.array([[0.0], [1.0], [1.0], [1.0], [1.0], [3.0]])
++    s.build(X)
++    idx, d = s.query(np.array([0.0]), k=3)
++    assert list(idx) == [0, 1, 2]  # 0 (d=0) + empatados em d=1 por menor indice
++    idx2, _ = s.query(np.array([0.0]), k=3)
++    assert list(idx) == list(idx2)
++
++
++def test_dedupe_combinations_keeps_order():
++    combos = [{"k": 5}, {"k": 7}, {"k": 5}, {"k": 9}, {"k": 7}]
++    assert dedupe_combinations(combos) == [{"k": 5}, {"k": 7}, {"k": 9}]
++
++
++def test_summary_ignores_duplicate_runs():
++    runs = [{"combo_id": "k=5", "repeat_idx": 0, "fold_idx": 0, "i": 1},
++            {"combo_id": "k=5", "repeat_idx": 0, "fold_idx": 0, "i": 2},
++            {"combo_id": "k=5", "repeat_idx": 0, "fold_idx": 1, "i": 3}]
++    out = _dedupe_runs(runs)
++    assert [r["i"] for r in out] == [1, 3]
++
++
++def test_config_mismatch_is_rejected():
++    runs = [{"config_hash": "aaa"}]
++    with pytest.raises(RuntimeError):
++        _check_config_consistency(runs, "bbb", ("classifier", "radial", "ds", "x"))
++    _check_config_consistency(runs, "aaa", ("classifier", "radial", "ds", "x"))  # ok
++    _check_config_consistency([{}], "bbb", ("a",))  # legado: so' avisa
+diff --git a/tuning/param_space.py b/tuning/param_space.py
+index 97302ed..10c56cf 100644
+--- a/tuning/param_space.py
++++ b/tuning/param_space.py
+@@ -16,6 +16,21 @@ from tuning.random_search import sample_param_space
+ 
+ VALID_STRATEGIES = {"grid_search", "random_search"}
+ 
++
++def dedupe_combinations(combos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
++    """Remove combinacoes repetidas (mesmo combo_id), preservando a ordem.
++    No random search, bases sem parametro proprio sorteiam so' `k` e geram
++    repeticoes; sem isto a mesma run era gravada 2x (n_runs inflado)."""
++    from tuning.grid_search import combo_id
++
++    seen, out = set(), []
++    for c in combos:
++        cid = combo_id(c)
++        if cid not in seen:
++            seen.add(cid)
++            out.append(c)
++    return out
++
+ def generate_combinations(
+         plugin: ModelPlugin,
+         strategy: str,

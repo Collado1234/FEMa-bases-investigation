@@ -1,0 +1,72 @@
+{
+  "context": "classifier",
+  "basis": "rbf_gaussian",
+  "experiment": "v3_s42",
+  "dataset": "page_blocks",
+  "config_hash": "292788fe4eaed2e4",
+  "git_commit": "152b7698fa",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 15,
+    "epsilon": 3.139118461178404
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 3831,
+  "n_test": 821,
+  "metrics": {
+    "accuracy": 0.9671132764920828,
+    "balanced_accuracy": 0.7992317515671334,
+    "precision": 0.8326445374217333,
+    "recall": 0.7992317515671334,
+    "f1": 0.8152694512694513,
+    "roc_auc": 0.9584682410570433,
+    "mcc": 0.8214662973106048,
+    "per_class": {
+      "0": {
+        "accuracy": 0.989145183175034,
+        "precision": 0.9811574697173621,
+        "recall": 0.989145183175034,
+        "f1": 0.9851351351351352,
+        "support": 737
+      },
+      "1": {
+        "accuracy": 0.8,
+        "precision": 0.8695652173913043,
+        "recall": 0.8,
+        "f1": 0.8333333333333334,
+        "support": 50
+      },
+      "2": {
+        "accuracy": 0.75,
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "support": 4
+      },
+      "3": {
+        "accuracy": 0.6923076923076923,
+        "precision": 0.75,
+        "recall": 0.6923076923076923,
+        "f1": 0.72,
+        "support": 13
+      },
+      "4": {
+        "accuracy": 0.7647058823529411,
+        "precision": 0.8125,
+        "recall": 0.7647058823529411,
+        "f1": 0.7878787878787878,
+        "support": 17
+      }
+    }
+  },
+  "timestamp": "2026-11-02T02:48:49.819931+00:00"
+}

@@ -53,7 +53,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 1))
     ap.add_argument("--seeds", nargs="+", type=int, default=[42, 43, 44, 45, 46])
-    ap.add_argument("--large-seeds", nargs="+", type=int, default=[42])
+    ap.add_argument("--large-seeds", nargs="*", type=int, default=[42])
     ap.add_argument("--tiers", nargs="+", default=["small", "medium", "large"], choices=list(TIERS))
     ap.add_argument("--name", default="v3")
     ap.add_argument("--n-iter", default="20")

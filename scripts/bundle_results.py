@@ -26,6 +26,9 @@ def main() -> None:
     ap.add_argument("--experiment-prefix", default="", help="so' escopos cujo ultimo segmento comeca com isto")
     ap.add_argument("--out", default="bundle.json")
     ap.add_argument("--strict", action="store_true")
+    ap.add_argument("--no-runs", action="store_true",
+                    help="omite runs/combos (so' summary + test_results): bundle leve, proprio para o GitHub")
+    ap.add_argument("--gzip", action="store_true", help="grava <out>.gz")
     args = ap.parse_args()
 
     root = Path(args.results)
@@ -64,14 +67,22 @@ def main() -> None:
         )
         if test:
             test = {k: v for k, v in test.items() if k not in ("timestamp", "env")}
-        experiments.append({"scope": scope, "summary": summary, "test_results": test,
-                            "combos": dict(sorted(combos.items())), "runs": compact})
+        exp = {"scope": scope, "summary": summary, "test_results": test, "n_runs": len(runs)}
+        if not args.no_runs:
+            exp.update({"combos": dict(sorted(combos.items())), "runs": compact})
+        experiments.append(exp)
 
-    bundle = {"meta": {"n_experiments": len(experiments), "n_runs": sum(len(e["runs"]) for e in experiments),
+    bundle = {"meta": {"n_experiments": len(experiments), "n_runs": sum(e["n_runs"] for e in experiments), "runs_included": not args.no_runs,
                        "environments": list(envs.values()), "problems": problems},
               "experiments": experiments}
     text = json.dumps(bundle, ensure_ascii=False, sort_keys=True, default=str)
-    Path(args.out).write_text(text, encoding="utf-8")
+    if args.gzip:
+        import gzip
+        args.out += ".gz"
+        with open(args.out, "wb") as raw, gzip.GzipFile(filename="", mode="wb", fileobj=raw, compresslevel=9, mtime=0) as f:
+            f.write(text.encode("utf-8"))  # mtime=0 => bytes reprodutiveis
+    else:
+        Path(args.out).write_text(text, encoding="utf-8")
     print(f"{args.out}: {bundle['meta']['n_experiments']} experimentos, {bundle['meta']['n_runs']} runs, "
           f"{len(text)/1e6:.1f} MB, sha256={hashlib.sha256(text.encode()).hexdigest()[:16]}, problemas={len(problems)}")
     for p in problems:
