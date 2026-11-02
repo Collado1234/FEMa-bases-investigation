@@ -229,7 +229,9 @@ data/raw/
 data/processed/
 
 # Resultados e logs de execução (v2 arquivado, v3 em andamento)
-results/
 results_*/
 logs/
-bundle*.json
+bundle_full*.json
+
+# arquivos temporários de escrita atômica (sobram se o processo for morto)
+*.tmp
