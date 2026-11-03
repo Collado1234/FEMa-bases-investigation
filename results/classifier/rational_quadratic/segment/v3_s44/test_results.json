@@ -1,0 +1,87 @@
+{
+  "context": "classifier",
+  "basis": "rational_quadratic",
+  "experiment": "v3_s44",
+  "dataset": "segment",
+  "config_hash": "af0f7f22be8ff472",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 3,
+    "alpha": 1.2857942296693436,
+    "l": 0.028423480782239486
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 1616,
+  "n_test": 347,
+  "metrics": {
+    "accuracy": 0.9654178674351584,
+    "balanced_accuracy": 0.965539358600583,
+    "precision": 0.9665578114182348,
+    "recall": 0.965539358600583,
+    "f1": 0.9654391459554119,
+    "roc_auc": 0.9900835080344736,
+    "mcc": 0.9598666702891838,
+    "per_class": {
+      "0": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 49
+      },
+      "1": {
+        "accuracy": 0.88,
+        "precision": 0.9565217391304348,
+        "recall": 0.88,
+        "f1": 0.9166666666666666,
+        "support": 50
+      },
+      "2": {
+        "accuracy": 0.9387755102040817,
+        "precision": 0.9787234042553191,
+        "recall": 0.9387755102040817,
+        "f1": 0.9583333333333334,
+        "support": 49
+      },
+      "3": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 50
+      },
+      "4": {
+        "accuracy": 1.0,
+        "precision": 0.9090909090909091,
+        "recall": 1.0,
+        "f1": 0.9523809523809523,
+        "support": 50
+      },
+      "5": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 49
+      },
+      "6": {
+        "accuracy": 0.94,
+        "precision": 0.9215686274509803,
+        "recall": 0.94,
+        "f1": 0.9306930693069307,
+        "support": 50
+      }
+    }
+  },
+  "timestamp": "2026-11-03T22:29:19.835171+00:00"
+}

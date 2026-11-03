@@ -1,0 +1,56 @@
+{
+  "model": "knn",
+  "experiment": "v3_s44",
+  "dataset": "seeds",
+  "config_hash": "bc57f259aa737c1c",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "n_neighbors": 3,
+    "weights": "uniform",
+    "p": 1
+  },
+  "diagnostics": {},
+  "n_train_total": 146,
+  "n_test": 32,
+  "metrics": {
+    "accuracy": 0.90625,
+    "balanced_accuracy": 0.9060606060606061,
+    "precision": 0.9111111111111111,
+    "recall": 0.9060606060606061,
+    "f1": 0.9073153899240856,
+    "roc_auc": 0.9911976911976913,
+    "mcc": 0.8605001935271156,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9090909090909091,
+        "precision": 0.8333333333333334,
+        "recall": 0.9090909090909091,
+        "f1": 0.8695652173913043,
+        "support": 11
+      },
+      "1": {
+        "accuracy": 0.9090909090909091,
+        "precision": 1.0,
+        "recall": 0.9090909090909091,
+        "f1": 0.9523809523809523,
+        "support": 11
+      },
+      "2": {
+        "accuracy": 0.9,
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "support": 10
+      }
+    }
+  },
+  "timestamp": "2026-11-03T22:39:55.934744+00:00"
+}

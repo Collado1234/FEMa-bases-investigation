@@ -1,0 +1,86 @@
+{
+  "context": "classifier",
+  "basis": "laplacian",
+  "experiment": "v3_s44",
+  "dataset": "segment",
+  "config_hash": "de41fbb46268d2ee",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 3,
+    "epsilon": 26.98430486973716
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 1616,
+  "n_test": 347,
+  "metrics": {
+    "accuracy": 0.9654178674351584,
+    "balanced_accuracy": 0.9654810495626822,
+    "precision": 0.9672557048274849,
+    "recall": 0.9654810495626822,
+    "f1": 0.965443428265532,
+    "roc_auc": 0.9896519865003635,
+    "mcc": 0.9599686569526446,
+    "per_class": {
+      "0": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 49
+      },
+      "1": {
+        "accuracy": 0.88,
+        "precision": 0.9777777777777777,
+        "recall": 0.88,
+        "f1": 0.9263157894736842,
+        "support": 50
+      },
+      "2": {
+        "accuracy": 0.9183673469387755,
+        "precision": 0.9782608695652174,
+        "recall": 0.9183673469387755,
+        "f1": 0.9473684210526315,
+        "support": 49
+      },
+      "3": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 50
+      },
+      "4": {
+        "accuracy": 1.0,
+        "precision": 0.9090909090909091,
+        "recall": 1.0,
+        "f1": 0.9523809523809523,
+        "support": 50
+      },
+      "5": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 49
+      },
+      "6": {
+        "accuracy": 0.96,
+        "precision": 0.9056603773584906,
+        "recall": 0.96,
+        "f1": 0.9320388349514563,
+        "support": 50
+      }
+    }
+  },
+  "timestamp": "2026-11-03T22:28:13.459865+00:00"
+}

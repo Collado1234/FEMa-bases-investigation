@@ -1,0 +1,51 @@
+{
+  "context": "classifier",
+  "basis": "quartic_spline",
+  "experiment": "v3_s42",
+  "dataset": "tic_tac_toe",
+  "config_hash": "6c8e74ada5026c05",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 15,
+    "h": 2.9956315415712567
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 1.0
+  },
+  "n_train_total": 670,
+  "n_test": 144,
+  "metrics": {
+    "accuracy": 0.9305555555555556,
+    "balanced_accuracy": 0.9,
+    "precision": 0.9038461538461539,
+    "recall": 1.0,
+    "f1": 0.9494949494949495,
+    "roc_auc": 0.996595744680851,
+    "mcc": 0.8503392987960294,
+    "per_class": {
+      "0": {
+        "accuracy": 0.8,
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.8888888888888888,
+        "support": 50
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.9038461538461539,
+        "recall": 1.0,
+        "f1": 0.9494949494949495,
+        "support": 94
+      }
+    }
+  },
+  "timestamp": "2026-11-02T23:29:25.220365+00:00"
+}

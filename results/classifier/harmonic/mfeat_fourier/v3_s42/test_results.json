@@ -1,0 +1,106 @@
+{
+  "context": "classifier",
+  "basis": "harmonic",
+  "experiment": "v3_s42",
+  "dataset": "mfeat_fourier",
+  "config_hash": "9b6f19711e1742a4",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 5
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 1400,
+  "n_test": 300,
+  "metrics": {
+    "accuracy": 0.8066666666666666,
+    "balanced_accuracy": 0.8066666666666666,
+    "precision": 0.8072977446329374,
+    "recall": 0.8066666666666666,
+    "f1": 0.8048568975824765,
+    "roc_auc": 0.9650000000000002,
+    "mcc": 0.7856897406069887,
+    "per_class": {
+      "0": {
+        "accuracy": 1.0,
+        "precision": 0.9375,
+        "recall": 1.0,
+        "f1": 0.967741935483871,
+        "support": 30
+      },
+      "1": {
+        "accuracy": 0.8,
+        "precision": 0.7058823529411765,
+        "recall": 0.8,
+        "f1": 0.75,
+        "support": 30
+      },
+      "2": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 30
+      },
+      "3": {
+        "accuracy": 0.8,
+        "precision": 0.8571428571428571,
+        "recall": 0.8,
+        "f1": 0.8275862068965517,
+        "support": 30
+      },
+      "4": {
+        "accuracy": 0.7666666666666667,
+        "precision": 0.8846153846153846,
+        "recall": 0.7666666666666667,
+        "f1": 0.8214285714285714,
+        "support": 30
+      },
+      "5": {
+        "accuracy": 0.9,
+        "precision": 0.9310344827586207,
+        "recall": 0.9,
+        "f1": 0.9152542372881356,
+        "support": 30
+      },
+      "6": {
+        "accuracy": 0.4666666666666667,
+        "precision": 0.5185185185185185,
+        "recall": 0.4666666666666667,
+        "f1": 0.49122807017543857,
+        "support": 30
+      },
+      "7": {
+        "accuracy": 0.9333333333333333,
+        "precision": 0.7567567567567568,
+        "recall": 0.9333333333333333,
+        "f1": 0.835820895522388,
+        "support": 30
+      },
+      "8": {
+        "accuracy": 0.9,
+        "precision": 0.9642857142857143,
+        "recall": 0.9,
+        "f1": 0.9310344827586207,
+        "support": 30
+      },
+      "9": {
+        "accuracy": 0.5,
+        "precision": 0.5172413793103449,
+        "recall": 0.5,
+        "f1": 0.5084745762711864,
+        "support": 30
+      }
+    }
+  },
+  "timestamp": "2026-11-02T23:06:58.918029+00:00"
+}

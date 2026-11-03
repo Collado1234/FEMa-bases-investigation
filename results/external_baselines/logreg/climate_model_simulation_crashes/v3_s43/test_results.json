@@ -1,0 +1,49 @@
+{
+  "model": "logreg",
+  "experiment": "v3_s43",
+  "dataset": "climate_model_simulation_crashes",
+  "config_hash": "bec7c1e28d6702c1",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "C": 0.47385043700738655,
+    "penalty": "l2",
+    "max_iter": 500
+  },
+  "diagnostics": {},
+  "n_train_total": 378,
+  "n_test": 81,
+  "metrics": {
+    "accuracy": 0.9012345679012346,
+    "balanced_accuracy": 0.5579150579150579,
+    "precision": 0.9230769230769231,
+    "recall": 0.972972972972973,
+    "f1": 0.9473684210526315,
+    "roc_auc": 0.8301158301158301,
+    "mcc": 0.1723369655646452,
+    "per_class": {
+      "0": {
+        "accuracy": 0.14285714285714285,
+        "precision": 0.3333333333333333,
+        "recall": 0.14285714285714285,
+        "f1": 0.2,
+        "support": 7
+      },
+      "1": {
+        "accuracy": 0.972972972972973,
+        "precision": 0.9230769230769231,
+        "recall": 0.972972972972973,
+        "f1": 0.9473684210526315,
+        "support": 74
+      }
+    }
+  },
+  "timestamp": "2026-11-03T05:40:12.165569+00:00"
+}

@@ -1,0 +1,51 @@
+{
+  "context": "classifier",
+  "basis": "cubic_spline",
+  "experiment": "v3_s42",
+  "dataset": "haberman",
+  "config_hash": "bf330251fc7ed03f",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 4,
+    "h": 3.573720289591046
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 214,
+  "n_test": 46,
+  "metrics": {
+    "accuracy": 0.6521739130434783,
+    "balanced_accuracy": 0.4411764705882353,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.5588235294117645,
+    "mcc": -0.18333969940564226,
+    "per_class": {
+      "0": {
+        "accuracy": 0.8823529411764706,
+        "precision": 0.7142857142857143,
+        "recall": 0.8823529411764706,
+        "f1": 0.7894736842105263,
+        "support": 34
+      },
+      "1": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 12
+      }
+    }
+  },
+  "timestamp": "2026-11-02T23:12:20.271002+00:00"
+}

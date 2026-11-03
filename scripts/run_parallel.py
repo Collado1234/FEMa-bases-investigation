@@ -55,6 +55,8 @@ def main():
     ap.add_argument("--seeds", nargs="+", type=int, default=[42, 43, 44, 45, 46])
     ap.add_argument("--large-seeds", nargs="*", type=int, default=[42])
     ap.add_argument("--tiers", nargs="+", default=["small", "medium", "large"], choices=list(TIERS))
+    ap.add_argument("--datasets", nargs="*", help="roda so' estes (nomes do registry)")
+    ap.add_argument("--exclude", nargs="*", default=[], help="datasets a pular (ex.: bng_glass)")
     ap.add_argument("--name", default="v3")
     ap.add_argument("--n-iter", default="20")
     ap.add_argument("--n-splits", default="10")
@@ -70,7 +72,8 @@ def main():
                 continue
             if size == "large" and seed not in a.large_seeds:
                 continue
-            tasks += [(seed, ds, size) for ds in TIERS[size]]
+            tasks += [(seed, ds, size) for ds in TIERS[size]
+                      if ds not in a.exclude and (not a.datasets or ds in a.datasets)]
 
     passthrough = ["--name", a.name, "--n-iter", a.n_iter, "--n-splits", a.n_splits,
                    "--n-repeats", a.n_repeats, "--ranking-metric", a.ranking_metric]

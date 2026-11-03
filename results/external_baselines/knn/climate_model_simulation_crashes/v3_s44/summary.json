@@ -1,0 +1,1004 @@
+{
+  "model": "knn",
+  "experiment": "v3_s44",
+  "dataset": "climate_model_simulation_crashes",
+  "config": {
+    "model": "knn",
+    "dataset": "climate_model_simulation_crashes",
+    "cv_strategy": "repeated_stratified_kfold",
+    "n_splits": 10,
+    "n_repeats": 3,
+    "tuning_strategy": "random_search",
+    "tuning_n_iter": 20,
+    "master_seed": 44,
+    "fixed_hyperparameters": null,
+    "val_ratio": 0.15,
+    "test_ratio": 0.15,
+    "metric_names": [
+      "accuracy",
+      "balanced_accuracy",
+      "precision",
+      "recall",
+      "f1",
+      "roc_auc",
+      "mcc"
+    ]
+  },
+  "config_hash": "029089af899b41ca",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "primary_metric": "f1",
+  "std_ddof": 1,
+  "higher_is_better": true,
+  "n_combinations_evaluated": 19,
+  "total_runs": 570,
+  "best_configuration": {
+    "combo_id": "n_neighbors=21,p=2,weights=uniform",
+    "hyperparameters": {
+      "n_neighbors": 21,
+      "weights": "uniform",
+      "p": 2
+    },
+    "n_runs": 30,
+    "metrics": {
+      "accuracy": {
+        "mean": 0.9153627311522049,
+        "std": 0.01052286840736953,
+        "n": 30
+      },
+      "balanced_accuracy": {
+        "mean": 0.5,
+        "std": 0.0,
+        "n": 30
+      },
+      "precision": {
+        "mean": 0.9153627311522049,
+        "std": 0.01052286840736953,
+        "n": 30
+      },
+      "recall": {
+        "mean": 1.0,
+        "std": 0.0,
+        "n": 30
+      },
+      "f1": {
+        "mean": 0.9557806504169615,
+        "std": 0.005783007909082237,
+        "n": 30
+      },
+      "roc_auc": {
+        "mean": 0.8188865546218487,
+        "std": 0.10652975845168482,
+        "n": 30
+      },
+      "mcc": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n": 30
+      }
+    },
+    "mean_execution_time_seconds": 0.06187620333318288,
+    "diagnostics": {}
+  },
+  "ranking": [
+    {
+      "combo_id": "n_neighbors=21,p=2,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 21,
+        "weights": "uniform",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8188865546218487,
+          "std": 0.10652975845168482,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.06187620333318288,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=23,p=1,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 23,
+        "weights": "distance",
+        "p": 1
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8214332399626517,
+          "std": 0.10526338747963632,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.042770483332666726,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=29,p=1,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 29,
+        "weights": "uniform",
+        "p": 1
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8340277777777777,
+          "std": 0.10648340050673719,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04091305333422497,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=28,p=2,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 28,
+        "weights": "distance",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8503221288515407,
+          "std": 0.10671904722733626,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04157693000112583,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=25,p=2,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 25,
+        "weights": "uniform",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8448657796451914,
+          "std": 0.10111889148525888,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04576668666607778,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=18,p=2,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 18,
+        "weights": "distance",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8250396825396825,
+          "std": 0.09947385334601574,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04427164666606889,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=23,p=2,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 23,
+        "weights": "distance",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8337675070028011,
+          "std": 0.10147211457148492,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.044140590000218555,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=30,p=1,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 30,
+        "weights": "uniform",
+        "p": 1
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8317553688141924,
+          "std": 0.10892210216358128,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04331451333273435,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=30,p=2,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 30,
+        "weights": "uniform",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8462908496732027,
+          "std": 0.10171615028678145,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04147944000045148,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=22,p=2,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 22,
+        "weights": "uniform",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5,
+          "std": 0.0,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9153627311522049,
+          "std": 0.01052286840736953,
+          "n": 30
+        },
+        "recall": {
+          "mean": 1.0,
+          "std": 0.0,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557806504169615,
+          "std": 0.005783007909082237,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8247794117647058,
+          "std": 0.10599883219752304,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04095881999868046,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=14,p=2,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 14,
+        "weights": "distance",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9153627311522049,
+          "std": 0.012589313444746522,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.505079365079365,
+          "std": 0.03063008489644906,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9161213845424372,
+          "std": 0.01185713075409298,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9990476190476191,
+          "std": 0.0052164053095730125,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9557425986665808,
+          "std": 0.006820687726036624,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.823172268907563,
+          "std": 0.09838132028208925,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.01711327826175607,
+          "std": 0.10319816705903474,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04163086999906227,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=14,p=2,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 14,
+        "weights": "uniform",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9144855381697486,
+          "std": 0.013086188933834793,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5046031746031746,
+          "std": 0.030822217999730568,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9160502607871028,
+          "std": 0.01183290588011973,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9980952380952381,
+          "std": 0.0072488037629275005,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9552606098284276,
+          "std": 0.007094960306900484,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8264892623716152,
+          "std": 0.09222079807101988,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.01550890842471644,
+          "std": 0.10384549742579827,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.03908149999915622,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=11,p=2,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 11,
+        "weights": "distance",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9118539592223803,
+          "std": 0.015739408089596698,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5031605975723623,
+          "std": 0.03135485771842406,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9158131816026552,
+          "std": 0.011969216165561777,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9952100840336134,
+          "std": 0.010894571847724686,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9538010661635975,
+          "std": 0.00860226624387425,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.7952380952380953,
+          "std": 0.11279091365696518,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.010420555835855173,
+          "std": 0.10578177525426206,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04270616666811596,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=12,p=2,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 12,
+        "weights": "uniform",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9109530583214794,
+          "std": 0.017511969697754856,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.507749766573296,
+          "std": 0.04363118277979822,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9164967599178125,
+          "std": 0.013123277299288316,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9932773109243698,
+          "std": 0.012395633278757331,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9532667032126804,
+          "std": 0.009498476593826877,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.8055042016806724,
+          "std": 0.107096065467692,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.02588358819265012,
+          "std": 0.1471271405038644,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.040702116665003514,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=10,p=1,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 10,
+        "weights": "distance",
+        "p": 1
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.910099573257468,
+          "std": 0.014531206181047517,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.4971288515406162,
+          "std": 0.005840897234953106,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9149122807017543,
+          "std": 0.0105567683424238,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9942577030812324,
+          "std": 0.011681794469906212,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9528751402376715,
+          "std": 0.008026803731624307,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.7397852474323063,
+          "std": 0.12316794829309217,
+          "n": 30
+        },
+        "mcc": {
+          "mean": -0.009901462099980161,
+          "std": 0.020190039597888655,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.04049727666570106,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=8,p=1,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 8,
+        "weights": "distance",
+        "p": 1
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9065670934091987,
+          "std": 0.016332834121210907,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.49521008403361344,
+          "std": 0.007845586128158768,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9146198830409358,
+          "std": 0.010438817491341443,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9904201680672269,
+          "std": 0.015691172256317536,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9509192853723047,
+          "std": 0.009042978644191109,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.7033263305322129,
+          "std": 0.12947585461147323,
+          "n": 30
+        },
+        "mcc": {
+          "mean": -0.015456296373122097,
+          "std": 0.024300728217366934,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.044498923333109515,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=7,p=2,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 7,
+        "weights": "distance",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.9065670934091987,
+          "std": 0.019033695842203397,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5090592903828198,
+          "std": 0.04975942830930425,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9168721352931879,
+          "std": 0.012376638015224725,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9875630252100841,
+          "std": 0.01629681420785755,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.950804594181017,
+          "std": 0.01032304861266262,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.7381991129785247,
+          "std": 0.15138670166631796,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.033142600088997436,
+          "std": 0.17207149259803375,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.040728216667776,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=5,p=2,weights=distance",
+      "hyperparameters": {
+        "n_neighbors": 5,
+        "weights": "distance",
+        "p": 2
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.8914414414414414,
+          "std": 0.023793386759570913,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.5008239962651727,
+          "std": 0.051484966965497925,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9155862629546839,
+          "std": 0.012360937507031813,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9710924369747899,
+          "std": 0.02408237925291821,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9423411767452485,
+          "std": 0.0131696735151273,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.6999789915966387,
+          "std": 0.16203377702031763,
+          "n": 30
+        },
+        "mcc": {
+          "mean": 0.00799795829598075,
+          "std": 0.16084030499081559,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.041311123330766954,
+      "diagnostics": {}
+    },
+    {
+      "combo_id": "n_neighbors=3,p=1,weights=uniform",
+      "hyperparameters": {
+        "n_neighbors": 3,
+        "weights": "uniform",
+        "p": 1
+      },
+      "n_runs": 30,
+      "metrics": {
+        "accuracy": {
+          "mean": 0.8898293029871976,
+          "std": 0.028503009230360966,
+          "n": 30
+        },
+        "balanced_accuracy": {
+          "mean": 0.48603641456582636,
+          "std": 0.013994545524561242,
+          "n": 30
+        },
+        "precision": {
+          "mean": 0.9130595611090968,
+          "std": 0.011326742490885429,
+          "n": 30
+        },
+        "recall": {
+          "mean": 0.9720728291316527,
+          "std": 0.027989091049122485,
+          "n": 30
+        },
+        "f1": {
+          "mean": 0.9414675559406439,
+          "std": 0.016176059248837665,
+          "n": 30
+        },
+        "roc_auc": {
+          "mean": 0.599125816993464,
+          "std": 0.1267707616988154,
+          "n": 30
+        },
+        "mcc": {
+          "mean": -0.03858992510224082,
+          "std": 0.03270681340582724,
+          "n": 30
+        }
+      },
+      "mean_execution_time_seconds": 0.03967897000111407,
+      "diagnostics": {}
+    }
+  ]
+}

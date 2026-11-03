@@ -1,0 +1,51 @@
+{
+  "context": "classifier",
+  "basis": "cubic_spline",
+  "experiment": "v3_s44",
+  "dataset": "climate_model_simulation_crashes",
+  "config_hash": "d72fa2490022ff07",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 21,
+    "h": 1.6615088364774786
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 1.0
+  },
+  "n_train_total": 378,
+  "n_test": 81,
+  "metrics": {
+    "accuracy": 0.9135802469135802,
+    "balanced_accuracy": 0.5,
+    "precision": 0.9135802469135802,
+    "recall": 1.0,
+    "f1": 0.9548387096774194,
+    "roc_auc": 0.7586872586872586,
+    "mcc": 0.0,
+    "per_class": {
+      "0": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.9135802469135802,
+        "recall": 1.0,
+        "f1": 0.9548387096774194,
+        "support": 74
+      }
+    }
+  },
+  "timestamp": "2026-11-03T22:42:27.767664+00:00"
+}

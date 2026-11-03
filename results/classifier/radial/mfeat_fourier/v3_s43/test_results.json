@@ -1,0 +1,107 @@
+{
+  "context": "classifier",
+  "basis": "radial",
+  "experiment": "v3_s43",
+  "dataset": "mfeat_fourier",
+  "config_hash": "264dfe084891bec9",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 15,
+    "z": 2.5539703551349198
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 1400,
+  "n_test": 300,
+  "metrics": {
+    "accuracy": 0.8133333333333334,
+    "balanced_accuracy": 0.8133333333333332,
+    "precision": 0.8215293201487219,
+    "recall": 0.8133333333333332,
+    "f1": 0.8139002225213631,
+    "roc_auc": 0.9712901234567901,
+    "mcc": 0.7933765617185635,
+    "per_class": {
+      "0": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 30
+      },
+      "1": {
+        "accuracy": 0.8333333333333334,
+        "precision": 0.6944444444444444,
+        "recall": 0.8333333333333334,
+        "f1": 0.7575757575757576,
+        "support": 30
+      },
+      "2": {
+        "accuracy": 0.9333333333333333,
+        "precision": 1.0,
+        "recall": 0.9333333333333333,
+        "f1": 0.9655172413793104,
+        "support": 30
+      },
+      "3": {
+        "accuracy": 0.8,
+        "precision": 0.96,
+        "recall": 0.8,
+        "f1": 0.8727272727272727,
+        "support": 30
+      },
+      "4": {
+        "accuracy": 0.8,
+        "precision": 0.96,
+        "recall": 0.8,
+        "f1": 0.8727272727272727,
+        "support": 30
+      },
+      "5": {
+        "accuracy": 0.8666666666666667,
+        "precision": 0.896551724137931,
+        "recall": 0.8666666666666667,
+        "f1": 0.8813559322033898,
+        "support": 30
+      },
+      "6": {
+        "accuracy": 0.43333333333333335,
+        "precision": 0.4642857142857143,
+        "recall": 0.43333333333333335,
+        "f1": 0.4482758620689655,
+        "support": 30
+      },
+      "7": {
+        "accuracy": 1.0,
+        "precision": 0.7894736842105263,
+        "recall": 1.0,
+        "f1": 0.8823529411764706,
+        "support": 30
+      },
+      "8": {
+        "accuracy": 0.9666666666666667,
+        "precision": 0.9666666666666667,
+        "recall": 0.9666666666666667,
+        "f1": 0.9666666666666667,
+        "support": 30
+      },
+      "9": {
+        "accuracy": 0.5,
+        "precision": 0.4838709677419355,
+        "recall": 0.5,
+        "f1": 0.4918032786885246,
+        "support": 30
+      }
+    }
+  },
+  "timestamp": "2026-11-03T04:18:01.652175+00:00"
+}

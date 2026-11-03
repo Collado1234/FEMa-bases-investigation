@@ -1,0 +1,107 @@
+{
+  "context": "classifier",
+  "basis": "logarithmic",
+  "experiment": "v3_s42",
+  "dataset": "mfeat_karhunen",
+  "config_hash": "31c8e4ea6c78f49e",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 4,
+    "c": 0.23232604885522545
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 1400,
+  "n_test": 300,
+  "metrics": {
+    "accuracy": 0.9466666666666667,
+    "balanced_accuracy": 0.9466666666666669,
+    "precision": 0.9496857239148511,
+    "recall": 0.9466666666666669,
+    "f1": 0.9462973141442628,
+    "roc_auc": 0.9891234567901236,
+    "mcc": 0.9411474973109187,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9666666666666667,
+        "precision": 0.8787878787878788,
+        "recall": 0.9666666666666667,
+        "f1": 0.9206349206349206,
+        "support": 30
+      },
+      "1": {
+        "accuracy": 0.9666666666666667,
+        "precision": 0.9354838709677419,
+        "recall": 0.9666666666666667,
+        "f1": 0.9508196721311475,
+        "support": 30
+      },
+      "2": {
+        "accuracy": 1.0,
+        "precision": 0.9375,
+        "recall": 1.0,
+        "f1": 0.967741935483871,
+        "support": 30
+      },
+      "3": {
+        "accuracy": 0.9666666666666667,
+        "precision": 0.9354838709677419,
+        "recall": 0.9666666666666667,
+        "f1": 0.9508196721311475,
+        "support": 30
+      },
+      "4": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 30
+      },
+      "5": {
+        "accuracy": 0.9,
+        "precision": 0.9642857142857143,
+        "recall": 0.9,
+        "f1": 0.9310344827586207,
+        "support": 30
+      },
+      "6": {
+        "accuracy": 0.9666666666666667,
+        "precision": 1.0,
+        "recall": 0.9666666666666667,
+        "f1": 0.9830508474576272,
+        "support": 30
+      },
+      "7": {
+        "accuracy": 1.0,
+        "precision": 0.8823529411764706,
+        "recall": 1.0,
+        "f1": 0.9375,
+        "support": 30
+      },
+      "8": {
+        "accuracy": 0.8333333333333334,
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "support": 30
+      },
+      "9": {
+        "accuracy": 0.8666666666666667,
+        "precision": 0.9629629629629629,
+        "recall": 0.8666666666666667,
+        "f1": 0.9122807017543859,
+        "support": 30
+      }
+    }
+  },
+  "timestamp": "2026-11-02T23:02:18.983061+00:00"
+}

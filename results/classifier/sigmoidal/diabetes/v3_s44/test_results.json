@@ -1,0 +1,52 @@
+{
+  "context": "classifier",
+  "basis": "sigmoidal",
+  "experiment": "v3_s44",
+  "dataset": "diabetes",
+  "config_hash": "f8796d400099a5bc",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 11,
+    "alpha": 1.7065321720857376,
+    "c": 1.6861115855630056
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 536,
+  "n_test": 116,
+  "metrics": {
+    "accuracy": 0.7586206896551724,
+    "balanced_accuracy": 0.7092105263157895,
+    "precision": 0.6875,
+    "recall": 0.55,
+    "f1": 0.6111111111111112,
+    "roc_auc": 0.7667763157894736,
+    "mcc": 0.44497507744689724,
+    "per_class": {
+      "0": {
+        "accuracy": 0.868421052631579,
+        "precision": 0.7857142857142857,
+        "recall": 0.868421052631579,
+        "f1": 0.825,
+        "support": 76
+      },
+      "1": {
+        "accuracy": 0.55,
+        "precision": 0.6875,
+        "recall": 0.55,
+        "f1": 0.6111111111111112,
+        "support": 40
+      }
+    }
+  },
+  "timestamp": "2026-11-03T22:48:10.171363+00:00"
+}

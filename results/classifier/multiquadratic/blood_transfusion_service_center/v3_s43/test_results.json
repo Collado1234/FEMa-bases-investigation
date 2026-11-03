@@ -1,0 +1,51 @@
+{
+  "context": "classifier",
+  "basis": "multiquadratic",
+  "experiment": "v3_s43",
+  "dataset": "blood_transfusion_service_center",
+  "config_hash": "927da664c89180ca",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 15,
+    "c": 4.4703181789969095
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 522,
+  "n_test": 113,
+  "metrics": {
+    "accuracy": 0.8053097345132744,
+    "balanced_accuracy": 0.6307062876830318,
+    "precision": 0.7272727272727273,
+    "recall": 0.2962962962962963,
+    "f1": 0.42105263157894735,
+    "roc_auc": 0.774547803617571,
+    "mcc": 0.37606347509027027,
+    "per_class": {
+      "0": {
+        "accuracy": 0.9651162790697675,
+        "precision": 0.8137254901960784,
+        "recall": 0.9651162790697675,
+        "f1": 0.8829787234042553,
+        "support": 86
+      },
+      "1": {
+        "accuracy": 0.2962962962962963,
+        "precision": 0.7272727272727273,
+        "recall": 0.2962962962962963,
+        "f1": 0.42105263157894735,
+        "support": 27
+      }
+    }
+  },
+  "timestamp": "2026-11-03T05:08:05.375920+00:00"
+}

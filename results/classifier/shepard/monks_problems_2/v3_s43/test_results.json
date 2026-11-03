@@ -1,0 +1,51 @@
+{
+  "context": "classifier",
+  "basis": "shepard",
+  "experiment": "v3_s43",
+  "dataset": "monks_problems_2",
+  "config_hash": "0673b8af1e2b9853",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "k": 8,
+    "z": 1.7534043400071906
+  },
+  "diagnostics": {
+    "frac_uniform_fallback": 0.0
+  },
+  "n_train_total": 420,
+  "n_test": 91,
+  "metrics": {
+    "accuracy": 0.8571428571428571,
+    "balanced_accuracy": 0.8448924731182795,
+    "precision": 0.78125,
+    "recall": 0.8064516129032258,
+    "f1": 0.7936507936507936,
+    "roc_auc": 0.9521505376344086,
+    "mcc": 0.6846509092932955,
+    "per_class": {
+      "0": {
+        "accuracy": 0.8833333333333333,
+        "precision": 0.8983050847457628,
+        "recall": 0.8833333333333333,
+        "f1": 0.8907563025210085,
+        "support": 60
+      },
+      "1": {
+        "accuracy": 0.8064516129032258,
+        "precision": 0.78125,
+        "recall": 0.8064516129032258,
+        "f1": 0.7936507936507936,
+        "support": 31
+      }
+    }
+  },
+  "timestamp": "2026-11-03T05:17:46.399110+00:00"
+}

@@ -1,0 +1,49 @@
+{
+  "model": "logreg",
+  "experiment": "v3_s44",
+  "dataset": "tic_tac_toe",
+  "config_hash": "3ba399b26550b028",
+  "git_commit": "50e491ef51",
+  "git_dirty": true,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "C": 19.340529850584865,
+    "penalty": "l2",
+    "max_iter": 500
+  },
+  "diagnostics": {},
+  "n_train_total": 670,
+  "n_test": 144,
+  "metrics": {
+    "accuracy": 0.9861111111111112,
+    "balanced_accuracy": 0.98,
+    "precision": 0.9791666666666666,
+    "recall": 1.0,
+    "f1": 0.9894736842105263,
+    "roc_auc": 0.9982978723404254,
+    "mcc": 0.9695359714832659,
+    "per_class": {
+      "0": {
+        "accuracy": 0.96,
+        "precision": 1.0,
+        "recall": 0.96,
+        "f1": 0.9795918367346939,
+        "support": 50
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 0.9791666666666666,
+        "recall": 1.0,
+        "f1": 0.9894736842105263,
+        "support": 94
+      }
+    }
+  },
+  "timestamp": "2026-11-03T22:46:16.890595+00:00"
+}
