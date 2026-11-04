@@ -1,431 +1,234 @@
-"""
-analysis/statistical_comparison.py
+"""Comparacao estatistica entre bases, seguindo Demsar (2006) + pos-hoc moderno.
 
-Comparacao estatistica pareada entre funcoes de base do FEMa (Friedman +
-post-hoc Wilcoxon signed-rank com correcao de Holm), por dataset e por
-metrica.
+Unidade de analise = DATASET (nao o fold de CV): matriz N datasets x k bases, uma celula =
+media, nas seeds disponiveis, da metrica de TESTE (holdout) em results/**/test_results.json.
 
-DE ONDE VEM O PAREAMENTO
--------------------------
-summary.json (persistence/summary_builder.py) so' guarda media/desvio/n
-AGREGADOS por combinacao de hiperparametros - os valores individuais das
-30 avaliacoes (n_splits=10 x n_repeats=3) NAO estao la'. Eles existem,
-individualmente, nos arquivos run_XXXX.json da mesma pasta
-(results/<context>/<basis>/<dataset>/<experiment_name>/), cada um com os
-campos `combo_id`, `repeat_idx`, `fold_idx` (ver pipeline/run_model.py).
-
-Este script:
-  1. Le summary.json de cada base para achar o combo_id VENCEDOR (a
-     configuracao escolhida pelo tuning via F1 - "best_configuration").
-  2. Le todos os run_*.json daquele diretorio, filtra pelos que pertencem
-     ao combo vencedor, e indexa por (repeat_idx, fold_idx).
-  3. Como todas as bases usam o mesmo master_seed (default 42, fixo no
-     pipeline - ver pipeline/run_model.py::run_basis_experiment) para o
-     mesmo dataset, (repeat_idx, fold_idx) identifica a MESMA particao de
-     dados em todas as bases -> pareamento valido.
-  4. Roda Friedman (teste global) e, se p<alpha, post-hoc Wilcoxon
-     pareado com correcao de Holm + effect size (rank-biserial pareado).
-
-IMPORTANTE - o que estas 30 execucoes SAO e o que NAO SAO:
-  Sao as 30 avaliacoes de VALIDACAO CRUZADA (10 folds x 3 repeticoes) da
-  configuracao de hiperparametros que venceu o tuning por F1. NAO sao 30
-  execucoes independentes do modelo final treinado no conjunto de teste
-  (o pipeline atual so' avalia o modelo final UMA vez no teste -
-  test_results.json). Isso e' apropriado para comparar bases de forma
-  pareada (segue a literatura de comparacao de classificadores via CV
-  repetida, ex. Demsar 2006), mas a variabilidade capturada inclui
-  variacao do conjunto de TREINO entre folds, nao so' aleatoriedade do
-  modelo - deixe isso explicito na secao de limitacoes do relatorio.
-
-Se um par base/dataset nao tiver run_*.json (por exemplo, se foram
-apagados apos gerar o summary), o script AVISA explicitamente e nao
-inventa nada - so' reporta que o teste pareado nao pode ser feito para
-aquele caso.
+  1. Friedman (tie-corrected) + correcao de Iman-Davenport (F_F)      [Demsar 2006]
+  2. Distancia critica de Nemenyi (so' para o diagrama, descritivo)   [Demsar 2006]
+  3. Pos-hoc: Wilcoxon signed-rank vs CONTROLE + correcao de Holm     [Garcia&Herrera 2008;
+     Benavoli et al. 2016; Ismail Fawaz et al. 2019]
+  4. Baselines externos (knn, logreg): Wilcoxon pareado entre datasets (+ Holm)
 
 Uso:
-    python -m analysis.statistical_comparison \\
-        --context classifier \\
-        --datasets breast_cancer digits iris \\
-        --bases shepard wendland_c2 laplacian inverse_multiquadratic radial \\
-        --metrics accuracy balanced_accuracy f1 \\
-        --experiment-name oficial_v1
+    python -m reporting.statistical_comparison --metric balanced_accuracy --control shepard
+Defina metrica primaria e controle ANTES de olhar os resultados (evita p-hacking).
 """
 from __future__ import annotations
 
 import argparse
-import itertools
-import json
+import math
+import re
+from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
-from scipy.stats import friedmanchisquare, rankdata, wilcoxon
+import pandas as pd
+from scipy import stats
 
-RESULTS_ROOT = Path(__file__).resolve().parent.parent / "results"
-REPORTS_ROOT = Path(__file__).resolve().parent.parent / "reports"
-
-ALPHA_DEFAULT = 0.05
-
-
-class DataAvailabilityError(Exception):
-    """Levantado quando os dados necessarios para o teste pareado nao
-    estao disponiveis - a mensagem sempre explica exatamente o que falta
-    e o que fazer para gerar."""
+ROOT = Path(__file__).resolve().parent.parent
+SEED_RE = re.compile(r"_s(\d+)$")
 
 
-# --------------------------------------------------------------------------
-# Carregamento dos dados pareados (run_*.json do combo vencedor)
-# --------------------------------------------------------------------------
+# ----------------------------------------------------------------- carga
+def load_cells(results: Path, prefix: str, metric: str, seeds=None, source: str = "test"):
+    """-> dict[(grupo, modelo, dataset)][seed] = valor.  grupo: 'basis' | 'baseline'.
 
-def _scope_dir(context: str, basis: str, dataset: str, experiment_name: str) -> Path:
-    return RESULTS_ROOT / context / basis / dataset / experiment_name
-
-
-def load_paired_fold_values(
-    context: str, basis: str, dataset: str, experiment_name: str, metric_names: List[str]
-) -> Tuple[Dict[Tuple[int, int], Dict[str, Optional[float]]], dict]:
-    """Retorna ({(repeat_idx, fold_idx): {metric: valor}}, metadados)
-    para o combo_id VENCEDOR (best_configuration do summary.json)."""
-    scope_dir = _scope_dir(context, basis, dataset, experiment_name)
-    summary_path = scope_dir / "summary.json"
-
-    if not summary_path.exists():
-        raise DataAvailabilityError(
-            f"[{basis}/{dataset}] summary.json nao encontrado em {scope_dir}.\n"
-            f"    Rode antes: python main.py --context {context} --basis {basis} --dataset {dataset} "
-            f"--experiment-name {experiment_name} ..."
-        )
-
-    summary = json.loads(summary_path.read_text(encoding="utf-8"))
-    best = summary.get("best_configuration")
-    if not best:
-        raise DataAvailabilityError(f"[{basis}/{dataset}] summary.json nao tem 'best_configuration'.")
-    winning_combo_id = best["combo_id"]
-
-    run_files = sorted(scope_dir.glob("run_*.json"))
-    if not run_files:
-        raise DataAvailabilityError(
-            f"[{basis}/{dataset}] So' summary.json esta' disponivel em {scope_dir} (media/desvio "
-            f"AGREGADOS) - nao ha' nenhum run_*.json. Os testes pareados (Friedman/Wilcoxon) exigem "
-            f"os valores INDIVIDUAIS de cada fold/repeticao. Se os run_*.json foram apagados apos "
-            f"gerar o summary, nao e' possivel fazer o teste pareado para essa base/dataset; so' e' "
-            f"possivel reportar media e desvio-padrao descritivos (sem teste de significancia)."
-        )
-
-    paired: Dict[Tuple[int, int], Dict[str, Optional[float]]] = {}
-    for rf in run_files:
-        run = json.loads(rf.read_text(encoding="utf-8"))
-        if run.get("combo_id") != winning_combo_id:
+    source='test': metrica no HOLDOUT (test_results.json)  -> estimativa nao enviesada (primaria).
+    source='cv'  : media de CV da config escolhida (summary.json) -> menos ruido, mas otimista
+                   (selecao em cima do proprio CV); use como checagem de robustez.
+    """
+    import json
+    fname = "test_results.json" if source == "test" else "summary.json"
+    cells = defaultdict(dict)
+    for f in results.rglob(fname):
+        parts = f.relative_to(results).parts          # ctx/modelo/dataset/exp/<arquivo>
+        if len(parts) != 5 or not parts[3].startswith(prefix):
             continue
-        if "repeat_idx" not in run or "fold_idx" not in run:
-            raise DataAvailabilityError(
-                f"[{basis}/{dataset}] {rf.name} nao tem os campos 'repeat_idx'/'fold_idx' - nao e' "
-                f"possivel parear com as outras bases de forma confiavel (formato de run antigo?)."
-            )
-        key = (run["repeat_idx"], run["fold_idx"])
-        paired[key] = {m: run["metrics"].get(m) for m in metric_names}
-
-    if not paired:
-        raise DataAvailabilityError(
-            f"[{basis}/{dataset}] Nenhum run_*.json corresponde ao combo vencedor '{winning_combo_id}' - "
-            f"os run_*.json existentes sao de outras combinacoes de hiperparametros."
-        )
-
-    return paired, {
-        "winning_combo_id": winning_combo_id,
-        "n_runs_found": len(paired),
-        "hyperparameters": best["hyperparameters"],
-    }
+        m = SEED_RE.search(parts[3])
+        if not m or (seeds and int(m.group(1)) not in seeds):
+            continue
+        data = json.load(open(f, encoding="utf-8"))
+        if source == "test":
+            val = (data.get("metrics") or {}).get(metric)
+        else:
+            val = (((data.get("best_configuration") or {}).get("metrics") or {}).get(metric) or {}).get("mean")
+        if val is None or (isinstance(val, float) and math.isnan(val)):
+            continue
+        group = "baseline" if parts[0] == "external_baselines" else "basis"
+        cells[(group, parts[1], parts[2])][int(m.group(1))] = float(val)
+    return cells
 
 
-def build_paired_matrix(
-    bases: List[str], dataset: str, metric: str, experiment_name: str, context: str = "classifier"
-) -> Tuple[List[Tuple[int, int]], np.ndarray, Dict[str, dict]]:
-    """Matriz pareada (n_folds x n_bases) para UMA metrica, usando a
-    INTERSECAO das chaves (repeat_idx, fold_idx) disponiveis em todas as
-    bases (com aviso se a intersecao for menor que o esperado - indica
-    bases rodadas com seeds/CV diferentes entre si)."""
-    per_basis_data, per_basis_meta, key_sets = {}, {}, []
-    for basis in bases:
-        paired, meta = load_paired_fold_values(context, basis, dataset, experiment_name, [metric])
-        per_basis_data[basis] = paired
-        per_basis_meta[basis] = meta
-        key_sets.append(set(paired.keys()))
-
-    common_keys = sorted(set.intersection(*key_sets)) if key_sets else []
-    if not common_keys:
-        raise DataAvailabilityError(
-            f"[{dataset}/{metric}] Nenhuma chave (repeat_idx, fold_idx) em comum entre {bases}. "
-            f"Provavelmente foram rodadas com master_seed ou n_splits/n_repeats diferentes entre si - "
-            f"verifique se todas usaram os mesmos parametros de CV."
-        )
-
-    n_expected = max(len(s) for s in key_sets)
-    if len(common_keys) < n_expected:
-        print(
-            f"  [aviso] {dataset}/{metric}: so' {len(common_keys)}/{n_expected} folds em comum entre "
-            f"todas as bases - usando a intersecao (algumas bases tem runs extras/faltantes)."
-        )
-
-    raw_matrix = np.array(
-        [[per_basis_data[basis][key][metric] for basis in bases] for key in common_keys], dtype=float
-    )
-
-    # Descarta folds onde QUALQUER basis tem metrica indefinida (None/NaN no
-    # JSON -- comum em datasets pequenos/desbalanceados, quando o modelo nao
-    # prediz a classe minoritaria em algum fold, deixando precision/recall/f1
-    # matematicamente indefinidos). Precisa ser o MESMO subconjunto de folds
-    # para todas as bases, senao o design pareado do Friedman fica invalido.
-    valid_rows_mask = ~np.isnan(raw_matrix).any(axis=1)
-    n_total = len(common_keys)
-    n_valid = int(valid_rows_mask.sum())
-
-    if n_valid < n_total:
-        dropped = n_total - n_valid
-        print(f"  [aviso] {dataset}/{metric}: {dropped}/{n_total} fold(s) descartado(s) por metrica "
-              f"indefinida (None) em pelo menos uma basis -- usando os {n_valid} folds restantes.")
-
-    if n_valid == 0:
-        raise DataAvailabilityError(
-            f"[{dataset}/{metric}] Todos os {n_total} folds tem metrica indefinida em pelo menos uma "
-            f"basis -- nao e' possivel montar nenhuma comparacao pareada valida para essa metrica "
-            f"nesse dataset. Considere usar uma metrica mais robusta a classes ausentes (ex: "
-            f"balanced_accuracy, mcc) para este dataset especifico."
-        )
-
-    matrix = raw_matrix[valid_rows_mask]
-    filtered_keys = [k for k, valid in zip(common_keys, valid_rows_mask) if valid]
-
-    return filtered_keys, matrix, per_basis_meta
+def build_matrix(cells, group: str):
+    """DataFrame datasets x modelos, media nas seeds COMUNS a todos os modelos do dataset."""
+    by_ds = defaultdict(dict)
+    for (g, model, ds), seeds in cells.items():
+        if g == group:
+            by_ds[ds][model] = seeds
+    rows, info, dropped = {}, {}, []
+    models = sorted({m for d in by_ds.values() for m in d})
+    for ds, d in sorted(by_ds.items()):
+        if set(d) != set(models):
+            dropped.append((ds, f"faltam modelos: {sorted(set(models) - set(d))[:4]}..."))
+            continue
+        common = set.intersection(*[set(s) for s in d.values()])
+        if not common:
+            dropped.append((ds, "sem seed em comum entre os modelos"))
+            continue
+        rows[ds] = {m: float(np.mean([d[m][s] for s in common])) for m in models}
+        info[ds] = len(common)
+    return pd.DataFrame(rows).T[models] if rows else pd.DataFrame(), info, dropped
 
 
-# --------------------------------------------------------------------------
-# Estatistica
-# --------------------------------------------------------------------------
-
-def holm_correction(pvalues: List[float]) -> List[float]:
-    """Correcao de Holm (step-down, family-wise). Retorna p-values
-    ajustados NA MESMA ORDEM da lista de entrada."""
-    n = len(pvalues)
-    order = np.argsort(pvalues)
-    adjusted = np.empty(n)
-    running_max = 0.0
-    for rank, idx in enumerate(order):
-        adj = (n - rank) * pvalues[idx]
-        running_max = max(running_max, adj)
-        adjusted[idx] = min(running_max, 1.0)
-    return adjusted.tolist()
+# ------------------------------------------------------------- estatistica
+def friedman_iman_davenport(M: pd.DataFrame):
+    N, k = M.shape
+    chi2, p_chi = stats.friedmanchisquare(*[M[c].values for c in M.columns])   # corrige empates
+    denom = N * (k - 1) - chi2
+    if not np.isfinite(chi2) or denom <= 0:
+        return dict(N=N, k=k, chi2=chi2, p_chi2=p_chi, F=np.nan, p_F=np.nan)
+    F = (N - 1) * chi2 / denom
+    return dict(N=N, k=k, chi2=chi2, p_chi2=p_chi, F=F, p_F=stats.f.sf(F, k - 1, (k - 1) * (N - 1)))
 
 
-def matched_pairs_rank_biserial(x: np.ndarray, y: np.ndarray) -> float:
-    """Effect size para Wilcoxon signed-rank pareado:
-    r = (soma_ranks_positivos - soma_ranks_negativos) / soma_total_ranks.
-    r>0 => x tende a ser maior que y; |r| perto de 1 => diferenca
-    consistente em quase todos os pares; |r| perto de 0 => diferenca
-    inconsistente entre folds (mesmo que a media difira)."""
-    d = x - y
-    d_nonzero = d[d != 0]
-    if len(d_nonzero) == 0:
-        return 0.0
-    ranks = rankdata(np.abs(d_nonzero))
-    w_plus = ranks[d_nonzero > 0].sum()
-    w_minus = ranks[d_nonzero < 0].sum()
-    total = ranks.sum()
-    return float((w_plus - w_minus) / total) if total > 0 else 0.0
+def average_ranks(M: pd.DataFrame, higher_is_better=True) -> pd.Series:
+    R = M.apply(lambda r: stats.rankdata(-r.values if higher_is_better else r.values), axis=1, result_type="expand")
+    R.columns = M.columns
+    return R.mean()
 
 
-def kendalls_w(friedman_stat: float, n_subjects: int, n_treatments: int) -> float:
-    """Coeficiente de concordancia de Kendall - effect size GLOBAL do
-    Friedman (0 = nenhuma concordancia entre folds sobre o ranking das
-    bases; 1 = concordancia perfeita)."""
-    denom = n_subjects * (n_treatments - 1)
-    return float(friedman_stat / denom) if denom > 0 else float("nan")
+def nemenyi_cd(k: int, N: int, alpha=0.05) -> float:
+    q = stats.studentized_range.ppf(1 - alpha, k, 10**6) / math.sqrt(2)
+    return float(q * math.sqrt(k * (k + 1) / (6 * N)))
 
 
-def analyze_dataset_metric(
-    bases: List[str], dataset: str, metric: str, experiment_name: str,
-    context: str = "classifier", alpha: float = ALPHA_DEFAULT,
-) -> dict:
-    fold_keys, matrix, meta = build_paired_matrix(bases, dataset, metric, experiment_name, context)
-    n_folds, n_bases = matrix.shape
-
-    means = matrix.mean(axis=0)
-    stds = matrix.std(axis=0, ddof=1) if n_folds > 1 else np.zeros(n_bases)
-
-    friedman_stat, friedman_p = friedmanchisquare(*[matrix[:, i] for i in range(n_bases)])
-    w_kendall = kendalls_w(friedman_stat, n_folds, n_bases)
-
-    result = {
-        "dataset": dataset,
-        "metric": metric,
-        "n_folds_paired": n_folds,
-        "bases": bases,
-        "descriptive": {b: {"mean": float(means[i]), "std": float(stds[i])} for i, b in enumerate(bases)},
-        "friedman": {
-            "statistic": float(friedman_stat),
-            "p_value": float(friedman_p),
-            "significant": bool(friedman_p < alpha),
-        },
-        "kendalls_w": w_kendall,
-        "posthoc": [],
-    }
-
-    if friedman_p < alpha:
-        pairs = list(itertools.combinations(range(n_bases), 2))
-        raw_pvalues, pair_stats = [], []
-        for i, j in pairs:
-            xi, xj = matrix[:, i], matrix[:, j]
-            if np.allclose(xi, xj):
-                stat, p = np.nan, 1.0
-            else:
-                try:
-                    stat, p = wilcoxon(xi, xj, zero_method="wilcox")
-                except ValueError:
-                    # todas as diferencas sao zero, ou outro caso degenerado
-                    stat, p = np.nan, 1.0
-            raw_pvalues.append(p)
-            pair_stats.append((i, j, stat))
-
-        adjusted = holm_correction(raw_pvalues)
-
-        for (i, j, stat), p_raw, p_adj in zip(pair_stats, raw_pvalues, adjusted):
-            effect = matched_pairs_rank_biserial(matrix[:, i], matrix[:, j])
-            result["posthoc"].append(
-                {
-                    "pair": [bases[i], bases[j]],
-                    "wilcoxon_statistic": None if (isinstance(stat, float) and np.isnan(stat)) else float(stat),
-                    "p_value": float(p_raw),
-                    "p_value_holm": float(p_adj),
-                    "significant_after_holm": bool(p_adj < alpha),
-                    "effect_size_rank_biserial_r": effect,
-                    "mean_diff": float(means[i] - means[j]),
-                }
-            )
-
-    return result
+def holm(pvals: np.ndarray) -> np.ndarray:
+    m = len(pvals)
+    order = np.argsort(pvals)
+    adj = np.empty(m)
+    running = 0.0
+    for i, idx in enumerate(order):
+        running = max(running, (m - i) * pvals[idx])
+        adj[idx] = min(1.0, running)
+    return adj
 
 
-# --------------------------------------------------------------------------
-# Apresentacao
-# --------------------------------------------------------------------------
-
-def _print_result(res: dict) -> None:
-    print(f"\n--- Metrica: {res['metric']}  (n_folds pareados = {res['n_folds_paired']}) ---")
-    for b in res["bases"]:
-        d = res["descriptive"][b]
-        print(f"  {b:25s} media={d['mean']:.4f}  desvio={d['std']:.4f}")
-
-    fr = res["friedman"]
-    sig_txt = "SIM (p<0.05)" if fr["significant"] else "NAO"
-    print(
-        f"  Friedman: chi2={fr['statistic']:.4f}  p={fr['p_value']:.4g}  significativo={sig_txt}  "
-        f"Kendall's W={res['kendalls_w']:.3f}"
-    )
-
-    if res["posthoc"]:
-        print("  Post-hoc Wilcoxon pareado (p ajustado por Holm):")
-        for ph in res["posthoc"]:
-            flag = "*" if ph["significant_after_holm"] else " "
-            print(
-                f"    [{flag}] {ph['pair'][0]} vs {ph['pair'][1]}: "
-                f"p_holm={ph['p_value_holm']:.4g}  r={ph['effect_size_rank_biserial_r']:+.3f}  "
-                f"diff_medias={ph['mean_diff']:+.4f}"
-            )
-    elif fr["significant"]:
-        print("  (post-hoc nao pode ser calculado)")
-    else:
-        print(
-            "  Friedman NAO significativo -> post-hoc nao realizado. Isso significa AUSENCIA DE "
-            "EVIDENCIA suficiente de diferenca entre as bases nesse dataset/metrica - nao e' prova "
-            "de que elas sejam equivalentes."
-        )
+def wilcoxon_pair(a: np.ndarray, b: np.ndarray):
+    d = a - b
+    nz = d[d != 0]
+    if len(nz) == 0:
+        return dict(p=1.0, r_rb=0.0, wins=0, ties=len(d), losses=0, mean_diff=0.0)
+    p = stats.wilcoxon(d, zero_method="pratt", alternative="two-sided").pvalue
+    ranks = stats.rankdata(np.abs(nz))
+    wp, wm = ranks[nz > 0].sum(), ranks[nz < 0].sum()
+    return dict(p=float(p), r_rb=float((wp - wm) / (wp + wm)), wins=int((d > 0).sum()),
+                ties=int((d == 0).sum()), losses=int((d < 0).sum()), mean_diff=float(d.mean()))
 
 
-def _non_significant_pairs(res: dict) -> List[Tuple[str, str]]:
-    """Pares SEM diferenca estatisticamente significativa (apos Holm).
-    Se Friedman nao foi significativo, TODOS os pares contam como
-    'sem evidencia de diferenca' (mas ver aviso em item 10 do pedido:
-    isso nao e' prova de igualdade)."""
-    bases = res["bases"]
-    if not res["friedman"]["significant"]:
-        return list(itertools.combinations(bases, 2))
-    return [tuple(ph["pair"]) for ph in res["posthoc"] if not ph["significant_after_holm"]]
+def vs_control(M: pd.DataFrame, control: str) -> pd.DataFrame:
+    rows = [dict(basis=c, **wilcoxon_pair(M[c].values, M[control].values)) for c in M.columns if c != control]
+    out = pd.DataFrame(rows)
+    out["p_holm"] = holm(out["p"].values)
+    out["significativo_holm_0.05"] = out["p_holm"] < 0.05
+    return out.sort_values("p").reset_index(drop=True)
 
 
-def build_summary_table(all_results: List[dict]) -> str:
-    """Tabela compacta em Markdown, pronta para colar num trabalho
-    cientifico (item 13 do pedido)."""
-    lines = [
-        "| Dataset | Métrica | " + " | ".join(f"{b} (média+/-dp)" for b in all_results[0]["bases"]) + " | Friedman chi2 | p-value | Kendall's W | Pares sig. (Holm) |",
-        "|---" * (4 + len(all_results[0]["bases"])) + "|",
-    ]
-    for res in all_results:
-        desc_cols = " | ".join(
-            f"{res['descriptive'][b]['mean']:.4f}+/-{res['descriptive'][b]['std']:.4f}" for b in res["bases"]
-        )
-        fr = res["friedman"]
-        sig_pairs = [ph["pair"] for ph in res["posthoc"] if ph["significant_after_holm"]]
-        sig_txt = "; ".join(f"{a}!={b}" for a, b in sig_pairs) if sig_pairs else ("-" if fr["significant"] else "n/a (Friedman ns)")
-        lines.append(
-            f"| {res['dataset']} | {res['metric']} | {desc_cols} | {fr['statistic']:.3f} | "
-            f"{fr['p_value']:.4g}{'*' if fr['significant'] else ''} | {res['kendalls_w']:.3f} | {sig_txt} |"
-        )
-    return "\n".join(lines)
+# ------------------------------------------------------------------ grafico
+def plot_cd(avg: pd.Series, cd: float, path: Path, title: str):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    s = avg.sort_values()
+    k = len(s)
+    fig, ax = plt.subplots(figsize=(10, 0.35 * k + 2))
+    ax.hlines(range(k), s.min() - 0.3, s.values, color="#cccccc", lw=1)
+    ax.plot(s.values, range(k), "o", color="#1f6feb")
+    ax.set_yticks(range(k)); ax.set_yticklabels(s.index)
+    ax.set_xlabel("posto medio (1 = melhor)")
+    ax.set_ylim(k - 0.5, -2.4)                      # espaco no topo para a barra de CD
+    ax.hlines(-1.4, s.min(), s.min() + cd, color="black", lw=2)
+    ax.vlines([s.min(), s.min() + cd], -1.6, -1.2, color="black", lw=2)
+    ax.text(s.min() + cd / 2, -1.9, f"CD = {cd:.2f}", ha="center", fontsize=9)
+    ax.set_title(title, fontsize=10)
+    fig.tight_layout(); fig.savefig(path, dpi=150); plt.close(fig)
 
 
-# --------------------------------------------------------------------------
-# CLI
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------- main
+def run(results: Path, prefix: str, metric: str, control: str, out: Path, alpha=0.05, higher_is_better=True,
+        exclude=(), seeds=None, source="test"):
+    out.mkdir(parents=True, exist_ok=True)
+    cells = load_cells(results, prefix, metric, seeds, source)
+    M, info, dropped = build_matrix(cells, "basis")
+    M = M.drop(index=[d for d in exclude if d in M.index])
+    if M.empty or control not in M.columns:
+        raise SystemExit(f"Sem dados suficientes (matriz vazia ou controle '{control}' ausente).")
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--context", type=str, default="classifier")
-    parser.add_argument("--datasets", nargs="+", default=["breast_cancer", "digits", "iris"])
-    parser.add_argument(
-        "--bases", nargs="+",
-        default=["shepard", "wendland_c2", "laplacian", "inverse_multiquadratic", "radial"],
-    )
-    parser.add_argument("--metrics", nargs="+", default=["accuracy", "balanced_accuracy", "f1"])
-    parser.add_argument("--experiment-name", type=str, required=True)
-    parser.add_argument("--alpha", type=float, default=ALPHA_DEFAULT)
-    parser.add_argument("--output", type=str, default=None)
-    args = parser.parse_args()
+    tied = [d for d in M.index if M.loc[d].nunique() == 1]            # dataset sem informacao
+    Mi = M.drop(index=tied)
+    k = M.shape[1]
+    fr = friedman_iman_davenport(Mi)
+    avg = average_ranks(Mi, higher_is_better)
+    cd = nemenyi_cd(k, len(Mi), alpha)
+    post = vs_control(Mi, control)
 
-    all_results: List[dict] = []
-    for dataset in args.datasets:
-        print(f"\n{'=' * 78}\nDATASET: {dataset}\n{'=' * 78}")
-        for metric in args.metrics:
-            try:
-                res = analyze_dataset_metric(
-                    args.bases, dataset, metric, args.experiment_name, args.context, args.alpha
-                )
-            except DataAvailabilityError as e:
-                print(f"\n--- Metrica: {metric} ---")
-                print(f"  [DADOS INSUFICIENTES] {e}")
-                continue
-            all_results.append(res)
-            _print_result(res)
+    ranking = pd.DataFrame({"posto_medio": avg, "media_metrica": Mi.mean()}).sort_values("posto_medio")
+    ranking.index.name = "basis"
 
-    if not all_results:
-        print("\nNenhuma combinacao dataset/metrica pode ser analisada - ver mensagens acima.")
-        return
+    M.to_csv(out / "matrix_dataset_x_basis.csv")
+    ranking.to_csv(out / "ranking_postos_medios.csv")
+    post.to_csv(out / "posthoc_vs_controle_wilcoxon_holm.csv", index=False)
+    plot_cd(avg, cd, out / "cd_diagram.png", f"Postos medios ({metric}), N={len(Mi)} datasets, k={k}")
 
-    print(f"\n{'=' * 78}\nRESUMO - pares sem diferenca significativa (apos Holm)\n{'=' * 78}")
-    for res in all_results:
-        pairs = _non_significant_pairs(res)
-        label = "TODOS os pares (Friedman ns - sem evidencia de diferenca)" if not res["friedman"]["significant"] else (
-            "; ".join(f"{a}~={b}" for a, b in pairs) if pairs else "nenhum (todas as bases diferem entre si)"
-        )
-        print(f"  {res['dataset']:15s} {res['metric']:18s} -> {label}")
+    # baselines
+    base_md = ""
+    B, _, bdrop = build_matrix(cells, "baseline")
+    if not B.empty:
+        common = [d for d in Mi.index if d in B.index]
+        if len(common) >= 5:
+            best = ranking.index[0]
+            rows = []
+            for cand in dict.fromkeys([control, best]):
+                for bl in B.columns:
+                    rows.append(dict(base=cand, baseline=bl, n_datasets=len(common),
+                                     **wilcoxon_pair(M.loc[common, cand].values, B.loc[common, bl].values)))
+            bt = pd.DataFrame(rows); bt["p_holm"] = holm(bt["p"].values)
+            bt.to_csv(out / "baselines_wilcoxon_holm.csv", index=False)
+            base_md = "\n## Baselines (Wilcoxon pareado entre datasets, Holm)\n\n" + bt.round(4).to_markdown(index=False)
+            base_md += f"\n\n(`{best}` e' a base de melhor posto medio: escolhida a posteriori, interprete com cautela.)\n"
 
-    print(f"\n{'=' * 78}\nTABELA FINAL (Markdown)\n{'=' * 78}\n")
-    print(build_summary_table(all_results))
-
-    out_path = Path(args.output) if args.output else (REPORTS_ROOT / "statistical_comparison.json")
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(all_results, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"\n[salvo] {out_path}")
+    md = [f"# Comparacao estatistica das bases ({metric}; fonte: {'holdout de teste' if source == 'test' else 'media de CV da config escolhida'}; "
+          f"seeds: {sorted(seeds) if seeds else 'todas'})", "",
+          f"- Datasets na matriz: **{len(M)}** (usados no teste global: {len(Mi)}; "
+          f"{len(tied)} sem informacao porque todas as bases empataram: {tied or 'nenhum'})",
+          f"- Bases: **{k}** | controle: **{control}** | alpha = {alpha}",
+          f"- Seeds por dataset (interseccao entre bases): min {min(info.values())}, max {max(info.values())}",
+          f"- Datasets excluidos por dados incompletos: {dropped or 'nenhum'}", "",
+          "## Teste global (Friedman + Iman-Davenport, Demsar 2006)", "",
+          f"- chi2_F = {fr['chi2']:.3f} (p = {fr['p_chi2']:.3g})",
+          f"- F_F = {fr['F']:.3f}, gl = ({k-1}, {(k-1)*(len(Mi)-1)}), **p = {fr['p_F']:.3g}**", "",
+          f"Distancia critica de Nemenyi (so' para o diagrama): **CD = {cd:.2f}** postos.", "",
+          "## Ranking por posto medio", "", ranking.round(4).to_markdown(), "",
+          f"## Pos-hoc: cada base vs controle `{control}` (Wilcoxon signed-rank, zeros: Pratt; Holm)", "",
+          post.round(4).to_markdown(index=False), base_md,
+          "\n*Unidade de analise: dataset. Cada celula e' a media da metrica de teste nas seeds comuns.*"]
+    (out / "statistical_report.md").write_text("\n".join(md), encoding="utf-8")
+    return dict(friedman=fr, cd=cd, ranking=ranking, posthoc=post, matrix=M, tied=tied, dropped=dropped)
 
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--results", default=str(ROOT / "results"))
+    ap.add_argument("--prefix", default="v3")
+    ap.add_argument("--metric", default="balanced_accuracy")
+    ap.add_argument("--control", default="shepard")
+    ap.add_argument("--out", default=str(ROOT / "reports" / "v3_stats"))
+    ap.add_argument("--alpha", type=float, default=0.05)
+    ap.add_argument("--exclude", nargs="*", default=[])
+    ap.add_argument("--seeds", nargs="*", type=int, default=None, help="usa so' estas seeds (ex.: 42)")
+    ap.add_argument("--source", choices=["test", "cv"], default="test")
+    ap.add_argument("--lower-is-better", action="store_true")
+    a = ap.parse_args()
+    r = run(Path(a.results), a.prefix, a.metric, a.control, Path(a.out), a.alpha, not a.lower_is_better, a.exclude,
+            set(a.seeds) if a.seeds else None, a.source)
+    print(f"Friedman/Iman-Davenport: F={r['friedman']['F']:.3f}, p={r['friedman']['p_F']:.3g} | CD={r['cd']:.2f} | "
+          f"relatorio: {a.out}/statistical_report.md")
