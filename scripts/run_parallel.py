@@ -22,6 +22,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 from run_v3 import TIERS  # noqa: E402
 
@@ -29,13 +30,29 @@ LOGS = ROOT / "logs"
 _procs = []
 
 
+def unit_done(name, seed, ds, unit):
+    """Escopo(s) da unidade ja' concluido(s)? (pula sem nem iniciar processo)"""
+    exp = f"{name}_s{seed}"
+    res = ROOT / "results"
+    paths = ([res / "external_baselines" / m / ds / exp for m in ("knn", "logreg")]
+             if unit == "baselines" else [res / "classifier" / unit / ds / exp])
+    return all((p / "test_results.json").exists() for p in paths)
+
+
 def run_task(task, passthrough, env):
-    seed, ds, size = task
+    seed, ds, size, unit = task
     LOGS.mkdir(exist_ok=True)
-    log = LOGS / f"v3_s{seed}_{ds}.out"
+    tag = f"_{unit}" if unit else ""
+    log = LOGS / f"v3_s{seed}_{ds}{tag}.out"
     cmd = [sys.executable, "-u", str(ROOT / "scripts" / "run_v3.py"),
            "--datasets", ds, "--seeds", str(seed), *passthrough]
+    if unit == "baselines":
+        cmd += ["--only-baselines"]
+    elif unit:
+        cmd += ["--bases", unit, "--no-baselines"]
     t0 = time.time()
+    if unit and unit_done(passthrough[passthrough.index("--name") + 1], seed, ds, unit):
+        return "skip"
     with open(log, "w", encoding="utf-8") as f:
         p = subprocess.Popen(cmd, stdout=f, stderr=subprocess.STDOUT, cwd=ROOT, env=env)
         _procs.append(p)
@@ -43,9 +60,9 @@ def run_task(task, passthrough, env):
     dt = time.time() - t0
     failed = rc != 0 or "FALHA em" in log.read_text(encoding="utf-8", errors="ignore")
     status = "FALHOU" if failed else "ok"
-    print(f"[{time.strftime('%H:%M:%S')}] {status:6} seed={seed} {ds:34} {dt/60:6.1f} min  (log: {log.name})", flush=True)
+    print(f"[{time.strftime('%H:%M:%S')}] {status:6} seed={seed} {ds:28} {unit or '':22} {dt/60:6.1f} min", flush=True)
     with open(LOGS / "v3_progress.csv", "a", newline="") as f:
-        csv.writer(f).writerow([time.strftime("%Y-%m-%d %H:%M:%S"), seed, ds, size, status, round(dt)])
+        csv.writer(f).writerow([time.strftime("%Y-%m-%d %H:%M:%S"), seed, ds, size, status, round(dt), unit or ""])
     return status
 
 
@@ -62,6 +79,8 @@ def main():
     ap.add_argument("--n-splits", default="10")
     ap.add_argument("--n-repeats", default="3")
     ap.add_argument("--ranking-metric", default="f1")
+    ap.add_argument("--split-bases", action="store_true",
+                    help="1 processo por (dataset, base): usa todos os nucleos mesmo com poucos datasets")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
 
@@ -74,6 +93,13 @@ def main():
                 continue
             tasks += [(seed, ds, size) for ds in TIERS[size]
                       if ds not in a.exclude and (not a.datasets or ds in a.datasets)]
+
+    if a.split_bases:
+        from models.fema import available_bases
+        units = list(available_bases()) + ["baselines"]
+        tasks = [(sd, ds, sz, u) for (sd, ds, sz) in tasks for u in units]
+    else:
+        tasks = [(sd, ds, sz, "") for (sd, ds, sz) in tasks]
 
     passthrough = ["--name", a.name, "--n-iter", a.n_iter, "--n-splits", a.n_splits,
                    "--n-repeats", a.n_repeats, "--ranking-metric", a.ranking_metric]
@@ -96,7 +122,7 @@ def main():
             if p.poll() is None:
                 p.terminate()
         sys.exit(130)
-    bad = [t for t, r in zip(tasks, results) if r != "ok"]
+    bad = [t for t, r in zip(tasks, results) if r not in ("ok", "skip")]
     print(f"FIM em {(time.time()-t0)/3600:.2f} h. Falhas: {bad or 'nenhuma'}")
     print("Proximo passo: python scripts/bundle_results.py --experiment-prefix v3 --out bundle_v3.json --strict")
 

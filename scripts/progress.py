@@ -10,7 +10,6 @@ com a duracao media por tamanho de dataset (logs/v3_progress.csv) / workers.
 from __future__ import annotations
 
 import argparse
-import csv
 import os
 import sys
 import time
@@ -39,64 +38,53 @@ def snapshot(a):
     tasks = []
     for seed in sorted(a.seeds):
         for sz in ("large", "medium", "small"):
-            if sz == "large" and seed not in a.large_seeds:
+            if sz not in a.tiers or (sz == "large" and seed not in a.large_seeds):
                 continue
-            tasks += [(seed, ds, sz) for ds in TIERS[sz]]
+            tasks += [(seed, ds, sz) for ds in TIERS[sz] if ds not in a.exclude]
 
     done_scopes = partial = 0
+    credit = 0.0                      # credito parcial de escopos em andamento
+    mtimes = []
     task_done, by_seed = {}, defaultdict(lambda: [0, 0])
     for seed, ds, sz in tasks:
         n_done = 0
+        task_credit = 0.0
         for d in scope_dirs(results, bases, ds, f"{a.name}_s{seed}"):
             if (d / "test_results.json").exists():
                 n_done += 1
+                mtimes.append((d / "test_results.json").stat().st_mtime)
             elif d.exists():
                 partial += 1
+                # ~600 runs por escopo (20 combos x 30 folds); bases sem parametro tem menos => teto 0.99
+                task_credit += min(0.99, sum(1 for _ in d.glob("run_*.json")) / 600)
         task_done[(seed, ds)] = n_done
         done_scopes += n_done
-        by_seed[seed][0] += n_done
+        credit += task_credit
+        by_seed[seed][0] += n_done + task_credit
         by_seed[seed][1] += per_scope
     total_scopes = len(tasks) * per_scope
 
-    # duracao por tarefa (maior valor registrado: retomadas rapidas nao distorcem)
-    dur = {}
-    csv_path = ROOT / "logs" / "v3_progress.csv"
-    if csv_path.exists():
-        for row in csv.reader(open(csv_path, encoding="utf-8")):
-            if len(row) >= 6 and row[4] == "ok":
-                k = (int(row[1]), row[2])
-                dur[k] = max(dur.get(k, 0), float(row[5]))
-    avg = {}
-    for sz in ("small", "medium", "large"):
-        v = [t for (s, d), t in dur.items() if size_of.get(d) == sz]
-        avg[sz] = sum(v) / len(v) if v else None
-
-    remaining = 0.0
-    unknown = False
-    for seed, ds, sz in tasks:
-        frac_left = 1 - task_done[(seed, ds)] / per_scope
-        if frac_left > 0:
-            if avg[sz] is None:
-                unknown = True
-            else:
-                remaining += avg[sz] * frac_left
-
-    pct = 100 * done_scopes / total_scopes if total_scopes else 0
+    # ETA pelo RITMO recente: escopos concluidos nas ultimas 2 h (mtime do test_results.json)
+    now = time.time()
+    recent = [m for m in mtimes if now - m < 2 * 3600]
+    pct = 100 * (done_scopes + credit) / total_scopes if total_scopes else 0
     bar = "#" * int(pct / 2.5) + "-" * (40 - int(pct / 2.5))
-    print(f"\n[{time.strftime('%H:%M:%S')}] [{bar}] {pct:5.1f}%  ({done_scopes}/{total_scopes} escopos concluidos, {partial} em andamento)")
+    print(f"\n[{time.strftime('%H:%M:%S')}] [{bar}] {pct:5.1f}%  ({done_scopes}/{total_scopes} escopos concluidos; {partial} em andamento = ~{credit:.1f} escopos)")
     for seed in sorted(by_seed):
         d, t = by_seed[seed]
-        print(f"  seed {seed}: {100*d/t:5.1f}%  ({d}/{t})")
+        print(f"  seed {seed}: {100*d/t:5.1f}%  (~{d:.1f}/{t} escopos)")
     tasks_done = sum(1 for v in task_done.values() if v == per_scope)
     print(f"  datasets x seeds completos: {tasks_done}/{len(tasks)}")
-    if remaining > 0:
-        eta = remaining / max(1, a.workers)
-        h = eta / 3600
-        print(f"  ETA aprox.: {h:.1f} h ({'estimativa parcial: sem dados de algum tamanho' if unknown else f'{a.workers} workers'})")
-    elif done_scopes == total_scopes:
+    left = total_scopes - done_scopes - credit
+    if left <= 0.01:
         print("  CONCLUIDO.")
-    elif not dur:
-        print("  ETA: ainda sem tarefas concluidas para calibrar.")
+    elif len(recent) >= 3:
+        span = max(now - min(recent), 900)
+        eta_h = left / (len(recent) / span) / 3600
+        print(f"  ETA aprox.: {eta_h:.1f} h (ritmo das ultimas 2 h: {len(recent)} escopos; escopos de datasets "
+              f"diferentes custam muito diferente, entao e' so' uma ordem de grandeza)")
+    else:
+        print("  ETA: poucos escopos concluidos na ultima 2 h para estimar o ritmo.")
 
 
 def main():
@@ -104,6 +92,8 @@ def main():
     ap.add_argument("--results", default=str(ROOT / "results"))
     ap.add_argument("--seeds", nargs="+", type=int, default=[42, 43, 44, 45, 46])
     ap.add_argument("--large-seeds", nargs="*", type=int, default=[42])
+    ap.add_argument("--tiers", nargs="+", default=["small", "medium", "large"], choices=list(TIERS))
+    ap.add_argument("--exclude", nargs="*", default=[], help="datasets fora do plano (ex.: bng_glass)")
     ap.add_argument("--name", default="v3")
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 1))
     ap.add_argument("--watch", type=int, default=0, help="atualiza a cada N segundos")

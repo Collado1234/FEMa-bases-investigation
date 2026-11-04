@@ -44,6 +44,8 @@ def main() -> None:
     ap.add_argument("--n-repeats", type=int, default=3)
     ap.add_argument("--n-iter", type=int, default=20)
     ap.add_argument("--no-baselines", action="store_true")
+    ap.add_argument("--bases", nargs="+", help="roda so' estas bases (default: todas)")
+    ap.add_argument("--only-baselines", action="store_true", help="roda so' knn/logreg")
     args = ap.parse_args()
 
     datasets = args.datasets or [d for t in args.tier for d in TIERS[t]]
@@ -57,8 +59,9 @@ def main() -> None:
         for ds in datasets:
             try:
                 logger.info(f"##### {exp} | {ds} #####")
-                run_all_bases("classifier", ds, experiment_name=exp, master_seed=seed, **common)
-                if not args.no_baselines:
+                if not args.only_baselines:
+                    run_all_bases("classifier", ds, bases=args.bases, experiment_name=exp, master_seed=seed, **common)
+                if not args.no_baselines or args.only_baselines:
                     for model in ("knn", "logreg"):
                         run_baseline_experiment(model, ds, experiment_name=exp, master_seed=seed, **common)
             except Exception:
