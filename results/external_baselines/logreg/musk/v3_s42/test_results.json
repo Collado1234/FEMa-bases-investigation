@@ -1,0 +1,49 @@
+{
+  "model": "logreg",
+  "experiment": "v3_s42",
+  "dataset": "musk",
+  "config_hash": "1dcf20835daf5984",
+  "git_commit": "d716798e36",
+  "git_dirty": false,
+  "env": {
+    "python": "3.13.7",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "best_hyperparameters": {
+    "C": 0.07144800737102958,
+    "penalty": "l2",
+    "max_iter": 500
+  },
+  "diagnostics": {},
+  "n_train_total": 4618,
+  "n_test": 990,
+  "metrics": {
+    "accuracy": 1.0,
+    "balanced_accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "roc_auc": 1.0,
+    "mcc": 1.0,
+    "per_class": {
+      "0": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 837
+      },
+      "1": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 153
+      }
+    }
+  },
+  "timestamp": "2026-11-06T16:59:34.223675+00:00"
+}
