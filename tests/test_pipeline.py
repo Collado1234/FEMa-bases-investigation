@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
-from core import Basis
+from core.math.basis import Basis
 from datasets.registry import available_datasets
 from models.fema import FEMaPlugin
 from models.registry import available_models
