@@ -42,7 +42,7 @@ import csv
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
-from analysis.statistical_comparison import (
+from reporting.statistical_comparison import (
     ALPHA_DEFAULT,
     RESULTS_ROOT,
     REPORTS_ROOT,

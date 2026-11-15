@@ -9,7 +9,7 @@ from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from tests.test_stat_battery import loading, per_dataset, primitives as P  # noqa: E402
+from reporting.stat_battery import loading, per_dataset, primitives as P  # noqa: E402
 from tests import synth_results  # noqa: E402
 
 
