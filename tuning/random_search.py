@@ -34,6 +34,10 @@ def _sample_one(spec, rng: np.random.Generator):
         return float(np.exp(rng.uniform(math.log(low), math.log(high))))
     if kind == "randint":
         return int(rng.integers(low, high + 1))
+    if kind == "logint":
+        # inteiro com densidade uniforme em log(k): contagens (k vizinhos) variam multiplicativamente
+        # e o erro de estimativa kNN cai ~ 1/sqrt(k), entao a resolucao util esta nos k pequenos.
+        return int(min(high, max(low, round(math.exp(rng.uniform(math.log(low), math.log(high)))))))
     raise ValueError(f"Tipo de distribuicao desconhecido: '{kind}'")
 
 
