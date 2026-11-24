@@ -161,6 +161,12 @@ def _execute(
         f"n_splits={n_splits} n_repeats={n_repeats} ==="
     )
 
+    data = load_dataset(dataset, seed=master_seed, val_ratio=val_ratio, test_ratio=test_ratio)
+    X_train, y_train = data.X_train, data.y_train
+
+    # Espacos de busca que dependem dos dados (ex.: k relativo ao tamanho do treino) so' enxergam o TREINO.
+    plugin.bind_data(X_train, y_train)
+
     config = {
         "model": plugin.name,
         "dataset": dataset,
@@ -174,12 +180,12 @@ def _execute(
         "val_ratio": val_ratio,
         "test_ratio": test_ratio,
         "metric_names": list(metric_names),
+        # O PROPRIO espaco de busca entra no hash: mudar faixas (ex.: h absoluto -> h_rel, k fixo -> k relativo)
+        # impede misturar, no mesmo diretorio, runs de espacos diferentes.
+        "search_space": (plugin.parameter_grid() if tuning_strategy == "grid_search" else plugin.random_search_space()),
     }
     config_hash = stable_hash(config)
     run_meta = _run_meta()
-
-    data = load_dataset(dataset, seed=master_seed, val_ratio=val_ratio, test_ratio=test_ratio)
-    X_train, y_train = data.X_train, data.y_train
 
     raw_combinations = generate_combinations(
         plugin,

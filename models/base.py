@@ -25,6 +25,12 @@ class ModelPlugin(ABC):
     #: se este modelo suporta predict_proba de forma nativa
     supports_proba: bool = True
 
+    def bind_data(self, X_train, y_train) -> None:
+        """OPCIONAL. Chamado pelo pipeline com o conjunto de TREINO antes de gerar as combinacoes,
+        para plugins cujo espaco de busca depende dos dados (ex.: k relativo ao tamanho do treino).
+        Nao pode olhar validacao/teste. Default: nao faz nada."""
+        return None
+
     @abstractmethod
     def create_model(self, params: Dict[str, Any], random_state: int):
         """Instancia e retorna um estimator (nao treinado) com os

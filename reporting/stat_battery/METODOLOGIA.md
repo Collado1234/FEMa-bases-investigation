@@ -75,3 +75,38 @@ python tests/calibration_null.py --reps 300
 Custo: a 1ª execução lê ~10⁵–10⁶ JSONs (cache em `<out>/cache_*.csv`); a camada A usa 999 permutações por par (~1 min para 28 datasets × 210 pares em 1 CPU, ajustável com `--n-perm`).
 
 Referências: Demšar 2006 (JMLR 7); Nadeau & Bengio 2003 (Mach. Learn. 52); Schuirmann 1987; DeLong, DeLong & Clarke-Pearson 1988 (Biometrics 44); Sun & Xu 2014 (IEEE SPL 21); Scholz & Stephens 1987 (JASA 82); Benavoli et al. 2017 (JMLR 18); Bouckaert & Frank 2004.
+
+## 8. Espaço de hiperparâmetros relativo à densidade (v4) e relatórios por dataset
+
+**Problema encontrado no v3.** O raio de suporte `h` das bases compactas era absoluto (busca em [0,5; 5]) e `k` ficava em
+[3, 30] para qualquer dataset. Com features padronizadas a escala das distâncias cresce com √(n_features) e muda com a
+densidade amostral: em alta dimensão o vizinho mais próximo já estava além de `h = 5`, a soma dos pesos dava 0 e o código
+caía **silenciosamente** em pesos uniformes (kNN simples). As quatro bases compactas produziam escores idênticos nos 6
+datasets de maior dimensão, ou seja, o ranking comparava "kNN ponderado × kNN uniforme", não formas de base.
+
+**Correção.**
+- `h_rel` (adimensional): raio = `h_rel · r_k`, com `r_k` a distância ao k-ésimo vizinho do ponto de consulta (estimador kNN de
+  densidade). Faixa `loguniform(1,05; 3,0)`; abaixo de 1 o k-ésimo vizinho sairia do suporte, e `h_rel > 1` garante peso
+  positivo para todos os k vizinhos (nunca há fallback). Medido (`scripts/audit_search_space.py`): o número efetivo de
+  vizinhos ESS/k varia de ~0,23 (`h_rel=1,05`) a ~0,97 (`h_rel=3`), com a **mesma curva em 30 e 64 features**.
+  Propriedade testada: os pesos são invariantes a multiplicar todas as distâncias por uma constante.
+- `k` relativo ao tamanho do treino: `k ∈ [3, k_max]`, `k_max = max(10, min(⌈2√n⌉, ⌈0,2·n⌉))` (regra clássica k ~ √n),
+  amostrado com densidade uniforme em log(k) (`logint`). Ex.: n=70→14; 1257→71; 5457→148; 14000→237.
+- O espaço de busca entra no `config_hash`: o pipeline recusa misturar, no mesmo diretório, runs de espaços diferentes.
+  **Use um novo `experiment_name` (ex.: `v4`).**
+
+**Correções numéricas associadas (descobertas na auditoria).** `entropic` normalizava dentro de `evaluate` e gerava **pesos NaN**
+quando todos os `exp` davam underflow; `softmax_radial` e `gen_exponential` ganharam versão em log-espaço.
+Equivalências matemáticas (testadas): `entropic(β) = rbf_gaussian(ε=√β) = radial(z=1/√(2β))` e `laplacian = softmax_radial`
+— o conjunto de 21 bases tem 17 funções distintas; diferenças entre bases duplicadas vêm só das faixas de busca.
+
+**Limitação que permanece.** Bases sem parâmetro de escala (`harmonic`, `attention`, `lorentzian`) e as de escala absoluta
+(`logarithmic`, `multiquadratic`, `inverse_multiquadratic`, `student_t`) continuam dependendo da escala absoluta das
+distâncias; a auditoria mostra pesos quase uniformes (ESS/k ≈ 0,97–1,0) em quase todo o espaço delas em alta dimensão.
+Reparametrizar essas escalas pela densidade local mudaria a definição das bases e deve ser decisão do orientador.
+
+**Relatórios por dataset** (`python -m reporting.stat_battery.dataset_reports`): ranking das bases em balanced accuracy, F1,
+precisão e revocação para cada dataset, com a significância de cada base contra a melhor e contra o controle (mesma maquinaria
+da camada A: t pareado com correção de Nadeau & Bengio + Holm; TOST de equivalência; veredito `inconclusivo` ≠ equivalente).
+**Base × k** (`python -m reporting.k_analysis`): H1 as bases escolhem k diferentes? (Friedman sobre a posição relativa de k);
+H2 bases melhores usam k maior?; H3 dependência do contexto; H4 saturação nas bordas da faixa (k e escalas); H5 perfil k × escore.

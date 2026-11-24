@@ -30,7 +30,8 @@ basis.PARAMS/OPTIONAL_PARAMS agora acontece na CONSTRUÇÃO de cada
 FEMaPlugin (_validate_basis_entry), não mais de uma vez para todas as
 bases no import do modulo.
 """
-from typing import Any, Dict, List
+import math
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 
@@ -44,6 +45,16 @@ from core import (
 )
 from models.base import ModelPlugin
 
+# Raio de suporte das bases compactas, RELATIVO a densidade local: raio = h_rel * r_k (r_k = dist. ao
+# k-esimo vizinho; ver core/math/basis/_compactSupport.py). Adimensional => mesma faixa para qualquer
+# dataset/dimensao. Limite inferior 1.05 (>1): o k-esimo vizinho ainda recebe peso > 0 e a soma dos pesos
+# nunca zera (sem fallback para kNN uniforme). Limite superior 3: medido (scripts/audit_search_space.py,
+# wendland, k=20) o numero efetivo de vizinhos ESS/k vai de ~0.23 (h_rel=1.05) a ~0.97 (h_rel=3), ou seja,
+# de 'bem local' a quase kNN uniforme; acima de 3 os pesos ja sao praticamente iguais e a faixa so'
+# desperdicaria sorteios. A curva ESS/k x h_rel e' praticamente a mesma em 30 e 64 features.
+_H_REL_GRID = [1.1, 1.25, 1.5, 2.0, 3.0]
+_H_REL_SPACE = ("loguniform", 1.05, 3.0)
+
 # Grade para grid_search: basis_name -> {campo: [valores]}. Faixas
 # calibradas a partir da varredura de leakage em
 # tests/linear_algebra/math_validation.py (SWEEP_CONFIG lá resolve o
@@ -56,9 +67,9 @@ PARAM_GRIDS: Dict[str, Dict[str, List[float]]] = {
     "rbf_gaussian": {"epsilon": [0.1, 0.5, 1.0, 5.0, 20.0]},
     "multiquadratic": {"c": [0.1, 0.5, 1.0, 2.0, 5.0]},
     "inverse_multiquadratic": {"c": [0.01, 0.1, 0.5, 1.0, 2.0]},
-    "wendland_c2": {"h": [0.5, 1.0, 2.0, 3.0, 5.0]},
-    "cubic_spline": {"h": [0.5, 1.0, 2.0, 3.0, 5.0]},
-    "quartic_spline": {"h": [0.5, 1.0, 2.0, 3.0, 5.0]},
+    "wendland_c2": {"h_rel": _H_REL_GRID},
+    "cubic_spline": {"h_rel": _H_REL_GRID},
+    "quartic_spline": {"h_rel": _H_REL_GRID},
     "gen_exponential": {"epsilon": [0.1, 1.0, 5.0, 20.0], "p": [1.0, 2.0, 3.0]},
     "softmax_radial": {"beta": [0.1, 1.0, 5.0, 20.0]},
     "attention": {},
@@ -67,7 +78,7 @@ PARAM_GRIDS: Dict[str, Dict[str, List[float]]] = {
     "laplacian": {"epsilon": [0.1, 1.0, 5.0, 20.0]},
     "cauchy": {"epsilon": [0.1, 1.0, 5.0, 20.0]},
     "student_t": {"nu": [0.0001, 0.001, 0.01, 0.1, 1.0]},
-    "cosine": {"h": [0.5, 1.0, 2.0, 3.0, 5.0]},
+    "cosine": {"h_rel": _H_REL_GRID},
     "sigmoidal": {"alpha": [0.5, 1.0, 5.0, 20.0], "c": [0.5, 1.0, 2.0]},
     "lorentzian": {},
     "entropic": {"beta": [0.1, 1.0, 5.0, 20.0]},
@@ -80,9 +91,9 @@ RANDOM_SEARCH_SPACES: Dict[str, Dict[str, Any]] = {
     "rbf_gaussian": {"epsilon": ("loguniform", 0.1, 50.0)},
     "multiquadratic": {"c": ("uniform", 0.1, 5.0)},
     "inverse_multiquadratic": {"c": ("loguniform", 0.01, 2.0)},
-    "wendland_c2": {"h": ("uniform", 0.5, 5.0)},
-    "cubic_spline": {"h": ("uniform", 0.5, 5.0)},
-    "quartic_spline": {"h": ("uniform", 0.5, 5.0)},
+    "wendland_c2": {"h_rel": _H_REL_SPACE},
+    "cubic_spline": {"h_rel": _H_REL_SPACE},
+    "quartic_spline": {"h_rel": _H_REL_SPACE},
     "gen_exponential": {"epsilon": ("loguniform", 0.1, 50.0), "p": ("uniform", 1.0, 3.0)},
     "softmax_radial": {"beta": ("loguniform", 0.1, 50.0)},
     "attention": {},
@@ -91,15 +102,24 @@ RANDOM_SEARCH_SPACES: Dict[str, Dict[str, Any]] = {
     "laplacian": {"epsilon": ("loguniform", 0.1, 50.0)},
     "cauchy": {"epsilon": ("loguniform", 0.1, 50.0)},
     "student_t": {"nu": ("loguniform", 0.0001, 1.0)},
-    "cosine": {"h": ("uniform", 0.5, 5.0)},
+    "cosine": {"h_rel": _H_REL_SPACE},
     "sigmoidal": {"alpha": ("loguniform", 0.5, 20.0), "c": ("uniform", 0.5, 2.0)},
     "lorentzian": {},
     "entropic": {"beta": ("loguniform", 0.1, 50.0)},
     "rational_quadratic": {"alpha": ("uniform", 0.5, 2.0), "l": ("loguniform", 0.01, 2.0)},
 }
 
+# k (numero de vizinhos). Valores LEGADOS (usados so' se bind_data nao foi chamado): faixa absoluta [3, 30].
 _K_GRID = [5, 10, 15, 20]
 _K_SPACE = ("randint", 3, 30)
+_K_MIN = 3
+
+
+def k_upper_bound(n_train: int) -> int:
+    """Limite superior de k relativo ao tamanho do treino: 2*sqrt(n) (regra classica k ~ sqrt(n)),
+    limitado a 20% do treino (k nao pode "engolir" o dataset) e com piso 10 para haver faixa.
+    Ex.: n=70 -> 14 | n=124 -> 23 | n=1257 -> 71 | n=5457 -> 148 | n=14000 -> 237."""
+    return int(max(10, min(math.ceil(2.0 * math.sqrt(n_train)), math.ceil(0.2 * n_train))))
 
 _CONTEXT_CLASSES = {
     "classifier": FEMaClassifier,
@@ -200,6 +220,17 @@ class FEMaPlugin(ModelPlugin):
         self.basis = basis
         self.name = f"fema:{context}:{basis}"
         self.supports_proba = context == "classifier"
+        self._n_train: Optional[int] = None
+
+    def bind_data(self, X_train, y_train) -> None:
+        """Fixa o espaco de k em funcao do tamanho do TREINO (densidade amostral), em vez de [3, 30]."""
+        self._n_train = int(len(X_train))
+
+    def k_range(self) -> tuple:
+        """(k_min, k_max) efetivos do espaco de busca."""
+        if self._n_train is None:
+            return (_K_MIN, _K_SPACE[2])
+        return (_K_MIN, k_upper_bound(self._n_train))
 
     def create_model(self, params: Dict[str, Any], random_state: int):
         k = params.get("k", 5)
@@ -212,10 +243,21 @@ class FEMaPlugin(ModelPlugin):
         return estimator.diagnostics()
 
     def parameter_grid(self) -> Dict[str, list]:
-        return {"k": _K_GRID, **PARAM_GRIDS[self.basis]}
+        return {"k": self._k_grid(), **PARAM_GRIDS[self.basis]}
 
     def random_search_space(self) -> Dict[str, Any]:
-        return {"k": _K_SPACE, **RANDOM_SEARCH_SPACES[self.basis]}
+        return {"k": self._k_space(), **RANDOM_SEARCH_SPACES[self.basis]}
+
+    def _k_space(self):
+        if self._n_train is None:
+            return _K_SPACE
+        return ("logint", *self.k_range())
+
+    def _k_grid(self) -> list:
+        if self._n_train is None:
+            return _K_GRID
+        lo, hi = self.k_range()
+        return sorted({int(round(v)) for v in np.geomspace(lo, hi, 5)})
 
 
 def available_bases() -> List[str]:
