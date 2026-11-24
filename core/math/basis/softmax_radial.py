@@ -27,3 +27,7 @@ class SoftmaxRadialBasis(BaseBasis):
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
         beta = self._require(params)["beta"]
         return np.exp(-beta * dists)
+
+    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+        beta = self._require(params)["beta"]
+        return -beta * dists

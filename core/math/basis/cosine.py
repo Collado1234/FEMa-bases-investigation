@@ -14,5 +14,5 @@ class CosineBasis(CompactSupportBasis):
         super().__init__(search)
 
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
-        r = self._normalized_distance(dists, params.h)
+        r = self._normalized_distance(dists, params.h, params.h_rel)
         return np.where(r <= 1, np.cos(np.pi * r / 2) ** 2, 0.0)

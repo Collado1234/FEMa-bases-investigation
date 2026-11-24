@@ -40,5 +40,6 @@ class BasisParameters:
     beta: Optional[float] = None     # Softmax Radial, Entropic
     nu: Optional[float] = None       # Harmonic, Student-t
     h: Optional[float] = None        # Wendland C2, Cubic/Quartic Spline, Cosine (raio de suporte compacto)
+    h_rel: Optional[float] = None    # idem, RELATIVO a densidade local: raio = h_rel * dists. ao k-ésimo vizinho
     l: Optional[float] = None        # Rational Quadratic (lengthscale)
     p: Optional[float] = None        # Generalized Exponential (expoente)

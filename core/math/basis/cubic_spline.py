@@ -12,5 +12,5 @@ class CubicSplineBasis(CompactSupportBasis):
         super().__init__(search)
 
     def evaluate(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
-        r = self._normalized_distance(dists, params.h)
+        r = self._normalized_distance(dists, params.h, params.h_rel)
         return np.where(r <= 1, (1 - r) ** 3, 0.0)

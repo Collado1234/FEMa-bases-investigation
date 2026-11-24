@@ -14,3 +14,8 @@ class ExponentialGenBasis(BaseBasis):
         epsilon, p = values["epsilon"], values["p"]
         dists = np.where(dists == 0, DELTA, dists)
         return np.exp(-epsilon * (dists ** p))
+
+    def _log_phi(self, dists: np.ndarray, params: BasisParameters) -> np.ndarray:
+        values = self._require(params)
+        dists = np.where(dists == 0, DELTA, dists)
+        return -values["epsilon"] * (dists ** values["p"])
